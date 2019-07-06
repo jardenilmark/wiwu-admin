@@ -1,68 +1,91 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# wiwu-admin
 
-## Available Scripts
+the web admin side of weee wooo
 
-In the project directory, you can run:
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Requirements:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- [NodeJS](https://nodejs.org/en/) (>= v11.15)
+- [Yarn](https://yarnpkg.com/en/) (>= v1.17)
+- [Commitizen CLI](https://github.com/commitizen/cz-cli)
 
-### `npm test`
+Clone project:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone git@gitlab.com:team-weee-wooo/wiwu-admin.git
+cd wiwu-user
+```
 
-### `npm run build`
+Install dependencies & run:
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+yarn
+yarn start
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Starting development:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# create a new branch
+git checkout -b name-here/dev
+```
 
-### `npm run eject`
+##### IMPORTANT: Please only use [yarn](https://yarnpkg.com/en/) as the package manager to prevent conflicts.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Style Guide
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This project is using the [Standard Style](https://standardjs.com/) style guide.  
+Although the project has [ESlint](https://eslint.org/) set up, staged files are automatically formatted with [Prettier](https://prettier.io/):
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+# manual formatting of all files instead of the pre-commit hook:
+yarn run prettier
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# manual formatting of staged files instead of the pre-commit hook:
+npx pretty-quick
+```
 
-## Learn More
+## Conventions
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Git Commit Guidelines
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To automatically format `git commit` messages, we'll use `git cz` instead of `git commit`.
+This is done via [Commitizen](https://github.com/commitizen/cz-cli).
 
-### Code Splitting
+#### Installation & Usage
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```bash
+# install cz-cli
+npm install commitizen -g
 
-### Analyzing the Bundle Size
+# commit changes with
+git cz
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+##### NOTE: Please see [Git Commit Guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) for the description of each commit message types.
 
-### Making a Progressive Web App
+## Documentation
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+This project is set up with [React Styleguidist](https://react-styleguidist.js.org/) to document components, functions, etc. Please see the [documenting guide](https://react-styleguidist.js.org/docs/documenting.html) to learn how to document components, functions, etc.
 
-### Advanced Configuration
+## Stack
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Please list the frameworks, packages, and tools you used in this project:
 
-### Deployment
+- React (CRA)
+- Commitizen
+- React Styleguidist
+- React Router (web)
+- ESLint (Standard Style)
+- Prettier
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Authors
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Ronna Mae Firmo
+- Mark Jardenil
+- Danddie Porras
+- Jess Virgil Lanchinebre
+- Alfie Arcede
