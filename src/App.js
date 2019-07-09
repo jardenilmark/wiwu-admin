@@ -1,25 +1,11 @@
 import React from 'react'
-import { Button } from 'antd'
-import logo from './logo.svg'
-import './App.css'
+import { Route } from 'react-router-dom'
+import login from './components/LoginScreen'
 
 const App = () => {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-        <Button type='primary'>Hey!</Button>
-      </header>
+      <Route path='/' exact component={login} />
     </div>
   )
 }
