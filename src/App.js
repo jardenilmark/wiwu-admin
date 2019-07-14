@@ -1,11 +1,14 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import login from './components/LoginScreen'
+
+import LoginScreen from './components/LoginScreen'
+import Dashboard from './components/Dashboard'
 
 const App = () => {
   return (
     <div className='App'>
-      <Route path='/' exact component={login} />
+      <Route path='/login' exact component={LoginScreen} />
+      <Route path='/' exact component={Dashboard} />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../actions/user/userLogin.actions'
 const { Title } = Typography
+
 const initialValues = {
   username: '',
   password: ''
@@ -13,9 +14,12 @@ const LoginScreen = () => {
   const dispatch = useDispatch()
   const current = useSelector(state => state.user.current)
   console.log(current)
+
   return (
     <Card style={styles.loginForm}>
-      <Title style={{ textAlign: 'center' }}>Login</Title>
+      <Title level={3} style={{ textAlign: 'center' }}>
+        Admin Login
+      </Title>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
