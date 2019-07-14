@@ -61,7 +61,7 @@ const LoginScreen = () => {
               <Button type='primary' htmlType='submit' style={styles.button}>
                 Log in
               </Button>
-              or <a href=''>register now!</a>
+              or <a href='/signUp'>register now!</a>
             </Form.Item>
           </Form>
         )}
