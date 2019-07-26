@@ -2,8 +2,9 @@ import React from 'react'
 import { Button, Form, Input, Card, Alert } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { signUp, clearSignUpErrors } from '../actions/user/userSignUp.actions'
-import { userSignUpSchema } from '../schema/user.schema'
+import { userSignUpSchema } from '../../schema/user.schema'
+import { signUp } from '../../actions/user/signUp.action'
+import { clearSignUpErrors } from '../../actions/user/clearSignupErrors.action'
 
 const initialValues = {
   emailAddress: '',
@@ -13,7 +14,7 @@ const initialValues = {
   phoneNumber: ''
 }
 
-const SignUpScreen = () => {
+const SignupTab = () => {
   const dispatch = useDispatch()
   const signUpError = useSelector(state => state.user.signUpError)
   return (
@@ -188,4 +189,4 @@ const styles = {
   }
 }
 
-export default SignUpScreen
+export default SignupTab

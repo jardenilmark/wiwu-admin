@@ -1,4 +1,4 @@
-const changeActiveTab = key => {
+export const changeActiveTab = key => {
   return dispatch => {
     dispatch({
       type: 'CHANGE_ACTIVE_TAB',
@@ -6,5 +6,3 @@ const changeActiveTab = key => {
     })
   }
 }
-
-export { changeActiveTab }

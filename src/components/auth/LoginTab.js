@@ -2,15 +2,16 @@ import React from 'react'
 import { Button, Form, Input, Card, Alert } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { signIn, clearLoginErrors } from '../actions/user/userSignIn.actions'
-import { userSignInSchema } from '../schema/user.schema'
+import { signIn } from '../../actions/user/signIn.action'
+import { userSignInSchema } from '../../schema/user.schema'
+import { clearLoginErrors } from '../../actions/user/clearLoginErrors.action'
 
 const initialValues = {
   emailAddress: '',
   password: ''
 }
 
-const LoginScreen = () => {
+const LoginTab = () => {
   const dispatch = useDispatch()
   const current = useSelector(state => state.user.current)
   const loginError = useSelector(state => state.user.loginError)
@@ -118,4 +119,4 @@ const styles = {
   }
 }
 
-export default LoginScreen
+export default LoginTab

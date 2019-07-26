@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import user from './user'
-import navigation from './navigation'
+import user from './user.reducer'
+import navigation from './navigation.reducer'
 
 export default combineReducers({
   user,

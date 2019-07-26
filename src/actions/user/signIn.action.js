@@ -1,7 +1,7 @@
 import { auth } from '../../firebase'
 import { LOGIN_SUCCESS, LOGIN_FAILED } from './user.constants'
 
-const signIn = ({ emailAddress, password }) => {
+export const signIn = ({ emailAddress, password }) => {
   return async dispatch => {
     try {
       await auth.signInWithEmailAndPassword(emailAddress, password)
@@ -18,13 +18,3 @@ const signIn = ({ emailAddress, password }) => {
     }
   }
 }
-
-const clearLoginErrors = () => {
-  return dispatch => {
-    dispatch({
-      type: 'CLEAR_LOGIN_ERRORS'
-    })
-  }
-}
-
-export { signIn, clearLoginErrors }

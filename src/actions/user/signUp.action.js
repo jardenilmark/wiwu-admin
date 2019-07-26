@@ -1,7 +1,7 @@
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP_SUCCESS, SIGNUP_FAILED } from './user.constants'
 
-const signUp = ({ emailAddress, password, ...rest }) => {
+export const signUp = ({ emailAddress, password, ...rest }) => {
   return async dispatch => {
     try {
       await auth.createUserWithEmailAndPassword(emailAddress, password)
@@ -29,13 +29,3 @@ const signUp = ({ emailAddress, password, ...rest }) => {
     }
   }
 }
-
-const clearSignUpErrors = () => {
-  return dispatch => {
-    dispatch({
-      type: 'CLEAR_SIGNUP_ERRORS'
-    })
-  }
-}
-
-export { signUp, clearSignUpErrors }
