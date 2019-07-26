@@ -1,9 +1,10 @@
 import React from 'react'
-import { Button, Form, Input, Icon, Card, Typography } from 'antd'
+import { Button, Form, Input, Card, Alert } from 'antd'
 import { Formik } from 'formik'
-import { useDispatch } from 'react-redux'
-import { signUp } from '../actions/user/userSignUp.actions'
-const { Title } = Typography
+import { useDispatch, useSelector } from 'react-redux'
+import { signUp, clearSignUpErrors } from '../actions/user/userSignUp.actions'
+import { userSignUpSchema } from '../schema/user.schema'
+
 const initialValues = {
   emailAddress: '',
   password: '',
@@ -12,86 +13,165 @@ const initialValues = {
   phoneNumber: ''
 }
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 }
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 }
-  }
-}
-
 const SignUpScreen = () => {
   const dispatch = useDispatch()
+  const signUpError = useSelector(state => state.user.signUpError)
   return (
     <Card style={styles.loginForm} bordered={false}>
-      <Title style={{ textAlign: 'center' }} strong level={3}>
-        Sign Up
-      </Title>
+      {signUpError && (
+        <Alert
+          message={signUpError}
+          type='error'
+          banner
+          closable
+          onClose={() => {
+            dispatch(clearSignUpErrors())
+          }}
+        />
+      )}
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false)
-          }, 1500)
-          dispatch(signUp(values))
+        validationSchema={userSignUpSchema}
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          await dispatch(signUp(values))
+          setSubmitting(false)
+          resetForm(initialValues)
         }}>
-        {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-          <Form onSubmit={handleSubmit} {...formItemLayout}>
-            <Form.Item label={'Email Address'} required>
-              <Input
-                name='emailAddress'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.emailAddress}
-              />
-            </Form.Item>
-            <Form.Item label={'Password'} required>
-              <Input
-                name='password'
-                type='password'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
-            </Form.Item>
-            <Form.Item label={'First Name'} required>
-              <Input
-                name='firstName'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.firstName}
-              />
-            </Form.Item>
-            <Form.Item label='Last Name' required>
-              <Input
-                name='lastName'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.lastName}
-              />
-            </Form.Item>
-            <Form.Item label={'Phone Number'} required>
-              <Input
-                name='phoneNumber'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.phoneNumber}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type='primary'
-                htmlType='submit'
-                style={styles.button}
-                loading={isSubmitting}>
-                Sign Up
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
+        {({
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          errors,
+          touched,
+          dirty
+        }) => {
+          return (
+            <Form
+              onSubmit={handleSubmit}
+              layout='vertical'
+              autoComplete='off'
+              hideRequiredMark
+              style={{ textAlign: 'left' }}>
+              <Form.Item
+                label='First Name'
+                help={
+                  errors.firstName && touched.firstName ? errors.firstName : ''
+                }
+                validateStatus={
+                  errors.firstName && touched.firstName ? 'error' : ''
+                }
+                required
+                style={{ margin: 0 }}
+                hasFeedback>
+                <Input
+                  name='firstName'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
+                  style={{ margin: 0 }}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Last Name'
+                help={
+                  errors.lastName && touched.lastName ? errors.lastName : ''
+                }
+                validateStatus={
+                  errors.lastName && touched.lastName ? 'error' : ''
+                }
+                required
+                style={{ margin: 0 }}
+                hasFeedback>
+                <Input
+                  name='lastName'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  style={{ margin: 0 }}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Email Address'
+                help={
+                  errors.emailAddress && touched.emailAddress
+                    ? errors.emailAddress
+                    : ''
+                }
+                validateStatus={
+                  errors.emailAddress && touched.emailAddress ? 'error' : ''
+                }
+                required
+                style={{ margin: 0 }}
+                hasFeedback>
+                <Input
+                  name='emailAddress'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.emailAddress}
+                  style={{ margin: 0 }}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Password'
+                help={
+                  errors.password && touched.password ? errors.password : ''
+                }
+                validateStatus={
+                  errors.password && touched.password ? 'error' : ''
+                }
+                required
+                style={{ margin: 0 }}
+                hasFeedback>
+                <Input.Password
+                  name='password'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  style={{ margin: 0 }}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Phone Number'
+                help={
+                  errors.phoneNumber && touched.phoneNumber
+                    ? errors.phoneNumber
+                    : ''
+                }
+                validateStatus={
+                  errors.phoneNumber && touched.phoneNumber ? 'error' : ''
+                }
+                required
+                style={{ margin: 0 }}
+                hasFeedback>
+                <Input
+                  name='phoneNumber'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phoneNumber}
+                  style={{ margin: 0 }}
+                />
+              </Form.Item>
+              <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  shape='round'
+                  style={styles.button}
+                  disabled={!dirty}
+                  loading={isSubmitting}>
+                  Submit Details
+                </Button>
+              </Form.Item>
+            </Form>
+          )
+        }}
       </Formik>
     </Card>
   )
@@ -99,12 +179,12 @@ const SignUpScreen = () => {
 
 const styles = {
   loginForm: {
-    maxHeight: '500px',
-    maxWidth: '400px'
+    // width: '450px',
+    // margin: 100
   },
   button: {
-    width: '50%',
-    marginLeft: '25%'
+    width: '150px',
+    marginTop: '10px'
   }
 }
 

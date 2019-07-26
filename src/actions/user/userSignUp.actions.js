@@ -1,24 +1,41 @@
 import { auth, firestore as db } from '../../firebase'
+import { SIGNUP_SUCCESS, SIGNUP_FAILED } from './user.constants'
 
 const signUp = ({ emailAddress, password, ...rest }) => {
   return async dispatch => {
     try {
-      const result = await auth.createUserWithEmailAndPassword(
-        emailAddress,
-        password
-      )
-      const uid = result.user.uid
-      const docReference = await db
+      await auth.createUserWithEmailAndPassword(emailAddress, password)
+      const user = auth.currentUser
+      await db
         .collection('users')
-        .doc(uid)
+        .doc(user.uid)
         .set({
-          ...rest
+          ...rest,
+          role: 'admin',
+          status: 'active',
+          emergencies: []
         })
-      console.log(docReference)
+      // TODO: verification working already (just the redirect not working)
+      await user.sendEmailVerification()
+      dispatch({
+        type: SIGNUP_SUCCESS,
+        payload: { email: auth.currentUser.email }
+      })
     } catch (error) {
-      console.log(error.message)
+      dispatch({
+        type: SIGNUP_FAILED,
+        payload: error.message
+      })
     }
   }
 }
 
-export { signUp }
+const clearSignUpErrors = () => {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_SIGNUP_ERRORS'
+    })
+  }
+}
+
+export { signUp, clearSignUpErrors }
