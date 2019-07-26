@@ -1,71 +1,108 @@
 import React from 'react'
-import { Button, Form, Input, Icon, Card, Typography } from 'antd'
+import { Button, Form, Input, Card, Alert } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../actions/user/userLogin.actions'
-const { Title } = Typography
+import { signIn, clearLoginErrors } from '../actions/user/userSignIn.actions'
+import { userSignInSchema } from '../schema/user.schema'
 
 const initialValues = {
-  username: '',
+  emailAddress: '',
   password: ''
 }
 
 const LoginScreen = () => {
   const dispatch = useDispatch()
   const current = useSelector(state => state.user.current)
+  const loginError = useSelector(state => state.user.loginError)
   console.log(current)
 
   return (
-    <Card style={styles.loginForm}>
-      <Title level={3} style={{ textAlign: 'center' }}>
-        Admin Login
-      </Title>
+    <Card style={styles.loginForm} bordered={false}>
+      {loginError && (
+        <Alert
+          message={loginError}
+          type='error'
+          banner
+          closable
+          onClose={() => {
+            dispatch(clearLoginErrors())
+          }}
+        />
+      )}
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false)
-          }, 400)
-          dispatch(login(values.username, values.password))
+        validationSchema={userSignInSchema}
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          await dispatch(signIn(values))
+          setSubmitting(false)
+          resetForm(initialValues)
         }}>
         {({
           values,
-          errors,
-          touched,
           handleChange,
           handleBlur,
           handleSubmit,
           isSubmitting,
-          setFieldValue,
-          setFieldTouched
+          errors,
+          dirty,
+          touched
         }) => (
-          <Form onSubmit={handleSubmit}>
-            <Form.Item>
+          <Form
+            onSubmit={handleSubmit}
+            layout='vertical'
+            autoComplete='off'
+            hideRequiredMark
+            style={{ textAlign: 'left' }}>
+            <Form.Item
+              label='Email Address'
+              help={
+                errors.emailAddress && touched.emailAddress
+                  ? errors.emailAddress
+                  : ''
+              }
+              validateStatus={
+                errors.emailAddress && touched.emailAddress ? 'error' : ''
+              }
+              required
+              style={{ margin: 0 }}
+              hasFeedback>
               <Input
-                prefix={<Icon type='user' style={styles.input} />}
-                placeholder='Username'
-                name='username'
+                name='emailAddress'
+                disabled={isSubmitting}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.username}
+                value={values.emailAddress}
+                style={{ margin: 0 }}
               />
             </Form.Item>
-            <Form.Item>
-              <Input
-                prefix={<Icon type='lock' style={styles.input} />}
+            <Form.Item
+              label='Password'
+              help={errors.password && touched.password ? errors.password : ''}
+              validateStatus={
+                errors.password && touched.password ? 'error' : ''
+              }
+              required
+              style={{ margin: 0 }}
+              hasFeedback>
+              <Input.Password
                 name='password'
-                type='password'
-                placeholder='Password'
+                disabled={isSubmitting}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
+                style={{ margin: 0 }}
               />
             </Form.Item>
-            <Form.Item>
-              <Button type='primary' htmlType='submit' style={styles.button}>
-                Log in
+            <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+              <Button
+                type='primary'
+                htmlType='submit'
+                shape='round'
+                style={styles.button}
+                disabled={!dirty}
+                loading={isSubmitting}>
+                Submit Details
               </Button>
-              or <a href=''>register now!</a>
             </Form.Item>
           </Form>
         )}
@@ -75,17 +112,9 @@ const LoginScreen = () => {
 }
 
 const styles = {
-  loginForm: {
-    maxWidth: '400px',
-    margin: 'auto',
-    marginTop: '10%',
-    padding: '10px'
-  },
-  input: {
-    color: 'rgba(0,0,0,.25)'
-  },
   button: {
-    width: '100%'
+    width: '150px',
+    marginTop: '10px'
   }
 }
 

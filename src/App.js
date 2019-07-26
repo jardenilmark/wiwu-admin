@@ -1,13 +1,15 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
+import './App.css'
+import 'antd/dist/antd.css'
 
-import LoginScreen from './components/LoginScreen'
 import Dashboard from './components/Dashboard'
+import AuthScreen from './components/ScreenNavigation'
 
 const App = () => {
   return (
     <div className='App'>
-      <Route path='/login' exact component={LoginScreen} />
+      <Route path='/login' exact component={AuthScreen} />
       <Route path='/' exact component={Dashboard} />
     </div>
   )
