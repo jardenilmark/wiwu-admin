@@ -1,9 +1,7 @@
 import React from 'react'
 import { Card, Row, Col } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
 import LoginScreen from './LoginTab'
 import SignUpScreen from './SignupTab'
-import { changeActiveTab } from '../../actions/user/changeActiveTab.action'
 
 const tabList = [
   {
