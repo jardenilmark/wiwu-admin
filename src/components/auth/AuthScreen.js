@@ -26,9 +26,10 @@ const contentList = {
  * e.g. Sign up: /auth/signup or /signup
  * e.g. Sign in: /auth/signin or /signin
  */
-const AuthScreen = () => {
-  const dispatch = useDispatch()
-  const activeTab = useSelector(state => state.navigation.activeTabKey)
+const AuthScreen = ({ history, location }) => {
+  const pathName = location.pathname
+  const paths = pathName.split('/')
+  const activeTab = paths.length > 2 ? paths[2] : 'signIn'
   return (
     <Row
       style={{ height: '100vh' }}
@@ -41,7 +42,7 @@ const AuthScreen = () => {
           tabList={tabList}
           activeTabKey={activeTab}
           onTabChange={key => {
-            dispatch(changeActiveTab(key))
+            history.push(`/auth/${key}`)
           }}>
           {contentList[activeTab]}
         </Card>

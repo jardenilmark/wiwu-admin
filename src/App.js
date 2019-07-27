@@ -9,7 +9,7 @@ import AuthScreen from './components/auth/AuthScreen'
 const App = () => {
   return (
     <div className='App'>
-      <Route path='/login' exact component={AuthScreen} />
+      <Route path='/auth' component={AuthScreen} />
       <Route path='/' exact component={Dashboard} />
     </div>
   )
