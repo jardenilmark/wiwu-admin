@@ -1,6 +1,8 @@
 import React from 'react'
 import { Layout, Menu, Icon } from 'antd'
 
+import Logo from './Logo'
+
 const Dashboard = () => {
   return (
     <Layout>
@@ -18,10 +20,7 @@ const Dashboard = () => {
             justifyContent: 'center',
             margin: '35px 0px 20px 0px'
           }}>
-          <img
-            style={{ height: '70px' }}
-            src={require('../assets/images/wiwu-logo.png')}
-          />
+          <Logo height={70} />
         </div>
         <Menu theme='dark' mode='inline' defaultSelectedKeys={['4']}>
           <Menu.Item key='dashboard'>
