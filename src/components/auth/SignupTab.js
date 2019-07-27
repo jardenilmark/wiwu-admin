@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, Input, Card, Alert } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { userSignUpSchema } from '../../schema/user.schema'
+import { UserSignUpSchema } from '../../schema/user.schema'
 import { signUp } from '../../actions/user/signUp.action'
 import { clearSignUpErrors } from '../../actions/user/clearSignupErrors.action'
 
@@ -18,7 +18,7 @@ const SignupTab = () => {
   const dispatch = useDispatch()
   const signUpError = useSelector(state => state.user.signUpError)
   return (
-    <Card style={styles.loginForm} bordered={false}>
+    <Card bordered={false}>
       {signUpError && (
         <Alert
           message={signUpError}
@@ -32,7 +32,7 @@ const SignupTab = () => {
       )}
       <Formik
         initialValues={initialValues}
-        validationSchema={userSignUpSchema}
+        validationSchema={UserSignUpSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(signUp(values))
           setSubmitting(false)
@@ -179,13 +179,9 @@ const SignupTab = () => {
 }
 
 const styles = {
-  loginForm: {
-    // width: '450px',
-    // margin: 100
-  },
   button: {
     width: '150px',
-    marginTop: '10px'
+    marginTop: '15px'
   }
 }
 

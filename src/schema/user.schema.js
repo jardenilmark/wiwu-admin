@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-const userSignUpSchema = yup.object().shape({
+const UserSignUpSchema = yup.object().shape({
   phoneNumber: yup
     .string()
     .matches(/^(09)[0-9]{9}$/, 'Phone number is not valid')
@@ -12,14 +12,19 @@ const userSignUpSchema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required')
-    // .matches(!/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])(?!.* ).{8,}$/, 'Password is invalid'),
-    .max(13, 'The password you entered is too long')
-    .min(8, 'The password you entered is too short'),
+    .min(
+      8,
+      'The password you entered is too short. Must be atleast 8 characters'
+    )
+    .matches(
+      /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])(?!.* ).{8,}$/,
+      'Password must contain a lowercase letter, an uppercase letter, a number and one of the following characters: !@#$&*'
+    ),
   firstName: yup.string().required('First name is required'),
   lastName: yup.string().required('Last name is required')
 })
 
-const userSignInSchema = yup.object().shape({
+const UserSignInSchema = yup.object().shape({
   emailAddress: yup
     .string()
     .email('Please enter a valid email address')
@@ -27,4 +32,4 @@ const userSignInSchema = yup.object().shape({
   password: yup.string().required('Password is required')
 })
 
-export { userSignUpSchema, userSignInSchema }
+export { UserSignUpSchema, UserSignInSchema }

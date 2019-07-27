@@ -1,5 +1,6 @@
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP_SUCCESS, SIGNUP_FAILED } from './user.constants'
+import { roles, statuses } from '../../constants/User'
 
 export const signUp = ({ emailAddress, password, ...rest }) => {
   return async dispatch => {
@@ -11,8 +12,8 @@ export const signUp = ({ emailAddress, password, ...rest }) => {
         .doc(user.uid)
         .set({
           ...rest,
-          role: 'admin',
-          status: 'active',
+          role: roles.ADMIN,
+          status: statuses.ACTIVE,
           emergencies: []
         })
       // TODO: verification working already (just the redirect not working)

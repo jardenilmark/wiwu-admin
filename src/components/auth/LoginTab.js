@@ -3,7 +3,7 @@ import { Button, Form, Input, Card, Alert } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { signIn } from '../../actions/user/signIn.action'
-import { userSignInSchema } from '../../schema/user.schema'
+import { UserSignInSchema } from '../../schema/user.schema'
 import { clearLoginErrors } from '../../actions/user/clearLoginErrors.action'
 
 const initialValues = {
@@ -32,7 +32,7 @@ const LoginTab = () => {
       )}
       <Formik
         initialValues={initialValues}
-        validationSchema={userSignInSchema}
+        validationSchema={UserSignInSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(signIn(values))
           setSubmitting(false)
@@ -115,7 +115,7 @@ const LoginTab = () => {
 const styles = {
   button: {
     width: '150px',
-    marginTop: '10px'
+    marginTop: '15px'
   }
 }
 
