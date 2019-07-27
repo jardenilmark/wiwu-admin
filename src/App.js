@@ -1,24 +1,17 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Route } from 'react-router-dom'
 import './App.css'
 import 'antd/dist/antd.css'
 
 import Dashboard from './components/Dashboard'
 import AuthScreen from './components/auth/AuthScreen'
+import PrivateRoute from './components/PrivateRoute'
 
-const App = () => {
-  const isLoggedIn = useSelector(state => state.user.current)
-  return (
-    <div className='App'>
-      <Route path='/auth' component={AuthScreen} />
-      <Route
-        path='/'
-        exact
-        render={() => (isLoggedIn ? <Redirect to='/auth' /> : <Dashboard />)}
-      />
-    </div>
-  )
-}
+const App = () => (
+  <div className='App'>
+    <PrivateRoute exact path='/' component={Dashboard} />
+    <Route path='/auth' component={AuthScreen} />
+  </div>
+)
 
 export default App
