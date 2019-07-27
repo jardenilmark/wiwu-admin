@@ -1,0 +1,53 @@
+import React from 'react'
+import { Card, Row, Col } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import LoginScreen from './LoginTab'
+import SignUpScreen from './SignupTab'
+import { changeActiveTab } from '../../actions/user/changeActiveTab.action'
+
+const tabList = [
+  {
+    key: 'signIn',
+    tab: 'Sign In'
+  },
+  {
+    key: 'signUp',
+    tab: 'Sign Up'
+  }
+]
+
+const contentList = {
+  signIn: <LoginScreen />,
+  signUp: <SignUpScreen />
+}
+
+/**
+ * TODO: route should also follow which tab the user is on
+ * e.g. Sign up: /auth/signup or /signup
+ * e.g. Sign in: /auth/signin or /signin
+ */
+const AuthScreen = () => {
+  const dispatch = useDispatch()
+  const activeTab = useSelector(state => state.navigation.activeTabKey)
+  return (
+    <Row
+      style={{ height: '100vh' }}
+      type='flex'
+      justify='center'
+      align='middle'>
+      <Col span={8}>
+        <Card
+          headStyle={{ textAlign: 'left' }}
+          tabList={tabList}
+          activeTabKey={activeTab}
+          onTabChange={key => {
+            dispatch(changeActiveTab(key))
+          }}>
+          {contentList[activeTab]}
+        </Card>
+      </Col>
+    </Row>
+  )
+}
+
+export default AuthScreen
