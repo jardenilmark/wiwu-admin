@@ -1,7 +1,9 @@
 import React from 'react'
 import { Card, Row, Col } from 'antd'
+
 import LoginScreen from './LoginTab'
 import SignUpScreen from './SignupTab'
+import Logo from '../Logo'
 
 const tabList = [
   {
@@ -28,14 +30,24 @@ const AuthScreen = ({ history, location }) => {
   const pathName = location.pathname
   const paths = pathName.split('/')
   const activeTab = paths.length > 2 ? paths[2] : 'signIn'
+
   return (
     <Row
       style={{ height: '100vh' }}
       type='flex'
       justify='center'
       align='middle'>
-      <Col span={8}>
+      <Col xs={20} sm={16} md={14} lg={12} xl={9} xxl={7}>
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+          <Logo height={90} />
+        </div>
         <Card
+          bordered={false}
           headStyle={{ textAlign: 'left' }}
           tabList={tabList}
           activeTabKey={activeTab}
