@@ -16,11 +16,12 @@ export const signUp = ({ emailAddress, password, ...rest }) => {
           status: statuses.ACTIVE,
           emergencies: []
         })
-      // TODO: verification working already (just the redirect not working)
+      /*
+       TODO: verification working already except for the redirect (continueURL)
+      */
       await user.sendEmailVerification()
       dispatch({
-        type: SIGNUP_SUCCESS,
-        payload: { email: auth.currentUser.email }
+        type: SIGNUP_SUCCESS
       })
     } catch (error) {
       dispatch({

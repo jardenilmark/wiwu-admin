@@ -13,9 +13,7 @@ const initialValues = {
 
 const LoginTab = () => {
   const dispatch = useDispatch()
-  const current = useSelector(state => state.user.current)
   const loginError = useSelector(state => state.user.loginError)
-  console.log(current)
 
   return (
     <Card style={styles.loginForm} bordered={false}>

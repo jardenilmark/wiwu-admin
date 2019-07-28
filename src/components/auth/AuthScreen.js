@@ -21,11 +21,6 @@ const contentList = {
   signUp: <SignUpScreen />
 }
 
-/**
- * TODO: route should also follow which tab the user is on
- * e.g. Sign up: /auth/signup or /signup
- * e.g. Sign in: /auth/signin or /signin
- */
 const AuthScreen = ({ history, location }) => {
   const pathName = location.pathname
   const paths = pathName.split('/')
@@ -37,7 +32,7 @@ const AuthScreen = ({ history, location }) => {
       type='flex'
       justify='center'
       align='middle'>
-      <Col xs={20} sm={16} md={14} lg={12} xl={9} xxl={7}>
+      <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={8}>
         <div
           style={{
             alignItems: 'center',
