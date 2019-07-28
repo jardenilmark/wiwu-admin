@@ -5,8 +5,8 @@ import { auth } from './firebase'
 import 'antd/dist/antd.css'
 import './App.css'
 
-import AuthRoute from './components/AuthRoute'
-import PrivateRoute from './components/PrivateRoute'
+import AuthRoute from './components/routes/AuthRoute'
+import PrivateRoute from './components/routes/PrivateRoute'
 import Dashboard from './components/Dashboard'
 
 const App = props => {
@@ -27,6 +27,10 @@ const App = props => {
     })
   })
 
+  /* 
+    TODO: Temporary 'Loading...' is displayed while waiting for the
+          data from firebase and update the state
+  */
   if (loading) {
     return <div>Loading...</div>
   }

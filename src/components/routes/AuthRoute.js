@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-import AuthScreen from './auth/AuthScreen'
+import AuthScreen from '../auth/AuthScreen'
 
 const AuthRoute = ({ authenticated, ...rest }) => {
   return (
