@@ -1,10 +1,9 @@
 import React from 'react'
-import { Button, Form, Input, Card, Alert } from 'antd'
+import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { UserSignUpSchema } from '../../schema/user.schema'
 import { signUp } from '../../actions/user/signUp.action'
-import { clearSignUpErrors } from '../../actions/user/clearSignupErrors.action'
 
 const initialValues = {
   emailAddress: '',
@@ -16,27 +15,14 @@ const initialValues = {
 
 const SignupTab = () => {
   const dispatch = useDispatch()
-  const signUpError = useSelector(state => state.user.signUpError)
   return (
     <Card bordered={false}>
-      {signUpError && (
-        <Alert
-          message={signUpError}
-          type='error'
-          banner
-          closable
-          onClose={() => {
-            dispatch(clearSignUpErrors())
-          }}
-        />
-      )}
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignUpSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(signUp(values))
           setSubmitting(false)
-          resetForm(initialValues)
         }}>
         {({
           values,

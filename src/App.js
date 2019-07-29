@@ -15,7 +15,7 @@ const App = props => {
   const authenticated = useSelector(state => state.user.authenticated)
 
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
+    const observer = auth.onAuthStateChanged(user => {
       /* 
         setAuthDetails(user, loading, authenticated)
       */
@@ -25,6 +25,13 @@ const App = props => {
         dispatch(setAuthDetails(user, false, false))
       }
     })
+
+    return () => {
+      /* 
+        clean up subscriptions when component unmounts
+      */
+      observer()
+    }
   })
 
   /* 

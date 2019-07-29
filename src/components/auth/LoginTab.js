@@ -1,46 +1,32 @@
 import React from 'react'
-import { Button, Form, Input, Card, Alert } from 'antd'
+import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { signIn } from '../../actions/user/signIn.action'
 import { UserSignInSchema } from '../../schema/user.schema'
-import { clearLoginErrors } from '../../actions/user/clearLoginErrors.action'
 
 const initialValues = {
   emailAddress: '',
   password: ''
 }
 
-const LoginTab = () => {
+const LoginTab = ({ history }) => {
   const dispatch = useDispatch()
-  const loginError = useSelector(state => state.user.loginError)
-
   return (
-    <Card style={styles.loginForm} bordered={false}>
-      {loginError && (
-        <Alert
-          message={loginError}
-          type='error'
-          banner
-          closable
-          onClose={() => {
-            dispatch(clearLoginErrors())
-          }}
-        />
-      )}
+    <Card bordered={false}>
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignInSchema}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           await dispatch(signIn(values))
           setSubmitting(false)
-          resetForm(initialValues)
         }}>
         {({
           values,
           handleChange,
           handleBlur,
           handleSubmit,
+          handleReset,
           isSubmitting,
           errors,
           dirty,

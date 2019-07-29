@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Row, Col } from 'antd'
 
-import LoginScreen from './LoginTab'
-import SignUpScreen from './SignupTab'
+import LoginTab from './LoginTab'
+import SignupTab from './SignupTab'
 import Logo from '../Logo'
 
 const tabList = [
@@ -17,8 +17,8 @@ const tabList = [
 ]
 
 const contentList = {
-  signIn: <LoginScreen />,
-  signUp: <SignUpScreen />
+  signIn: <LoginTab />,
+  signUp: <SignupTab />
 }
 
 const AuthScreen = ({ history, location }) => {

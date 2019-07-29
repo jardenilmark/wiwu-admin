@@ -4,15 +4,12 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
   LOGIN_FAILED,
-  CLEAR_LOGIN_ERRORS,
-  CLEAR_SIGNUP_ERRORS,
   SET_AUTH_DETAILS
 } from '../actions/user/user.constants.js'
+import { message } from 'antd'
 
 const initialState = {
   user: null,
-  loginError: null,
-  signUpError: null,
   loading: true,
   authenticated: false
 }
@@ -32,24 +29,14 @@ export default function reducer(state = initialState, action) {
         ...initialState
       }
     case LOGIN_FAILED:
+      message.error(action.payload, 10)
       return {
-        ...initialState,
-        loginError: action.payload
+        ...initialState
       }
     case SIGNUP_FAILED:
+      message.error(action.payload, 10)
       return {
-        ...initialState,
-        signUpError: action.payload
-      }
-    case CLEAR_LOGIN_ERRORS:
-      return {
-        ...initialState,
-        loginError: null
-      }
-    case CLEAR_SIGNUP_ERRORS:
-      return {
-        ...initialState,
-        signUpError: null
+        ...initialState
       }
     case SET_AUTH_DETAILS:
       const { user, loading, authenticated } = action.payload
