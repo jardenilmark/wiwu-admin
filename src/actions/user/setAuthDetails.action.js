@@ -1,10 +1,8 @@
 import { SET_AUTH_DETAILS } from './user.constants'
+import { createAction } from 'redux-actions'
 
 export const setAuthDetails = (user, loading, authenticated) => {
   return dispatch => {
-    dispatch({
-      type: SET_AUTH_DETAILS,
-      payload: { user, loading, authenticated }
-    })
+    dispatch(createAction(SET_AUTH_DETAILS)({ user, loading, authenticated }))
   }
 }

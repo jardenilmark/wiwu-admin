@@ -1,6 +1,7 @@
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP_SUCCESS, SIGNUP_FAILED } from './user.constants'
 import { roles, statuses } from '../../constants/User'
+import { createAction } from 'redux-actions'
 
 export const signUp = ({ emailAddress, password, ...rest }) => {
   return async dispatch => {
@@ -23,15 +24,11 @@ export const signUp = ({ emailAddress, password, ...rest }) => {
       const actionCodeSettings = {
         url: 'http://localhost:3000/'
       }
+
       await user.sendEmailVerification(actionCodeSettings)
-      dispatch({
-        type: SIGNUP_SUCCESS
-      })
+      dispatch(createAction(SIGNUP_SUCCESS))
     } catch (error) {
-      dispatch({
-        type: SIGNUP_FAILED,
-        payload: error.message
-      })
+      dispatch(createAction(SIGNUP_FAILED)(error.message))
     }
   }
 }

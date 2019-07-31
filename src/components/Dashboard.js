@@ -1,9 +1,11 @@
 import React from 'react'
 import { Layout, Menu, Icon } from 'antd'
-
+import { logout } from '../actions/user/logout.action'
 import Logo from './Logo'
+import { useDispatch } from 'react-redux'
 
 const Dashboard = () => {
+  const dispatch = useDispatch()
   return (
     <Layout>
       <Layout.Sider
@@ -34,6 +36,10 @@ const Dashboard = () => {
           <Menu.Item key='history'>
             <Icon type='history' />
             <span className='nav-text'>History</span>
+          </Menu.Item>
+          <Menu.Item key='logout' onClick={e => dispatch(logout())}>
+            <Icon type='poweroff' />
+            <span className='nav-text'>Logout</span>
           </Menu.Item>
         </Menu>
       </Layout.Sider>
