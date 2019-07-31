@@ -16,10 +16,14 @@ export const signUp = ({ emailAddress, password, ...rest }) => {
           status: statuses.ACTIVE,
           emergencies: []
         })
-      /*
-       TODO: verification working already except for the redirect (continueURL)
-      */
-      await user.sendEmailVerification()
+      /** TODO: instead of passing through the web widget
+       *  and clicing the continue button to redirect, implement
+       *  that it automatically redirects to the Home Screen
+       */
+      const actionCodeSettings = {
+        url: 'http://localhost:3000/'
+      }
+      await user.sendEmailVerification(actionCodeSettings)
       dispatch({
         type: SIGNUP_SUCCESS
       })

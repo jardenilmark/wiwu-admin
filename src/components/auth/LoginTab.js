@@ -10,7 +10,7 @@ const initialValues = {
   password: ''
 }
 
-const LoginTab = ({ history }) => {
+const LoginTab = () => {
   const dispatch = useDispatch()
   return (
     <Card bordered={false}>
@@ -26,7 +26,6 @@ const LoginTab = ({ history }) => {
           handleChange,
           handleBlur,
           handleSubmit,
-          handleReset,
           isSubmitting,
           errors,
           dirty,

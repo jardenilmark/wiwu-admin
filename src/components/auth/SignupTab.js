@@ -20,7 +20,7 @@ const SignupTab = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignUpSchema}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           await dispatch(signUp(values))
           setSubmitting(false)
         }}>

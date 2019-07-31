@@ -32,7 +32,7 @@ const AuthScreen = ({ history, location }) => {
       type='flex'
       justify='center'
       align='middle'>
-      <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={8}>
+      <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
         <div
           style={{
             alignItems: 'center',

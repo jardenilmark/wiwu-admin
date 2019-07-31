@@ -5,12 +5,11 @@ export const signIn = ({ emailAddress, password }) => {
   return async dispatch => {
     try {
       await auth.signInWithEmailAndPassword(emailAddress, password)
-      // alert(auth.currentUser.emailVerified)
+      alert(auth.currentUser.emailVerified)
       dispatch({
         type: LOGIN_SUCCESS
       })
     } catch (error) {
-      console.log('error', error)
       dispatch({
         type: LOGIN_FAILED,
         payload: error.message
