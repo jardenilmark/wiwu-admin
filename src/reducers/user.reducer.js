@@ -9,7 +9,7 @@ import {
 import { message } from 'antd'
 
 const initialState = {
-  user: null,
+  current: null,
   loading: true,
   authenticated: false
 }
