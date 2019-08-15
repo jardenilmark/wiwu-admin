@@ -13,13 +13,14 @@ const App = () => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.user.loading)
   const authenticated = useSelector(state => state.user.authenticated)
+  const current = useSelector(state => state.user.current)
 
   useEffect(() => {
     const observer = auth.onAuthStateChanged(user => {
       /* 
         setAuthDetails(user, loading, authenticated)
       */
-      if (user && user.emailVerified) {
+      if (user) {
         dispatch(setAuthDetails(user, false, true))
       } else {
         dispatch(setAuthDetails(user, false, false))
@@ -49,8 +50,9 @@ const App = () => {
         path='/'
         component={Dashboard}
         authenticated={authenticated}
+        user={current}
       />
-      <AuthRoute path='/auth' authenticated={authenticated} />
+      <AuthRoute path='/auth' authenticated={authenticated} user={current} />
     </div>
   )
 }

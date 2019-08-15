@@ -42,7 +42,7 @@ export default function reducer(state = initialState, action) {
       const { user, loading, authenticated } = action.payload
       return {
         ...initialState,
-        user: user,
+        current: user,
         loading: loading,
         authenticated: authenticated
       }
