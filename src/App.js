@@ -9,7 +9,7 @@ import AuthRoute from './components/routes/AuthRoute'
 import PrivateRoute from './components/routes/PrivateRoute'
 import Dashboard from './components/Dashboard'
 
-const App = props => {
+const App = () => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.user.loading)
   const authenticated = useSelector(state => state.user.authenticated)
@@ -19,7 +19,7 @@ const App = props => {
       /* 
         setAuthDetails(user, loading, authenticated)
       */
-      if (user) {
+      if (user && user.emailVerified) {
         dispatch(setAuthDetails(user, false, true))
       } else {
         dispatch(setAuthDetails(user, false, false))

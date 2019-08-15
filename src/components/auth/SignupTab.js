@@ -16,7 +16,7 @@ const initialValues = {
 const SignupTab = () => {
   const dispatch = useDispatch()
   return (
-    <Card bordered={false}>
+    <Card bordered={false} style={{ backgroundColor: 'whitesmoke' }}>
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignUpSchema}
