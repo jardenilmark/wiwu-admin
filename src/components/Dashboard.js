@@ -3,6 +3,7 @@ import { Layout, Menu, Icon } from 'antd'
 import { logout } from '../actions/user/logout.action'
 import Logo from './Logo'
 import { useDispatch } from 'react-redux'
+import VideoVerification from './VideoVerification'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -48,6 +49,7 @@ const Dashboard = () => {
         <Layout.Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
             Hello, world!
+            <VideoVerification />
           </div>
         </Layout.Content>
         <Layout.Footer style={{ textAlign: 'center' }}>
