@@ -6,6 +6,7 @@ export const logout = () => {
   return async dispatch => {
     try {
       await auth.signOut()
+      // alert(auth.currentUser.emailVerified)
       dispatch(createAction(LOGIN_SUCCESS))
     } catch (error) {
       console.log('error', error)

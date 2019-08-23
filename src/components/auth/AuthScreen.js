@@ -1,16 +1,30 @@
 import React from 'react'
-import { Card, Row, Col, Tabs } from 'antd'
+import { Card, Row, Col } from 'antd'
 
 import LoginTab from './LoginTab'
 import SignupTab from './SignupTab'
 import Logo from '../Logo'
 
-const { TabPane } = Tabs
+const tabList = [
+  {
+    key: 'signIn',
+    tab: 'Sign In'
+  },
+  {
+    key: 'signUp',
+    tab: 'Sign Up'
+  }
+]
+
+const contentList = {
+  signIn: <LoginTab />,
+  signUp: <SignupTab />
+}
 
 const AuthScreen = ({ history, location }) => {
   const pathName = location.pathname
   const paths = pathName.split('/')
-  const activeKey = paths.length > 2 ? paths[2] : 'signIn'
+  const activeTab = paths.length > 2 ? paths[2] : 'signIn'
 
   return (
     <Row
@@ -25,26 +39,17 @@ const AuthScreen = ({ history, location }) => {
             display: 'flex',
             justifyContent: 'center'
           }}>
-          <Logo height={120} />
+          <Logo height={90} />
         </div>
         <Card
           bordered={false}
-          style={{
-            marginTop: -10,
-            backgroundColor: 'whitesmoke'
+          headStyle={{ textAlign: 'left' }}
+          tabList={tabList}
+          activeTabKey={activeTab}
+          onTabChange={key => {
+            history.push(`/auth/${key}`)
           }}>
-          <Tabs
-            activeKey={activeKey}
-            onTabClick={key => history.push(`/auth/${key}`)}
-            tabBarStyle={{ fontWeight: 'bold', textAlign: 'left' }}
-            tabBarGutter={15}>
-            <TabPane tab='SIGN IN' key='signIn'>
-              <LoginTab />
-            </TabPane>
-            <TabPane tab='SIGN UP' key='signUp'>
-              <SignupTab />
-            </TabPane>
-          </Tabs>
+          {contentList[activeTab]}
         </Card>
       </Col>
     </Row>

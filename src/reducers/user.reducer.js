@@ -13,7 +13,7 @@ import {
 import { message } from 'antd'
 
 const initialState = {
-  current: null,
+  user: null,
   loading: true,
   authenticated: false,
   token: ''

@@ -9,11 +9,10 @@ import AuthRoute from './components/routes/AuthRoute'
 import PrivateRoute from './components/routes/PrivateRoute'
 import Dashboard from './components/Dashboard'
 
-const App = () => {
+const App = props => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.user.loading)
   const authenticated = useSelector(state => state.user.authenticated)
-  const current = useSelector(state => state.user.current)
 
   useEffect(() => {
     const observer = auth.onAuthStateChanged(user => {
@@ -50,9 +49,8 @@ const App = () => {
         path='/'
         component={Dashboard}
         authenticated={authenticated}
-        user={current}
       />
-      <AuthRoute path='/auth' authenticated={authenticated} user={current} />
+      <AuthRoute path='/auth' authenticated={authenticated} />
     </div>
   )
 }
