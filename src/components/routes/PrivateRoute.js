@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 
+import AdminPage from '../AdminPage'
+
 const PrivateRoute = ({
   component: Component,
   authenticated,
@@ -12,7 +14,7 @@ const PrivateRoute = ({
       {...rest}
       render={props =>
         authenticated && user.emailVerified ? (
-          <Component {...props} />
+          <AdminPage {...props} component={Component} />
         ) : (
           <Redirect to='/auth' />
         )

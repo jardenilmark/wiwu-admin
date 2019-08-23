@@ -1,28 +1,38 @@
 import React from 'react'
-import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { roles } from '../../constants/User'
 import { UserSignUpSchema } from '../../schema/user.schema'
+import { roles } from '../../constants/User'
 import { signUp } from '../../actions/user/signUp.action'
+import { Form, Input, Button, Select } from 'antd'
+
+const { Option } = Select
 
 const initialValues = {
   emailAddress: '',
   password: '',
   firstName: '',
   lastName: '',
-  phoneNumber: ''
+  phoneNumber: '',
+  department: ''
 }
 
-const SignupTab = () => {
+const CreateResponder = ({ history }) => {
   const dispatch = useDispatch()
   return (
-    <Card bordered={false} style={{ backgroundColor: 'whitesmoke' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
+      }}>
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignUpSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          await dispatch(signUp({ ...values, role: roles.ADMIN }))
+          await dispatch(signUp({ ...values, role: roles.RESPONDER }))
+          history.push('/manage-responders/view-responders')
           setSubmitting(false)
         }}>
         {({
@@ -31,6 +41,7 @@ const SignupTab = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          setFieldValue,
           errors,
           touched,
           dirty
@@ -41,7 +52,7 @@ const SignupTab = () => {
               layout='vertical'
               autoComplete='off'
               hideRequiredMark
-              style={{ textAlign: 'left' }}>
+              style={{ textAlign: 'left', width: '600px' }}>
               <Form.Item
                 label='First Name'
                 help={
@@ -70,6 +81,7 @@ const SignupTab = () => {
                 validateStatus={
                   errors.lastName && touched.lastName ? 'error' : ''
                 }
+                Dashboard
                 required
                 style={{ margin: 0 }}
                 hasFeedback>
@@ -81,6 +93,30 @@ const SignupTab = () => {
                   value={values.lastName}
                   style={{ margin: 0 }}
                 />
+              </Form.Item>
+              <Form.Item
+                label='Department'
+                help={
+                  errors.department && touched.department
+                    ? errors.department
+                    : ''
+                }
+                validateStatus={
+                  errors.department && touched.department ? 'error' : ''
+                }
+                required
+                style={{ margin: 0 }}
+                hasFeedback>
+                <Select
+                  name='department'
+                  onChange={value => setFieldValue('department', value)}
+                  value={values.department}>
+                  <Option value='PNP'>Philippine National Police Iloilo</Option>
+                  <Option value='BFP'>Bureau of Fire Protection Iloilo</Option>
+                  <Option value='ICER'>
+                    Iloilo City Emergency Response Team
+                  </Option>
+                </Select>
               </Form.Item>
               <Form.Item
                 label='Email Address'
@@ -161,7 +197,7 @@ const SignupTab = () => {
           )
         }}
       </Formik>
-    </Card>
+    </div>
   )
 }
 
@@ -172,4 +208,4 @@ const styles = {
   }
 }
 
-export default SignupTab
+export default CreateResponder

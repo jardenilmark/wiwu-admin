@@ -8,7 +8,9 @@ import {
   GET_TWILIO_TOKEN_SUCCESS,
   GET_TWILIO_TOKEN_FAILED,
   RESET_TWILIO_TOKEN_SUCCESS,
-  RESET_TWILIO_TOKEN_FAILED
+  RESET_TWILIO_TOKEN_FAILED,
+  FETCH_RESPONDERS_SUCCESS,
+  FETCH_RESPONDERS_FAILED
 } from '../actions/user/user.constants.js'
 import { message } from 'antd'
 
@@ -16,6 +18,7 @@ const initialState = {
   current: null,
   loading: true,
   authenticated: false,
+  responders: [],
   token: ''
 }
 
@@ -32,23 +35,23 @@ export default function reducer(state = initialState, action) {
       }
     case LOGOUT_SUCCESS:
       return {
-        ...initialState
+        ...state
       }
     case LOGIN_FAILED:
       message.error(action.payload, 10)
       return {
-        ...initialState
+        ...state
       }
     case SIGNUP_FAILED:
       message.error(action.payload, 10)
       return {
-        ...initialState
+        ...state
       }
     case SET_AUTH_DETAILS:
       const { user, loading, authenticated } = action.payload
       return {
         ...state,
-        user,
+        current: user,
         loading,
         authenticated
       }
@@ -70,6 +73,19 @@ export default function reducer(state = initialState, action) {
         token
       }
     case RESET_TWILIO_TOKEN_FAILED:
+      message.error(action.payload, 10)
+      return {
+        ...state,
+        current: user,
+        loading: loading,
+        authenticated: authenticated
+      }
+    case FETCH_RESPONDERS_SUCCESS:
+      return {
+        ...state,
+        responders: action.payload
+      }
+    case FETCH_RESPONDERS_FAILED:
       message.error(action.payload, 10)
       return {
         ...state

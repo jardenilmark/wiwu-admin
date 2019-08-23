@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAuthDetails } from './actions/user/setAuthDetails.action'
+import { Switch } from 'react-router'
 import { auth } from './firebase'
 import 'antd/dist/antd.css'
 import './App.css'
 
 import AuthRoute from './components/routes/AuthRoute'
 import PrivateRoute from './components/routes/PrivateRoute'
-import Dashboard from './components/Dashboard'
+import ManageResponders from './components/responders/RespondersScreen'
+import VideoVerification from './components/VideoVerification'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -16,42 +18,35 @@ const App = () => {
   const current = useSelector(state => state.user.current)
 
   useEffect(() => {
-    const observer = auth.onAuthStateChanged(user => {
-      /* 
-        setAuthDetails(user, loading, authenticated)
-      */
+    auth.onAuthStateChanged(user => {
       if (user) {
         dispatch(setAuthDetails(user, false, true))
       } else {
         dispatch(setAuthDetails(user, false, false))
       }
     })
-
-    return () => {
-      /* 
-        clean up subscriptions when component unmounts
-      */
-      observer()
-    }
   })
 
-  /* 
-    TODO: Temporary 'Loading...' is displayed while waiting for the
-          data from firebase and update the state
-  */
   if (loading) {
     return <div>Loading...</div>
   }
 
   return (
     <div className='App'>
+      {/* <Switch> */}
       <PrivateRoute
-        exact
-        path='/'
-        component={Dashboard}
+        path='/manage-responders'
+        component={ManageResponders}
         authenticated={authenticated}
         user={current}
       />
+      <PrivateRoute
+        path='/verification'
+        component={VideoVerification}
+        authenticated={authenticated}
+        user={current}
+      />
+      {/* </Switch> */}
       <AuthRoute path='/auth' authenticated={authenticated} user={current} />
     </div>
   )

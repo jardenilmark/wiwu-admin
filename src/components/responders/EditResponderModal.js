@@ -1,29 +1,33 @@
 import React from 'react'
-import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
-import { useDispatch } from 'react-redux'
-import { roles } from '../../constants/User'
-import { UserSignUpSchema } from '../../schema/user.schema'
-import { signUp } from '../../actions/user/signUp.action'
+import { useDispatch, useSelector } from 'react-redux'
+import { UserEditSchema } from '../../schema/user.schema'
+import { editResponder } from '../../actions/user/editResponder.action'
+import { toggleEditModal } from '../../actions/user/toggleEditModal.action'
+import { fetchResponders } from '../../actions/user/fetchResponders.action'
+import { Form, Input, Button, Select, Modal } from 'antd'
 
-const initialValues = {
-  emailAddress: '',
-  password: '',
-  firstName: '',
-  lastName: '',
-  phoneNumber: ''
-}
+const { Option } = Select
 
-const SignupTab = () => {
+const EditResponder = ({ history }) => {
   const dispatch = useDispatch()
+  const responder = useSelector(state => state.responder.clicked)
+  const visible = useSelector(state => state.responder.modalState)
   return (
-    <Card bordered={false} style={{ backgroundColor: 'whitesmoke' }}>
+    <Modal
+      centered={true}
+      visible={visible}
+      footer={null}
+      onCancel={() => dispatch(toggleEditModal())}>
       <Formik
-        initialValues={initialValues}
-        validationSchema={UserSignUpSchema}
+        enableReinitialize={true}
+        initialValues={responder}
+        validationSchema={UserEditSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          await dispatch(signUp({ ...values, role: roles.ADMIN }))
+          await dispatch(editResponder(values, responder.id))
           setSubmitting(false)
+          dispatch(toggleEditModal())
+          dispatch(fetchResponders())
         }}>
         {({
           values,
@@ -31,6 +35,7 @@ const SignupTab = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          setFieldValue,
           errors,
           touched,
           dirty
@@ -41,7 +46,7 @@ const SignupTab = () => {
               layout='vertical'
               autoComplete='off'
               hideRequiredMark
-              style={{ textAlign: 'left' }}>
+              style={{ textAlign: 'left', width: '100%' }}>
               <Form.Item
                 label='First Name'
                 help={
@@ -70,6 +75,7 @@ const SignupTab = () => {
                 validateStatus={
                   errors.lastName && touched.lastName ? 'error' : ''
                 }
+                Dashboard
                 required
                 style={{ margin: 0 }}
                 hasFeedback>
@@ -83,46 +89,28 @@ const SignupTab = () => {
                 />
               </Form.Item>
               <Form.Item
-                label='Email Address'
+                label='Department'
                 help={
-                  errors.emailAddress && touched.emailAddress
-                    ? errors.emailAddress
+                  errors.department && touched.department
+                    ? errors.department
                     : ''
                 }
                 validateStatus={
-                  errors.emailAddress && touched.emailAddress ? 'error' : ''
+                  errors.department && touched.department ? 'error' : ''
                 }
                 required
                 style={{ margin: 0 }}
                 hasFeedback>
-                <Input
-                  name='emailAddress'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.emailAddress}
-                  style={{ margin: 0 }}
-                />
-              </Form.Item>
-              <Form.Item
-                label='Password'
-                help={
-                  errors.password && touched.password ? errors.password : ''
-                }
-                validateStatus={
-                  errors.password && touched.password ? 'error' : ''
-                }
-                required
-                style={{ margin: 0 }}
-                hasFeedback>
-                <Input.Password
-                  name='password'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                  style={{ margin: 0 }}
-                />
+                <Select
+                  name='department'
+                  onChange={value => setFieldValue('department', value)}
+                  value={values.department}>
+                  <Option value='PNP'>Philippine National Police Iloilo</Option>
+                  <Option value='BFP'>Bureau of Fire Protection Iloilo</Option>
+                  <Option value='ICER'>
+                    Iloilo City Emergency Response Team
+                  </Option>
+                </Select>
               </Form.Item>
               <Form.Item
                 label='Phone Number'
@@ -154,14 +142,14 @@ const SignupTab = () => {
                   style={styles.button}
                   disabled={!dirty}
                   loading={isSubmitting}>
-                  Submit Details
+                  Save Changes
                 </Button>
               </Form.Item>
             </Form>
           )
         }}
       </Formik>
-    </Card>
+    </Modal>
   )
 }
 
@@ -172,4 +160,4 @@ const styles = {
   }
 }
 
-export default SignupTab
+export default EditResponder

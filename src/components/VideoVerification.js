@@ -8,7 +8,7 @@ import { getTwilioToken, resetTwilioToken } from '../actions/user/twilio.action'
 const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
   // note: fix when variable is renamed (user.user)
-  const identity = useSelector(state => state.user.user.email)
+  const identity = useSelector(state => state.user.current.email)
   const token = useSelector(state => state.user.token)
   const [roomName, setRoomName] = useState('')
   const [previewTracks, setPreviewTracks] = useState(null)

@@ -8,7 +8,6 @@ export const logout = () => {
       await auth.signOut()
       dispatch(createAction(LOGIN_SUCCESS))
     } catch (error) {
-      console.log('error', error)
       dispatch(createAction(LOGIN_FAILED)(error.message))
     }
   }

@@ -12,10 +12,8 @@ const AuthRoute = ({ authenticated, user, ...rest }) => {
         if (!authenticated) {
           return <AuthScreen {...props} />
         } else {
-          console.log(user)
-          console.log(user.emailVerified)
           if (user && user.emailVerified) {
-            return <Redirect to='/' />
+            return <Redirect to='/manage-responders' />
           } else {
             return <VerifyScreen />
           }

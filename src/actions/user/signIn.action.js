@@ -6,9 +6,8 @@ export const signIn = ({ emailAddress, password }) => {
   return async dispatch => {
     try {
       await auth.signInWithEmailAndPassword(emailAddress, password)
-      dispatch(createAction(LOGIN_SUCCESS))
+      dispatch(createAction(LOGIN_SUCCESS)())
     } catch (error) {
-      console.log('error', error)
       dispatch(createAction(LOGIN_FAILED)(error.message))
     }
   }

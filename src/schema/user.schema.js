@@ -21,7 +21,18 @@ const UserSignUpSchema = yup.object().shape({
       'Password must contain a lowercase letter, an uppercase letter, a number and one of the following characters: !@#$&*'
     ),
   firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required')
+  lastName: yup.string().required('Last name is required'),
+  department: yup.string().required('Department is required')
+})
+
+const UserEditSchema = yup.object().shape({
+  phoneNumber: yup
+    .string()
+    .matches(/^(09)[0-9]{9}$/, 'Phone number is not valid')
+    .required('Phone number is required'),
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  department: yup.string().required('Department is required')
 })
 
 const UserSignInSchema = yup.object().shape({
@@ -32,4 +43,4 @@ const UserSignInSchema = yup.object().shape({
   password: yup.string().required('Password is required')
 })
 
-export { UserSignUpSchema, UserSignInSchema }
+export { UserSignUpSchema, UserSignInSchema, UserEditSchema }
