@@ -105,9 +105,13 @@ const EditResponder = ({ history }) => {
                   name='department'
                   onChange={value => setFieldValue('department', value)}
                   value={values.department}>
-                  <Option value='PNP'>Philippine National Police Iloilo</Option>
-                  <Option value='BFP'>Bureau of Fire Protection Iloilo</Option>
-                  <Option value='ICER'>
+                  <Option value='Philippine National Police Iloilo'>
+                    Philippine National Police Iloilo
+                  </Option>
+                  <Option value='Bureau of Fire Protection Iloilo'>
+                    Bureau of Fire Protection Iloilo
+                  </Option>
+                  <Option value='Iloilo City Emergency Response Team'>
                     Iloilo City Emergency Response Team
                   </Option>
                 </Select>
