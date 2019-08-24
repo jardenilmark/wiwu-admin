@@ -1,43 +1,48 @@
-import React, { Fragment } from 'react'
-import { Layout, Menu } from 'antd'
+import React from 'react'
+import { Layout, Collapse, Divider } from 'antd'
 
-import CreateResponder from './CreateResponderTab'
-import ViewResponders from './ViewRespondersTab'
+import CreateResponder from './CreateResponder'
+import ViewResponders from './ViewResponders'
 
-const Responders = ({ history, location }) => {
-  const pathname = location.pathname.split('/')[2]
-  const selectedKeys =
-    pathname === undefined ? ['create-responder'] : [pathname]
+const { Panel } = Collapse
 
+const Responders = () => {
   return (
-    <Fragment>
-      <Layout.Header style={{ padding: 0, height: 45 }}>
-        <Menu
-          theme='dark'
-          selectedKeys={selectedKeys}
-          mode='horizontal'
-          size='large'
-          style={{ display: 'flex', flexDirection: 'row' }}>
-          <Menu.Item
-            key='create-responder'
-            onClick={() => history.push('/manage-responders/create-responder')}>
-            Create Responder
-          </Menu.Item>
-          <Menu.Item
-            key='view-responders'
-            onClick={() => history.push('/manage-responders/view-responders')}>
-            View Responders
-          </Menu.Item>
-        </Menu>
-      </Layout.Header>
-      <Layout.Content>
-        {selectedKeys[0] === 'create-responder' && (
-          <CreateResponder history={history} />
-        )}
-        {selectedKeys[0] === 'view-responders' && <ViewResponders />}
-      </Layout.Content>
-    </Fragment>
+    <Layout.Content style={styles.content}>
+      <div style={styles.collapseWrapper}>
+        <Collapse defaultActiveKey={['1']} style={styles.collapse}>
+          <Panel key='1' header='Add New Responder'>
+            <CreateResponder />
+          </Panel>
+        </Collapse>
+      </div>
+      <div style={styles.dividerWrapper}>
+        <Divider>
+          <b>EMERGENCY RESPONSE ADMINISTRATORS</b>
+        </Divider>
+      </div>
+      <ViewResponders />
+    </Layout.Content>
   )
+}
+
+const styles = {
+  content: {
+    height: '100%',
+    overflowY: 'auto'
+  },
+  dividerWrapper: {
+    width: '90%',
+    marginLeft: '5%'
+  },
+  collapseWrapper: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  collapse: {
+    width: '90%',
+    textAlign: 'left'
+  }
 }
 
 export default Responders

@@ -46,7 +46,7 @@ const EditResponder = ({ history }) => {
               layout='vertical'
               autoComplete='off'
               hideRequiredMark
-              style={{ textAlign: 'left', width: '100%' }}>
+              style={styles.form}>
               <Form.Item
                 label='First Name'
                 help={
@@ -56,7 +56,7 @@ const EditResponder = ({ history }) => {
                   errors.firstName && touched.firstName ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='firstName'
@@ -64,7 +64,7 @@ const EditResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.firstName}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -77,7 +77,7 @@ const EditResponder = ({ history }) => {
                 }
                 Dashboard
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='lastName'
@@ -85,7 +85,7 @@ const EditResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.lastName}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -99,7 +99,7 @@ const EditResponder = ({ history }) => {
                   errors.department && touched.department ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Select
                   name='department'
@@ -123,7 +123,7 @@ const EditResponder = ({ history }) => {
                   errors.phoneNumber && touched.phoneNumber ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='phoneNumber'
@@ -131,10 +131,10 @@ const EditResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phoneNumber}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
-              <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+              <Form.Item style={styles.buttonWrapper}>
                 <Button
                   type='primary'
                   htmlType='submit'
@@ -157,6 +157,17 @@ const styles = {
   button: {
     width: '150px',
     marginTop: '15px'
+  },
+  form: {
+    textAlign: 'left',
+    width: '100%'
+  },
+  input: {
+    margin: 0
+  },
+  buttonWrapper: {
+    textAlign: 'center',
+    margin: 0
   }
 }
 

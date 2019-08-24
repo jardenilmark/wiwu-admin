@@ -12,8 +12,9 @@ const initialValues = {
 
 const LoginTab = () => {
   const dispatch = useDispatch()
+
   return (
-    <Card bordered={false} style={{ backgroundColor: 'whitesmoke' }}>
+    <Card bordered={false} style={styles.card}>
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignInSchema}
@@ -36,7 +37,7 @@ const LoginTab = () => {
             layout='vertical'
             autoComplete='off'
             hideRequiredMark
-            style={{ textAlign: 'left' }}>
+            style={styles.form}>
             <Form.Item
               label='Email Address'
               help={
@@ -48,7 +49,7 @@ const LoginTab = () => {
                 errors.emailAddress && touched.emailAddress ? 'error' : ''
               }
               required
-              style={{ margin: 0 }}
+              style={styles.input}
               hasFeedback>
               <Input
                 name='emailAddress'
@@ -56,7 +57,7 @@ const LoginTab = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.emailAddress}
-                style={{ margin: 0 }}
+                style={styles.input}
               />
             </Form.Item>
             <Form.Item
@@ -66,7 +67,7 @@ const LoginTab = () => {
                 errors.password && touched.password ? 'error' : ''
               }
               required
-              style={{ margin: 0 }}
+              style={styles.input}
               hasFeedback>
               <Input.Password
                 name='password'
@@ -74,10 +75,10 @@ const LoginTab = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
-                style={{ margin: 0 }}
+                style={styles.input}
               />
             </Form.Item>
-            <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+            <Form.Item style={styles.buttonWrapper}>
               <Button
                 type='primary'
                 htmlType='submit'
@@ -99,6 +100,19 @@ const styles = {
   button: {
     width: '150px',
     marginTop: '15px'
+  },
+  form: {
+    textAlign: 'left'
+  },
+  input: {
+    margin: 0
+  },
+  buttonWrapper: {
+    textAlign: 'center',
+    margin: 0
+  },
+  card: {
+    background: 'whitesmoke'
   }
 }
 

@@ -13,30 +13,16 @@ const AuthScreen = ({ history, location }) => {
   const activeKey = paths.length > 2 ? paths[2] : 'signIn'
 
   return (
-    <Row
-      style={{ height: '100vh' }}
-      type='flex'
-      justify='center'
-      align='middle'>
+    <Row style={styles.row} type='flex' justify='center' align='middle'>
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
-        <div
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
+        <div style={styles.logoWrapper}>
           <Logo height={120} />
         </div>
-        <Card
-          bordered={false}
-          style={{
-            marginTop: -10,
-            backgroundColor: 'whitesmoke'
-          }}>
+        <Card bordered={false} style={styles.card}>
           <Tabs
             activeKey={activeKey}
             onTabClick={key => history.push(`/auth/${key}`)}
-            tabBarStyle={{ fontWeight: 'bold', textAlign: 'left' }}
+            tabBarStyle={styles.tabBar}
             tabBarGutter={15}>
             <TabPane tab='SIGN IN' key='signIn'>
               <LoginTab />
@@ -49,6 +35,25 @@ const AuthScreen = ({ history, location }) => {
       </Col>
     </Row>
   )
+}
+
+const styles = {
+  logoWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  card: {
+    marginTop: -10,
+    backgroundColor: 'whitesmoke'
+  },
+  tabBar: {
+    fontWeight: 'bold',
+    textAlign: 'left'
+  },
+  row: {
+    height: '100vh'
+  }
 }
 
 export default AuthScreen

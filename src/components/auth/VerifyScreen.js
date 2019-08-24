@@ -15,12 +15,7 @@ const VerifyScreen = () => {
       justify='center'
       align='middle'>
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
-        <div
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
+        <div style={styles.logoWrapper}>
           <Logo height={90} />
         </div>
         <Card
@@ -31,7 +26,7 @@ const VerifyScreen = () => {
               Go Back to Sign In Page
             </Button>
           ]}
-          style={{ backgroundColor: 'whitesmoke' }}>
+          style={styles.card}>
           <Meta
             title='Your account is not yet verified!'
             description='Please check your email if you have received the verification link we sent you.'
@@ -40,6 +35,17 @@ const VerifyScreen = () => {
       </Col>
     </Row>
   )
+}
+
+const styles = {
+  logoWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  card: {
+    backgroundColor: 'whitesmoke'
+  }
 }
 
 export default VerifyScreen

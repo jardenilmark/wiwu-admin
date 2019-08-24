@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { UserSignUpSchema } from '../../schema/user.schema'
+import { ResponderSignUpSchema } from '../../schema/user.schema'
 import { roles } from '../../constants/User'
 import { signUp } from '../../actions/user/signUp.action'
 import { Form, Input, Button, Select } from 'antd'
@@ -14,26 +14,20 @@ const initialValues = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
-  department: ''
+  department: 'Philippine National Police Iloilo'
 }
 
-const CreateResponder = ({ history }) => {
+const CreateResponder = () => {
   const dispatch = useDispatch()
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%'
-      }}>
+    <div style={styles.formWrapper}>
       <Formik
         initialValues={initialValues}
-        validationSchema={UserSignUpSchema}
-        onSubmit={async (values, { setSubmitting }) => {
+        validationSchema={ResponderSignUpSchema}
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(signUp({ ...values, role: roles.RESPONDER }))
-          history.push('/manage-responders/view-responders')
           setSubmitting(false)
+          resetForm(initialValues)
         }}>
         {({
           values,
@@ -52,7 +46,7 @@ const CreateResponder = ({ history }) => {
               layout='vertical'
               autoComplete='off'
               hideRequiredMark
-              style={{ textAlign: 'left', width: '600px' }}>
+              style={styles.form}>
               <Form.Item
                 label='First Name'
                 help={
@@ -62,7 +56,7 @@ const CreateResponder = ({ history }) => {
                   errors.firstName && touched.firstName ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='firstName'
@@ -70,7 +64,7 @@ const CreateResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.firstName}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -83,7 +77,7 @@ const CreateResponder = ({ history }) => {
                 }
                 Dashboard
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='lastName'
@@ -91,7 +85,7 @@ const CreateResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.lastName}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -105,15 +99,20 @@ const CreateResponder = ({ history }) => {
                   errors.department && touched.department ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Select
                   name='department'
+                  disabled={isSubmitting}
                   onChange={value => setFieldValue('department', value)}
                   value={values.department}>
-                  <Option value='PNP'>Philippine National Police Iloilo</Option>
-                  <Option value='BFP'>Bureau of Fire Protection Iloilo</Option>
-                  <Option value='ICER'>
+                  <Option value='Philippine National Police Iloilo'>
+                    Philippine National Police Iloilo
+                  </Option>
+                  <Option value='Bureau of Fire Protection Iloilo'>
+                    Bureau of Fire Protection Iloilo
+                  </Option>
+                  <Option value='Iloilo City Emergency Response Team'>
                     Iloilo City Emergency Response Team
                   </Option>
                 </Select>
@@ -129,7 +128,7 @@ const CreateResponder = ({ history }) => {
                   errors.emailAddress && touched.emailAddress ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='emailAddress'
@@ -137,7 +136,7 @@ const CreateResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.emailAddress}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -149,7 +148,7 @@ const CreateResponder = ({ history }) => {
                   errors.password && touched.password ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input.Password
                   name='password'
@@ -157,7 +156,7 @@ const CreateResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.password}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -171,7 +170,7 @@ const CreateResponder = ({ history }) => {
                   errors.phoneNumber && touched.phoneNumber ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='phoneNumber'
@@ -179,10 +178,10 @@ const CreateResponder = ({ history }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phoneNumber}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
-              <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+              <Form.Item style={styles.buttonWrapper}>
                 <Button
                   type='primary'
                   htmlType='submit'
@@ -205,6 +204,21 @@ const styles = {
   button: {
     width: '150px',
     marginTop: '15px'
+  },
+  form: {
+    textAlign: 'left',
+    width: '600px'
+  },
+  input: {
+    margin: 0
+  },
+  buttonWrapper: {
+    textAlign: 'center',
+    margin: 0
+  },
+  formWrapper: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 }
 

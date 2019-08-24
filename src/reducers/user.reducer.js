@@ -1,6 +1,7 @@
 import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
   SIGNUP_SUCCESS,
   SIGNUP_FAILED,
   LOGIN_FAILED,
@@ -10,7 +11,11 @@ import {
   RESET_TWILIO_TOKEN_SUCCESS,
   RESET_TWILIO_TOKEN_FAILED,
   FETCH_RESPONDERS_SUCCESS,
-  FETCH_RESPONDERS_FAILED
+  FETCH_RESPONDERS_FAILED,
+  EDIT_RESPONDER_FAILED,
+  EDIT_RESPONDER_SUCCESS,
+  DELETE_RESPONDER_FAILED,
+  DELETE_RESPONDER_SUCCESS
 } from '../actions/user/user.constants.js'
 import { message } from 'antd'
 
@@ -29,7 +34,18 @@ export default function reducer(state = initialState, action) {
       return {
         ...state
       }
+    case LOGIN_FAILED:
+      message.error(action.payload, 10)
+      return {
+        ...state
+      }
     case SIGNUP_SUCCESS:
+      message.success('User created successfully!', 10)
+      return {
+        ...state
+      }
+    case SIGNUP_FAILED:
+      message.error(action.payload, 10)
       return {
         ...state
       }
@@ -37,12 +53,37 @@ export default function reducer(state = initialState, action) {
       return {
         ...state
       }
-    case LOGIN_FAILED:
+    case LOGOUT_FAILED:
       message.error(action.payload, 10)
       return {
         ...state
       }
-    case SIGNUP_FAILED:
+    case EDIT_RESPONDER_SUCCESS:
+      message.success('User updated successfully!', 10)
+      return {
+        ...state
+      }
+    case EDIT_RESPONDER_FAILED:
+      message.error(action.payload, 10)
+      return {
+        ...state
+      }
+    case DELETE_RESPONDER_SUCCESS:
+      message.success('User deleted successfully!', 10)
+      return {
+        ...state
+      }
+    case DELETE_RESPONDER_FAILED:
+      message.error(action.payload, 10)
+      return {
+        ...state
+      }
+    case FETCH_RESPONDERS_SUCCESS:
+      return {
+        ...state,
+        responders: action.payload
+      }
+    case FETCH_RESPONDERS_FAILED:
       message.error(action.payload, 10)
       return {
         ...state
@@ -80,17 +121,9 @@ export default function reducer(state = initialState, action) {
         loading: loading,
         authenticated: authenticated
       }
-    case FETCH_RESPONDERS_SUCCESS:
-      return {
-        ...state,
-        responders: action.payload
-      }
-    case FETCH_RESPONDERS_FAILED:
-      message.error(action.payload, 10)
+    default:
       return {
         ...state
       }
-    default:
-      return state
   }
 }

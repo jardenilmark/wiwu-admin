@@ -1,7 +1,6 @@
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 import * as firebase from 'firebase/app'
-
 // Add the Firebase services that you want to use
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -15,7 +14,6 @@ var firebaseConfig = {
   messagingSenderId: '363729210043',
   appId: '1:363729210043:web:47b0c446dc062344'
 }
-
 const main = firebase.initializeApp(firebaseConfig, 'main')
 const secondary = firebase.initializeApp(firebaseConfig, 'secondary')
 const mainAuth = main.auth()

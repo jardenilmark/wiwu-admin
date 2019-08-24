@@ -1,20 +1,17 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
+import { useSelector } from 'react-redux'
 
-import AdminPage from '../AdminPage'
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const authenticated = useSelector(state => state.user.authenticated)
+  const user = useSelector(state => state.user.current)
 
-const PrivateRoute = ({
-  component: Component,
-  authenticated,
-  user,
-  ...rest
-}) => {
   return (
     <Route
       {...rest}
       render={props =>
         authenticated && user.emailVerified ? (
-          <AdminPage {...props} component={Component} />
+          <Component {...props} />
         ) : (
           <Redirect to='/auth' />
         )

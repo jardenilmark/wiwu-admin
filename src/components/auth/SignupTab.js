@@ -3,7 +3,7 @@ import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { roles } from '../../constants/User'
-import { UserSignUpSchema } from '../../schema/user.schema'
+import { AdminSignUpSchema } from '../../schema/user.schema'
 import { signUp } from '../../actions/user/signUp.action'
 
 const initialValues = {
@@ -17,10 +17,10 @@ const initialValues = {
 const SignupTab = () => {
   const dispatch = useDispatch()
   return (
-    <Card bordered={false} style={{ backgroundColor: 'whitesmoke' }}>
+    <Card bordered={false} style={styles.card}>
       <Formik
         initialValues={initialValues}
-        validationSchema={UserSignUpSchema}
+        validationSchema={AdminSignUpSchema}
         onSubmit={async (values, { setSubmitting }) => {
           await dispatch(signUp({ ...values, role: roles.ADMIN }))
           setSubmitting(false)
@@ -41,7 +41,7 @@ const SignupTab = () => {
               layout='vertical'
               autoComplete='off'
               hideRequiredMark
-              style={{ textAlign: 'left' }}>
+              style={styles.form}>
               <Form.Item
                 label='First Name'
                 help={
@@ -51,7 +51,7 @@ const SignupTab = () => {
                   errors.firstName && touched.firstName ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='firstName'
@@ -59,7 +59,7 @@ const SignupTab = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.firstName}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -71,7 +71,7 @@ const SignupTab = () => {
                   errors.lastName && touched.lastName ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='lastName'
@@ -79,7 +79,7 @@ const SignupTab = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.lastName}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -93,7 +93,7 @@ const SignupTab = () => {
                   errors.emailAddress && touched.emailAddress ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='emailAddress'
@@ -101,7 +101,7 @@ const SignupTab = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.emailAddress}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -121,7 +121,7 @@ const SignupTab = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.password}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
               <Form.Item
@@ -135,7 +135,7 @@ const SignupTab = () => {
                   errors.phoneNumber && touched.phoneNumber ? 'error' : ''
                 }
                 required
-                style={{ margin: 0 }}
+                style={styles.input}
                 hasFeedback>
                 <Input
                   name='phoneNumber'
@@ -143,10 +143,10 @@ const SignupTab = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phoneNumber}
-                  style={{ margin: 0 }}
+                  style={styles.input}
                 />
               </Form.Item>
-              <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+              <Form.Item style={styles.buttonWrapper}>
                 <Button
                   type='primary'
                   htmlType='submit'
@@ -169,6 +169,19 @@ const styles = {
   button: {
     width: '150px',
     marginTop: '15px'
+  },
+  form: {
+    textAlign: 'left'
+  },
+  input: {
+    margin: 0
+  },
+  buttonWrapper: {
+    textAlign: 'center',
+    margin: 0
+  },
+  card: {
+    background: 'whitesmoke'
   }
 }
 

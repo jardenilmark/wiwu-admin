@@ -1,34 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import { logout } from '../actions/user/logout.action'
-import { toggleSiderCollapse } from '../actions/layout/toggleSiderCollapse.action'
+import { useDispatch } from 'react-redux'
 import Logo from './Logo'
-import { useDispatch, useSelector } from 'react-redux'
 
 const Sidebar = ({ history, location }) => {
   const dispatch = useDispatch()
   const pathname = location.pathname.split('/')[1]
   const selectedKeys = pathname === '' ? ['dashboard'] : [pathname]
-  const collapsed = useSelector(state => state.layout.collapsed)
+  const [collapsed, toggleCollapse] = useState(false)
 
   return (
     <Layout.Sider
       collapsible
+      width={250}
       collapsed={collapsed}
-      onCollapse={() => dispatch(toggleSiderCollapse())}>
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          margin: '35px 0px 20px 0px'
-        }}>
+      onCollapse={() => toggleCollapse(!collapsed)}>
+      <div style={styles.logoWrapper}>
         <Logo height={70} />
       </div>
       <Menu
         theme='dark'
         mode='inline'
-        style={{ textAlign: 'left' }}
+        style={styles.menu}
         selectedKeys={selectedKeys}>
         <Menu.Item
           key='manage-responders'
@@ -46,7 +40,7 @@ const Sidebar = ({ history, location }) => {
           key='verification'
           onClick={() => history.push('/verification')}>
           <Icon type='check-circle' />
-          <span>Verification</span>
+          <span>User Verification</span>
         </Menu.Item>
         <Menu.Item key='settings' onClick={() => history.push('/settings')}>
           <Icon type='setting' />
@@ -59,6 +53,18 @@ const Sidebar = ({ history, location }) => {
       </Menu>
     </Layout.Sider>
   )
+}
+
+const styles = {
+  logoWrapper: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '35px 0px 20px 0px'
+  },
+  menu: {
+    textAlign: 'left'
+  }
 }
 
 export default Sidebar

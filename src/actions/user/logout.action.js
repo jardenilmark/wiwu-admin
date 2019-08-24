@@ -1,14 +1,16 @@
 import { auth } from '../../firebase'
-import { LOGIN_SUCCESS, LOGIN_FAILED } from './user.constants'
+import { LOGOUT_SUCCESS, LOGOUT_FAILED } from './user.constants'
 import { createAction } from 'redux-actions'
+import { history } from '../../history'
 
 export const logout = () => {
   return async dispatch => {
     try {
       await auth.signOut()
-      dispatch(createAction(LOGIN_SUCCESS))
+      history.push('/auth/signIn')
+      dispatch(createAction(LOGOUT_SUCCESS))
     } catch (error) {
-      dispatch(createAction(LOGIN_FAILED)(error.message))
+      dispatch(createAction(LOGOUT_FAILED)(error.message))
     }
   }
 }

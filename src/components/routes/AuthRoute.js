@@ -1,19 +1,23 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import AuthScreen from '../auth/AuthScreen'
 import VerifyScreen from '../auth/VerifyScreen'
 
-const AuthRoute = ({ authenticated, user, ...rest }) => {
+const AuthRoute = props => {
+  const authenticated = useSelector(state => state.user.authenticated)
+  const user = useSelector(state => state.user.current)
+
   return (
     <Route
-      {...rest}
+      {...props}
       render={props => {
         if (!authenticated) {
           return <AuthScreen {...props} />
         } else {
           if (user && user.emailVerified) {
-            return <Redirect to='/manage-responders' />
+            return <Redirect to='/' />
           } else {
             return <VerifyScreen />
           }

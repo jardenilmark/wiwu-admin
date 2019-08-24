@@ -1,4 +1,4 @@
-import { auth, firestore as db } from '../../firebase'
+import { firestore as db } from '../../firebase'
 import {
   FETCH_RESPONDERS_FAILED,
   FETCH_RESPONDERS_SUCCESS
