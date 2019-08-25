@@ -6,9 +6,9 @@ import {
 import { createAction } from 'redux-actions'
 import { fetchResponders } from './fetchResponders.action'
 
-export const deleteResponder = userID => {
+export const deleteResponder = responderId => {
   /* 
-    TODO: For now only user details from the users collection is deleted.
+    TODO: For now only responder details from the users collection is deleted.
     Firebase Auth requires that the user must input his/her credentials 
     before his/her account gets deleted
   */
@@ -16,7 +16,7 @@ export const deleteResponder = userID => {
     try {
       await db
         .collection('users')
-        .doc(userID)
+        .doc(responderId)
         .delete()
       dispatch(fetchResponders())
       dispatch(createAction(DELETE_RESPONDER_SUCCESS)())

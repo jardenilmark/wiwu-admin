@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUsers } from '../../actions/user/fetchUsers.action'
-// import { deleteResponder } from '../../actions/responder/deleteResponder.action'
+import { deleteUser } from '../../actions/user/deleteUser.action'
 import { statuses } from '../../constants/User'
 import { List, Avatar, Icon, Tag, Popconfirm, Spin } from 'antd'
 
@@ -44,8 +44,8 @@ const UsersList = () => {
               actions={[
                 <Popconfirm
                   placement='top'
-                  title='Are you sure you want to delete this responder?'
-                  // onConfirm={() => dispatch(deleteResponder(responder.id))}
+                  title='Are you sure you want to delete this user?'
+                  onConfirm={() => dispatch(deleteUser(user.id))}
                   okText='Yes'
                   cancelText='No'>
                   <Icon type='delete' style={{ fontSize: 18 }} />
