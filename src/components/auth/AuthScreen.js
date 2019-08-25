@@ -45,7 +45,7 @@ const styles = {
   },
   card: {
     marginTop: -10,
-    backgroundColor: 'whitesmoke'
+    backgroundColor: '#f5f5f5'
   },
   tabBar: {
     fontWeight: 'bold',

@@ -16,7 +16,7 @@ const ManageResponders = () => {
         destroyOnClose={true}
         maskClosable={false}
         keyboard={false}
-        bodyStyle={{ background: 'whitesmoke', height: '94%' }}
+        bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
         <CreateResponder setDrawerVisibility={setDrawerVisibility} />

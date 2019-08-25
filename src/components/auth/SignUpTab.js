@@ -181,7 +181,7 @@ const styles = {
     margin: 0
   },
   card: {
-    background: 'whitesmoke'
+    background: '#f5f5f5'
   }
 }
 

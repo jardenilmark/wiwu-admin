@@ -44,7 +44,7 @@ const styles = {
     justifyContent: 'center'
   },
   card: {
-    backgroundColor: 'whitesmoke'
+    backgroundColor: '#f5f5f5'
   }
 }
 
