@@ -4,6 +4,7 @@ import { Layout } from 'antd'
 import Sidebar from './Sidebar'
 import ResponderScreen from './responders/RespondersScreen'
 import VideoVerification from './VideoVerification'
+import NoMatch from './NoMatch'
 
 const getComponentToRender = pathname => {
   switch (pathname) {
@@ -11,6 +12,8 @@ const getComponentToRender = pathname => {
       return <ResponderScreen />
     case 'verification':
       return <VideoVerification />
+    default:
+      return <NoMatch />
   }
 }
 

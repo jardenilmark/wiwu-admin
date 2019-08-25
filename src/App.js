@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAuthDetails } from './actions/user/setAuthDetails.action'
-import { Route } from 'react-router'
 import { Spin, Icon } from 'antd'
 import { auth } from './firebase'
 import 'antd/dist/antd.css'
