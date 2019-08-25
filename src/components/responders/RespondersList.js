@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchResponders } from '../../actions/responder/fetchResponders.action'
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
@@ -14,15 +14,21 @@ const { Column } = Table
 const RespondersList = () => {
   const dispatch = useDispatch()
   const responders = useSelector(state => state.responder.responders)
+  const [fetching, setFetchingStatus] = useState(true)
 
-  useEffect(() => {
-    dispatch(fetchResponders())
+  useEffect(async () => {
+    await dispatch(fetchResponders())
+    setFetchingStatus(false)
   }, [])
 
   return (
     <div style={styles.tableWrapper}>
       <EditResponderModal />
-      <Table dataSource={responders} bordered={true} style={{ width: '90%' }}>
+      <Table
+        dataSource={responders}
+        loading={fetching}
+        bordered={true}
+        style={styles.table}>
         <Column
           title='First Name'
           dataIndex='responder.firstName'
@@ -89,6 +95,9 @@ const styles = {
   tableWrapper: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  table: {
+    width: '90%'
   }
 }
 
