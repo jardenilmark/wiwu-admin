@@ -13,7 +13,8 @@ export const fetchUsers = () => {
         .get()
       usersRef.forEach(user => {
         users.push({
-          user: { ...user.data(), id: user.id }
+          ...user.data(),
+          id: user.id
         })
       })
       dispatch(createAction(FETCH_USERS_SUCCESS)(users))

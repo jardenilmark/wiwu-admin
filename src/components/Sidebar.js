@@ -37,6 +37,12 @@ const Sidebar = ({ history, location }) => {
           <span>Manage Users</span>
         </Menu.Item>
         <Menu.Item
+          key='manage-contacts'
+          onClick={() => history.push('/manage-contacts')}>
+          <Icon type='contacts' />
+          <span>Manage Contacts</span>
+        </Menu.Item>
+        <Menu.Item
           key='verification'
           onClick={() => history.push('/verification')}>
           <Icon type='check-circle' />

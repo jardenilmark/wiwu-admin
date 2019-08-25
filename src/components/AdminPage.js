@@ -4,6 +4,7 @@ import { Layout } from 'antd'
 import Sidebar from './Sidebar'
 import ManageResponders from './responders/ManageResponders'
 import VideoVerification from './VideoVerification'
+import ManageUsers from './users/ManageUsers'
 import NoMatch from './NoMatch'
 
 const getComponentToRender = pathname => {
@@ -12,6 +13,8 @@ const getComponentToRender = pathname => {
       return <ManageResponders />
     case 'verification':
       return <VideoVerification />
+    case 'manage-users':
+      return <ManageUsers />
     default:
       return <NoMatch />
   }
