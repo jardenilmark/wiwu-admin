@@ -3,10 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Card, Row, Col, Table, Typography, Button, message } from 'antd'
 import Video from 'twilio-video'
 import VideoModal from './VideoModal'
-import {
-  getTwilioToken,
-  resetTwilioToken
-} from '../actions/twilio/twilio.action'
+import { getTwilioToken } from '../actions/twilio/getTwilioToken.action'
+import { resetTwilioToken } from '../actions/twilio/resetTwilioToken.action'
 
 const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
