@@ -1,18 +1,16 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUsers } from '../../actions/user/fetchUsers.action'
-import { deleteUser } from '../../actions/user/deleteUser.action'
-import { statuses } from '../../constants/User'
-import { List, Avatar, Icon, Tag, Popconfirm, Spin } from 'antd'
+import { fetchContacts } from '../../actions/contact/fetchContacts.action'
+import { List, Avatar, Icon, Popconfirm, Spin } from 'antd'
 
-const UsersList = () => {
+const ContactsList = () => {
   const dispatch = useDispatch()
-  const users = useSelector(state => state.user.users)
+  const contacts = useSelector(state => state.contact.contacts)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
-      await dispatch(fetchUsers())
+      await dispatch(fetchContacts())
       setFetchingStatus(false)
     }
 
@@ -24,7 +22,7 @@ const UsersList = () => {
       <div style={styles.spinnerWrapper}>
         <Spin
           indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<span style={styles.tip}>Fetching users...</span>}
+          tip={<span style={styles.tip}>Fetching contacts...</span>}
         />
       </div>
     )
@@ -36,16 +34,14 @@ const UsersList = () => {
         style={{ width: '70%', textAlign: 'left' }}
         itemLayout='horizontal'
         pagination={{ pageSize: 10, hideOnSinglePage: true, size: 'small' }}
-        dataSource={users}
-        renderItem={user => {
-          const color = user.status === statuses.ACTIVE ? 'green' : 'red'
+        dataSource={contacts}
+        renderItem={contact => {
           return (
             <List.Item
               actions={[
                 <Popconfirm
                   placement='top'
-                  title='Are you sure you want to delete this user?'
-                  onConfirm={() => dispatch(deleteUser(user.id))}
+                  title='Are you sure you want to delete this contact?'
                   okText='Yes'
                   cancelText='No'>
                   <Icon type='delete' style={{ fontSize: 18 }} />
@@ -54,18 +50,16 @@ const UsersList = () => {
               <List.Item.Meta
                 avatar={
                   <Avatar
-                    src={require('../../assets/images/user-avatar.png')}
+                    src={require('../../assets/images/medical.png')}
+                    size={45}
                   />
                 }
-                title={
-                  <b>
-                    {user.firstName} {user.lastName} |{' '}
-                    <Tag color={color}>{user.status.toUpperCase()}</Tag>
-                  </b>
-                }
+                title={<b>{contact.name}</b>}
                 description={
                   <Fragment>
-                    <span>{user.phoneNumber}</span>
+                    <span>{contact.address}</span>
+                    <br />
+                    <span>{contact.numbers.join(', ')}</span>
                   </Fragment>
                 }
               />
@@ -97,4 +91,4 @@ const styles = {
   }
 }
 
-export default UsersList
+export default ContactsList

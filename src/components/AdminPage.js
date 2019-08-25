@@ -3,8 +3,9 @@ import { Layout } from 'antd'
 
 import Sidebar from './Sidebar'
 import ManageResponders from './responders/ManageResponders'
-import VideoVerification from './VideoVerification'
 import ManageUsers from './users/ManageUsers'
+import ManageContacts from './contacts/ManageContacts'
+import VideoVerification from './VideoVerification'
 import NoMatch from './NoMatch'
 
 const getComponentToRender = pathname => {
@@ -15,6 +16,8 @@ const getComponentToRender = pathname => {
       return <VideoVerification />
     case 'manage-users':
       return <ManageUsers />
+    case 'manage-contacts':
+      return <ManageContacts />
     default:
       return <NoMatch />
   }
