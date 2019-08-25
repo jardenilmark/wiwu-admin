@@ -13,7 +13,7 @@ const Sidebar = ({ history, location }) => {
   return (
     <Layout.Sider
       collapsible
-      width={250}
+      width={220}
       collapsed={collapsed}
       onCollapse={() => toggleCollapse(!collapsed)}>
       <div style={styles.logoWrapper}>
@@ -39,7 +39,7 @@ const Sidebar = ({ history, location }) => {
         <Menu.Item
           key='manage-contacts'
           onClick={() => history.push('/manage-contacts')}>
-          <Icon type='contacts' />
+          <Icon type='phone' />
           <span>Manage Contacts</span>
         </Menu.Item>
         <Menu.Item

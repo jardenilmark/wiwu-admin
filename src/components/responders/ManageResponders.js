@@ -21,7 +21,7 @@ const ManageResponders = () => {
         visible={drawerVisibility}>
         <CreateResponder setDrawerVisibility={setDrawerVisibility} />
       </Drawer>
-      <div style={styles.buttonWrapper}>
+      <div style={styles.wrapper}>
         <Search
           placeholder='Search responder admins...'
           onSearch={value => console.log(value)}
@@ -45,7 +45,7 @@ const styles = {
     height: '100%',
     overflowY: 'auto'
   },
-  buttonWrapper: {
+  wrapper: {
     width: '70%',
     marginLeft: '15%',
     marginTop: 40,

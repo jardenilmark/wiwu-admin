@@ -82,8 +82,7 @@ const UsersList = () => {
 const styles = {
   listWrapper: {
     display: 'flex',
-    justifyContent: 'center',
-    marginTop: 30
+    justifyContent: 'center'
   },
   spinnerWrapper: {
     height: 700,
