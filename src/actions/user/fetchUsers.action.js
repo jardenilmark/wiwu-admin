@@ -4,18 +4,15 @@ import { roles } from '../../constants/User'
 import { createAction } from 'redux-actions'
 
 export const fetchUsers = () => {
-  const users = []
+  let users = []
   return async dispatch => {
     try {
       const usersRef = await db
         .collection('users')
         .where('role', '==', roles.USER)
         .get()
-      usersRef.forEach(user => {
-        users.push({
-          ...user.data(),
-          id: user.id
-        })
+      users = usersRef.docs.map(user => {
+        return { ...user.data(), id: user.id }
       })
       dispatch(createAction(FETCH_USERS_SUCCESS)(users))
     } catch (error) {
