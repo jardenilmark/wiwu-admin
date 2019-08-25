@@ -3,7 +3,7 @@ import {
   GET_TWILIO_TOKEN_FAILED,
   RESET_TWILIO_TOKEN_SUCCESS,
   RESET_TWILIO_TOKEN_FAILED
-} from './user.constants'
+} from './twilio.constants'
 import { createAction } from 'redux-actions'
 
 export const getTwilioToken = (identity, roomName) => {

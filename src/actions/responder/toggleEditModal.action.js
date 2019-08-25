@@ -1,4 +1,4 @@
-import { TOGGLE_EDIT_MODAL } from './user.constants'
+import { TOGGLE_EDIT_MODAL } from './responder.constants'
 import { createAction } from 'redux-actions'
 
 export const toggleEditModal = () => {

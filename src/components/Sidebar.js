@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Layout, Menu, Icon } from 'antd'
-import { logout } from '../actions/user/logout.action'
+import { signOut } from '../actions/admin/signOut.action'
 import { useDispatch } from 'react-redux'
 import Logo from './Logo'
 
@@ -46,7 +46,7 @@ const Sidebar = ({ history, location }) => {
           <Icon type='setting' />
           <span>Settings</span>
         </Menu.Item>
-        <Menu.Item key='logout' onClick={() => dispatch(logout())}>
+        <Menu.Item key='logout' onClick={() => dispatch(signOut())}>
           <Icon type='poweroff' />
           <span>Logout</span>
         </Menu.Item>

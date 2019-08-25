@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchResponders } from '../../actions/user/fetchResponders.action'
 import { toggleEditModal } from '../../actions/user/toggleEditModal.action'
 import { setClickedResponder } from '../../actions/user/setClickedResponder.action'
-import { deleteResponder } from '../../actions/user/deleteResponder.action'
+import { deleteResponder } from '../../actions/responder/deleteResponder.action'
 import { statuses } from '../../constants/User'
 import { Table, Tag, Button } from 'antd'
 
@@ -11,7 +11,7 @@ import EditResponderModal from './EditResponderModal'
 
 const { Column } = Table
 
-const ViewResponders = () => {
+const UsersList = () => {
   const dispatch = useDispatch()
   const responders = useSelector(state => state.user.responders)
 
@@ -92,4 +92,4 @@ const styles = {
   }
 }
 
-export default ViewResponders
+export default UsersList

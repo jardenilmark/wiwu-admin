@@ -1,4 +1,4 @@
-import { SET_CLICKED_RESPONDER } from './user.constants'
+import { SET_CLICKED_RESPONDER } from './responder.constants'
 import { createAction } from 'redux-actions'
 
 export const setClickedResponder = responder => {

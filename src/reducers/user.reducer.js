@@ -1,129 +1,60 @@
-import {
-  LOGIN_SUCCESS,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILED,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAILED,
-  LOGIN_FAILED,
-  SET_AUTH_DETAILS,
-  GET_TWILIO_TOKEN_SUCCESS,
-  GET_TWILIO_TOKEN_FAILED,
-  RESET_TWILIO_TOKEN_SUCCESS,
-  RESET_TWILIO_TOKEN_FAILED,
-  FETCH_RESPONDERS_SUCCESS,
-  FETCH_RESPONDERS_FAILED,
-  EDIT_RESPONDER_FAILED,
-  EDIT_RESPONDER_SUCCESS,
-  DELETE_RESPONDER_FAILED,
-  DELETE_RESPONDER_SUCCESS
-} from '../actions/user/user.constants.js'
-import { message } from 'antd'
+// import {
+//   SIGNIN_SUCCESS,
+//   SIGNIN_FAILED,
+//   SIGNUP_SUCCESS,
+//   SIGNUP_FAILED,
+//   SIGNOUT_SUCCESS,
+//   SIGNOUT_FAILED,
+//   SET_AUTH_DETAILS,
+// } from '../actions/admin/user.constants.js'
 
-const initialState = {
-  current: null,
-  loading: true,
-  authenticated: false,
-  responders: [],
-  token: ''
-}
+// const initialState = {
+//   current: null,
+//   loading: true,
+//   authenticated: false
+// }
 
-export default function reducer(state = initialState, action) {
-  let token
-  switch (action.type) {
-    case LOGIN_SUCCESS:
-      return {
-        ...state
-      }
-    case LOGIN_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case SIGNUP_SUCCESS:
-      message.success('User created successfully!', 10)
-      return {
-        ...state
-      }
-    case SIGNUP_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case LOGOUT_SUCCESS:
-      return {
-        ...state
-      }
-    case LOGOUT_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case EDIT_RESPONDER_SUCCESS:
-      message.success('User updated successfully!', 10)
-      return {
-        ...state
-      }
-    case EDIT_RESPONDER_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case DELETE_RESPONDER_SUCCESS:
-      message.success('User deleted successfully!', 10)
-      return {
-        ...state
-      }
-    case DELETE_RESPONDER_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case FETCH_RESPONDERS_SUCCESS:
-      return {
-        ...state,
-        responders: action.payload
-      }
-    case FETCH_RESPONDERS_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case SET_AUTH_DETAILS:
-      const { user, loading, authenticated } = action.payload
-      return {
-        ...state,
-        current: user,
-        loading,
-        authenticated
-      }
-    case GET_TWILIO_TOKEN_SUCCESS:
-      token = action.payload
-      return {
-        ...state,
-        token
-      }
-    case GET_TWILIO_TOKEN_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
-      }
-    case RESET_TWILIO_TOKEN_SUCCESS:
-      token = action.payload
-      return {
-        ...state,
-        token
-      }
-    case RESET_TWILIO_TOKEN_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state,
-        current: user,
-        loading: loading,
-        authenticated: authenticated
-      }
-    default:
-      return {
-        ...state
-      }
-  }
-}
+// export default function reducer (state = initialState, action) {
+//   switch (action.type) {
+//     case SIGNIN_SUCCESS:
+//       return {
+//         ...state
+//       }
+//     case SIGNIN_FAILED:
+//       message.error(action.payload, 10)
+//       return {
+//         ...state
+//       }
+//     case SIGNUP_SUCCESS:
+//       return {
+//         ...state
+//       }
+//     case SIGNUP_FAILED:
+//       message.error(action.payload, 10)
+//       return {
+//         ...state
+//       }
+//     case SIGNOUT_SUCCESS:
+//       return {
+//         ...state
+//       }
+//     case SIGNOUT_FAILED:
+//       message.error(action.payload, 10)
+//       return {
+//         ...state
+//       }
+
+//     case SET_AUTH_DETAILS:
+//       const { user, loading, authenticated } = action.payload
+//       return {
+//         ...state,
+//         current: user,
+//         loading,
+//         authenticated
+//       }
+//     default:
+//       return {
+//         ...state
+//       }
+//   }
+// }

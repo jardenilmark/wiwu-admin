@@ -6,8 +6,8 @@ import AuthScreen from '../auth/AuthScreen'
 import VerifyScreen from '../auth/VerifyScreen'
 
 const AuthRoute = props => {
-  const authenticated = useSelector(state => state.user.authenticated)
-  const user = useSelector(state => state.user.current)
+  const authenticated = useSelector(state => state.admin.authenticated)
+  const user = useSelector(state => state.admin.current)
 
   return (
     <Route

@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { roles } from '../../constants/User'
 import { AdminSignUpSchema } from '../../schema/user.schema'
-import { signUp } from '../../actions/user/signUp.action'
+import { signUp } from '../../actions/admin/signUp.action'
 
 const initialValues = {
   emailAddress: '',
@@ -14,7 +14,7 @@ const initialValues = {
   phoneNumber: ''
 }
 
-const SignupTab = () => {
+const SignUpTab = () => {
   const dispatch = useDispatch()
   return (
     <Card bordered={false} style={styles.card}>
@@ -185,4 +185,4 @@ const styles = {
   }
 }
 
-export default SignupTab
+export default SignUpTab

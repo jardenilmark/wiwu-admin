@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Row, Col, Button } from 'antd'
-import { logout } from '../../actions/user/logout.action'
 import { useDispatch } from 'react-redux'
+import { signOut } from '../../actions/admin/signOut.action'
 import Logo from '../Logo'
 
 const { Meta } = Card
@@ -22,7 +22,7 @@ const VerifyScreen = () => {
           bordered={false}
           actions={[
             <Button type='dashed'>Resend Verification Email</Button>,
-            <Button type='dashed' onClick={() => dispatch(logout())}>
+            <Button type='dashed' onClick={() => dispatch(signOut())}>
               Go Back to Sign In Page
             </Button>
           ]}

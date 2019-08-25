@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Row, Col, Tabs } from 'antd'
 
-import LoginTab from './LoginTab'
-import SignupTab from './SignupTab'
+import SignInTab from './SignInTab'
+import SignUpTab from './SignUpTab'
 import Logo from '../Logo'
 
 const { TabPane } = Tabs
@@ -25,10 +25,10 @@ const AuthScreen = ({ history, location }) => {
             tabBarStyle={styles.tabBar}
             tabBarGutter={15}>
             <TabPane tab='SIGN IN' key='signIn'>
-              <LoginTab />
+              <SignInTab />
             </TabPane>
             <TabPane tab='SIGN UP' key='signUp'>
-              <SignupTab />
+              <SignUpTab />
             </TabPane>
           </Tabs>
         </Card>

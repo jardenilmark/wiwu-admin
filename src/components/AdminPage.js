@@ -2,14 +2,14 @@ import React from 'react'
 import { Layout } from 'antd'
 
 import Sidebar from './Sidebar'
-import ResponderScreen from './responders/RespondersScreen'
+import ManageResponders from './responders/ManageResponders'
 import VideoVerification from './VideoVerification'
 import NoMatch from './NoMatch'
 
 const getComponentToRender = pathname => {
   switch (pathname) {
     case 'manage-responders':
-      return <ResponderScreen />
+      return <ManageResponders />
     case 'verification':
       return <VideoVerification />
     default:

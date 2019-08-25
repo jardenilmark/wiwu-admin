@@ -2,11 +2,11 @@ import React from 'react'
 import { Layout, Collapse, Divider } from 'antd'
 
 import CreateResponder from './CreateResponder'
-import ViewResponders from './ViewResponders'
+import ViewResponders from './RespondersList'
 
 const { Panel } = Collapse
 
-const Responders = () => {
+const ManageResponders = () => {
   return (
     <Layout.Content style={styles.content}>
       <div style={styles.collapseWrapper}>
@@ -45,4 +45,4 @@ const styles = {
   }
 }
 
-export default Responders
+export default ManageResponders

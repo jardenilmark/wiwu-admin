@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { signIn } from '../../actions/user/signIn.action'
+import { signIn } from '../../actions/admin/signIn.action'
 import { UserSignInSchema } from '../../schema/user.schema'
 
 const initialValues = {
@@ -10,7 +10,7 @@ const initialValues = {
   password: ''
 }
 
-const LoginTab = () => {
+const SignInTab = () => {
   const dispatch = useDispatch()
 
   return (
@@ -116,4 +116,4 @@ const styles = {
   }
 }
 
-export default LoginTab
+export default SignInTab

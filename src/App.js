@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAuthDetails } from './actions/user/setAuthDetails.action'
+import { setAuthDetails } from './actions/admin/setAuthDetails.action'
 import { Spin, Icon } from 'antd'
 import { auth } from './firebase'
 import 'antd/dist/antd.css'
@@ -12,7 +12,7 @@ import AdminPage from './components/AdminPage'
 
 const App = () => {
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.user.loading)
+  const loading = useSelector(state => state.admin.loading)
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {

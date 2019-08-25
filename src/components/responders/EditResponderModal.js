@@ -2,17 +2,17 @@ import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserEditSchema } from '../../schema/user.schema'
-import { editResponder } from '../../actions/user/editResponder.action'
-import { toggleEditModal } from '../../actions/user/toggleEditModal.action'
-import { fetchResponders } from '../../actions/user/fetchResponders.action'
+import { editResponder } from '../../actions/responder/editResponder.action'
+import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
+import { fetchResponders } from '../../actions/responder/fetchResponders.action'
 import { Form, Input, Button, Select, Modal } from 'antd'
 
 const { Option } = Select
 
 const EditResponder = ({ history }) => {
   const dispatch = useDispatch()
-  const responder = useSelector(state => state.responder.clicked)
-  const visible = useSelector(state => state.responder.modalState)
+  const responder = useSelector(state => state.responder.clickedResponder)
+  const visible = useSelector(state => state.responder.editModalVisibility)
   return (
     <Modal
       centered={true}

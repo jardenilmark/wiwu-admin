@@ -2,8 +2,7 @@ import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { ResponderSignUpSchema } from '../../schema/user.schema'
-import { roles } from '../../constants/User'
-import { signUp } from '../../actions/user/signUp.action'
+import { createResponder } from '../../actions/responder/createResponder.action'
 import { Form, Input, Button, Select } from 'antd'
 
 const { Option } = Select
@@ -25,7 +24,7 @@ const CreateResponder = () => {
         initialValues={initialValues}
         validationSchema={ResponderSignUpSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await dispatch(signUp({ ...values, role: roles.RESPONDER }))
+          await dispatch(createResponder(values))
           setSubmitting(false)
           resetForm(initialValues)
         }}>
