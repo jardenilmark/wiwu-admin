@@ -16,7 +16,7 @@ const initialValues = {
   department: 'Philippine National Police Iloilo'
 }
 
-const CreateResponder = () => {
+const CreateResponder = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
   return (
     <div style={styles.formWrapper}>
@@ -27,6 +27,7 @@ const CreateResponder = () => {
           await dispatch(createResponder(values))
           setSubmitting(false)
           resetForm(initialValues)
+          setDrawerVisibility(false)
         }}>
         {({
           values,
@@ -59,6 +60,7 @@ const CreateResponder = () => {
                 hasFeedback>
                 <Input
                   name='firstName'
+                  placeholder='e.g. Juan'
                   disabled={isSubmitting}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -80,10 +82,57 @@ const CreateResponder = () => {
                 hasFeedback>
                 <Input
                   name='lastName'
+                  placeholder='e.g. Dela Cruz'
                   disabled={isSubmitting}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.lastName}
+                  style={styles.input}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Phone Number'
+                help={
+                  errors.phoneNumber && touched.phoneNumber
+                    ? errors.phoneNumber
+                    : ''
+                }
+                validateStatus={
+                  errors.phoneNumber && touched.phoneNumber ? 'error' : ''
+                }
+                required
+                style={styles.input}
+                hasFeedback>
+                <Input
+                  name='phoneNumber'
+                  placeholder='e.g. 09123456789'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phoneNumber}
+                  style={styles.input}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Email Address'
+                help={
+                  errors.emailAddress && touched.emailAddress
+                    ? errors.emailAddress
+                    : ''
+                }
+                validateStatus={
+                  errors.emailAddress && touched.emailAddress ? 'error' : ''
+                }
+                required
+                style={styles.input}
+                hasFeedback>
+                <Input
+                  name='emailAddress'
+                  placeholder='e.g. juan.delacruz@gmail.com'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.emailAddress}
                   style={styles.input}
                 />
               </Form.Item>
@@ -117,28 +166,6 @@ const CreateResponder = () => {
                 </Select>
               </Form.Item>
               <Form.Item
-                label='Email Address'
-                help={
-                  errors.emailAddress && touched.emailAddress
-                    ? errors.emailAddress
-                    : ''
-                }
-                validateStatus={
-                  errors.emailAddress && touched.emailAddress ? 'error' : ''
-                }
-                required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='emailAddress'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.emailAddress}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
                 label='Password'
                 help={
                   errors.password && touched.password ? errors.password : ''
@@ -155,28 +182,6 @@ const CreateResponder = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.password}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
-                label='Phone Number'
-                help={
-                  errors.phoneNumber && touched.phoneNumber
-                    ? errors.phoneNumber
-                    : ''
-                }
-                validateStatus={
-                  errors.phoneNumber && touched.phoneNumber ? 'error' : ''
-                }
-                required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='phoneNumber'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.phoneNumber}
                   style={styles.input}
                 />
               </Form.Item>
@@ -206,7 +211,7 @@ const styles = {
   },
   form: {
     textAlign: 'left',
-    width: '600px'
+    width: '500px'
   },
   input: {
     margin: 0

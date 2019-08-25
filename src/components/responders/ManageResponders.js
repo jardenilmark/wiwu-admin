@@ -1,27 +1,41 @@
-import React from 'react'
-import { Layout, Collapse, Divider } from 'antd'
+import React, { useState } from 'react'
+import { Layout, Drawer, Button, Input } from 'antd'
 
 import CreateResponder from './CreateResponder'
-import ViewResponders from './RespondersList'
+import RespondersList from './RespondersList'
 
-const { Panel } = Collapse
+const { Search } = Input
 
 const ManageResponders = () => {
+  const [drawerVisibility, setDrawerVisibility] = useState(false)
   return (
     <Layout.Content style={styles.content}>
-      <div style={styles.collapseWrapper}>
-        <Collapse defaultActiveKey={['1']} style={styles.collapse}>
-          <Panel key='1' header='Add New Responder'>
-            <CreateResponder />
-          </Panel>
-        </Collapse>
+      <Drawer
+        title={<b>Create Responder Administrator</b>}
+        width={550}
+        destroyOnClose={true}
+        maskClosable={false}
+        keyboard={false}
+        bodyStyle={{ background: 'whitesmoke', height: '94%' }}
+        onClose={() => setDrawerVisibility(false)}
+        visible={drawerVisibility}>
+        <CreateResponder setDrawerVisibility={setDrawerVisibility} />
+      </Drawer>
+      <div style={styles.buttonWrapper}>
+        <Search
+          placeholder='Search responder admins...'
+          onSearch={value => console.log(value)}
+          style={{ width: 300 }}
+        />
+        <Button
+          icon='user-add'
+          type='dashed'
+          onClick={() => setDrawerVisibility(true)}
+          style={{ float: 'right' }}>
+          Add Responder
+        </Button>
       </div>
-      <div style={styles.dividerWrapper}>
-        <Divider>
-          <b>EMERGENCY RESPONSE ADMINISTRATORS</b>
-        </Divider>
-      </div>
-      <ViewResponders />
+      <RespondersList />
     </Layout.Content>
   )
 }
@@ -31,16 +45,11 @@ const styles = {
     height: '100%',
     overflowY: 'auto'
   },
-  dividerWrapper: {
-    width: '90%',
-    marginLeft: '5%'
-  },
-  collapseWrapper: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  collapse: {
-    width: '90%',
+  buttonWrapper: {
+    width: '70%',
+    marginLeft: '15%',
+    marginTop: 40,
+    marginBottom: 30,
     textAlign: 'left'
   }
 }

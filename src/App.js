@@ -29,7 +29,7 @@ const App = () => {
       <div style={styles.spinnerWrapper}>
         <Spin
           indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<b style={styles.tip}>Please wait for a while...</b>}
+          tip={<span style={styles.tip}>Please wait for a while...</span>}
         />
       </div>
     )
@@ -52,11 +52,11 @@ const styles = {
     justifyContent: 'center'
   },
   indicator: {
-    fontSize: 50,
-    marginBottom: 20
+    fontSize: 40,
+    marginBottom: 15
   },
   tip: {
-    fontSize: 18
+    fontSize: 16
   }
 }
 

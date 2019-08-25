@@ -11,9 +11,7 @@ export const editResponder = (values, id) => {
       await db
         .collection('users')
         .doc(id)
-        .update({
-          ...values
-        })
+        .update(values)
       dispatch(createAction(EDIT_RESPONDER_SUCCESS)())
     } catch (error) {
       alert(error.message)

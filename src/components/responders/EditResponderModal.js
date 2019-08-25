@@ -9,7 +9,7 @@ import { Form, Input, Button, Select, Modal } from 'antd'
 
 const { Option } = Select
 
-const EditResponder = ({ history }) => {
+const EditResponder = () => {
   const dispatch = useDispatch()
   const responder = useSelector(state => state.responder.clickedResponder)
   const visible = useSelector(state => state.responder.editModalVisibility)
@@ -18,6 +18,9 @@ const EditResponder = ({ history }) => {
       centered={true}
       visible={visible}
       footer={null}
+      destroyOnClose={true}
+      maskClosable={false}
+      title='Update Responder Details'
       onCancel={() => dispatch(toggleEditModal())}>
       <Formik
         enableReinitialize={true}

@@ -16,7 +16,8 @@ export const fetchResponders = () => {
         .get()
       respondersRef.forEach(responder => {
         responders.push({
-          responder: { ...responder.data(), id: responder.id }
+          ...responder.data(),
+          id: responder.id
         })
       })
       dispatch(createAction(FETCH_RESPONDERS_SUCCESS)(responders))
