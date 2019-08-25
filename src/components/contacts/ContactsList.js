@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchContacts } from '../../actions/contact/fetchContacts.action'
+import { deleteContact } from '../../actions/contact/deleteContact.action'
 import { List, Avatar, Icon, Popconfirm, Spin } from 'antd'
 
 const ContactsList = () => {
@@ -42,6 +43,7 @@ const ContactsList = () => {
                 <Popconfirm
                   placement='top'
                   title='Are you sure you want to delete this contact?'
+                  onConfirm={() => dispatch(deleteContact(contact.id))}
                   okText='Yes'
                   cancelText='No'>
                   <Icon type='delete' style={{ fontSize: 18 }} />
