@@ -34,7 +34,7 @@ const ContactsList = () => {
       <List
         style={{ width: '70%', textAlign: 'left' }}
         itemLayout='horizontal'
-        pagination={{ pageSize: 10, hideOnSinglePage: true, size: 'small' }}
+        pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
         dataSource={contacts}
         renderItem={contact => {
           return (
