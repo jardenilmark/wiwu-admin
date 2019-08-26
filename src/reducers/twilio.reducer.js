@@ -1,33 +1,33 @@
 import {
-  FETCH_USERS_FAILED,
-  FETCH_USERS_SUCCESS,
-  DELETE_USER_FAILED,
-  DELETE_USER_SUCCESS
-} from '../actions/user/user.constants.js'
+  GET_TWILIO_TOKEN_SUCCESS,
+  GET_TWILIO_TOKEN_FAILED,
+  RESET_TWILIO_TOKEN_SUCCESS,
+  RESET_TWILIO_TOKEN_FAILED
+} from '../actions/twilio/twilio.constants.js'
 import { message } from 'antd'
 
 const initialState = {
-  users: []
+  token: ''
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_USERS_SUCCESS:
+    case GET_TWILIO_TOKEN_SUCCESS:
       return {
         ...state,
-        users: action.payload
+        token: action.payload
       }
-    case FETCH_USERS_FAILED:
+    case GET_TWILIO_TOKEN_FAILED:
       message.error(action.payload, 10)
       return {
         ...state
       }
-    case DELETE_USER_SUCCESS:
-      message.success('User deleted successfully!', 10)
+    case RESET_TWILIO_TOKEN_SUCCESS:
       return {
-        ...state
+        ...state,
+        token: action.payload
       }
-    case DELETE_USER_FAILED:
+    case RESET_TWILIO_TOKEN_FAILED:
       message.error(action.payload, 10)
       return {
         ...state

@@ -1,4 +1,4 @@
-import { SET_AUTH_DETAILS } from './user.constants'
+import { SET_AUTH_DETAILS } from './admin.constants'
 import { createAction } from 'redux-actions'
 
 export const setAuthDetails = (user, loading, authenticated) => {

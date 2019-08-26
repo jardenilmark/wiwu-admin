@@ -1,59 +1,59 @@
 import React from 'react'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Tabs } from 'antd'
 
-import LoginTab from './LoginTab'
-import SignupTab from './SignupTab'
+import SignInTab from './SignInTab'
+import SignUpTab from './SignUpTab'
 import Logo from '../Logo'
 
-const tabList = [
-  {
-    key: 'signIn',
-    tab: 'Sign In'
-  },
-  {
-    key: 'signUp',
-    tab: 'Sign Up'
-  }
-]
-
-const contentList = {
-  signIn: <LoginTab />,
-  signUp: <SignupTab />
-}
+const { TabPane } = Tabs
 
 const AuthScreen = ({ history, location }) => {
   const pathName = location.pathname
   const paths = pathName.split('/')
-  const activeTab = paths.length > 2 ? paths[2] : 'signIn'
+  const activeKey = paths.length > 2 ? paths[2] : 'signIn'
 
   return (
-    <Row
-      style={{ height: '100vh' }}
-      type='flex'
-      justify='center'
-      align='middle'>
+    <Row style={styles.row} type='flex' justify='center' align='middle'>
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
-        <div
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-          <Logo height={90} />
+        <div style={styles.logoWrapper}>
+          <Logo height={120} />
         </div>
-        <Card
-          bordered={false}
-          headStyle={{ textAlign: 'left' }}
-          tabList={tabList}
-          activeTabKey={activeTab}
-          onTabChange={key => {
-            history.push(`/auth/${key}`)
-          }}>
-          {contentList[activeTab]}
+        <Card bordered={false} style={styles.card}>
+          <Tabs
+            activeKey={activeKey}
+            onTabClick={key => history.push(`/auth/${key}`)}
+            tabBarStyle={styles.tabBar}
+            tabBarGutter={15}>
+            <TabPane tab='SIGN IN' key='signIn'>
+              <SignInTab />
+            </TabPane>
+            <TabPane tab='SIGN UP' key='signUp'>
+              <SignUpTab />
+            </TabPane>
+          </Tabs>
         </Card>
       </Col>
     </Row>
   )
+}
+
+const styles = {
+  logoWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  card: {
+    marginTop: -10,
+    backgroundColor: '#f5f5f5'
+  },
+  tabBar: {
+    fontWeight: 'bold',
+    textAlign: 'left'
+  },
+  row: {
+    height: '100vh'
+  }
 }
 
 export default AuthScreen

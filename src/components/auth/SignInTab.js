@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { signIn } from '../../actions/user/signIn.action'
+import { signIn } from '../../actions/admin/signIn.action'
 import { UserSignInSchema } from '../../schema/user.schema'
 
 const initialValues = {
@@ -10,10 +10,11 @@ const initialValues = {
   password: ''
 }
 
-const LoginTab = () => {
+const SignInTab = () => {
   const dispatch = useDispatch()
+
   return (
-    <Card bordered={false}>
+    <Card bordered={false} style={styles.card}>
       <Formik
         initialValues={initialValues}
         validationSchema={UserSignInSchema}
@@ -36,7 +37,7 @@ const LoginTab = () => {
             layout='vertical'
             autoComplete='off'
             hideRequiredMark
-            style={{ textAlign: 'left' }}>
+            style={styles.form}>
             <Form.Item
               label='Email Address'
               help={
@@ -48,7 +49,7 @@ const LoginTab = () => {
                 errors.emailAddress && touched.emailAddress ? 'error' : ''
               }
               required
-              style={{ margin: 0 }}
+              style={styles.input}
               hasFeedback>
               <Input
                 name='emailAddress'
@@ -56,7 +57,7 @@ const LoginTab = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.emailAddress}
-                style={{ margin: 0 }}
+                style={styles.input}
               />
             </Form.Item>
             <Form.Item
@@ -66,7 +67,7 @@ const LoginTab = () => {
                 errors.password && touched.password ? 'error' : ''
               }
               required
-              style={{ margin: 0 }}
+              style={styles.input}
               hasFeedback>
               <Input.Password
                 name='password'
@@ -74,10 +75,10 @@ const LoginTab = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
-                style={{ margin: 0 }}
+                style={styles.input}
               />
             </Form.Item>
-            <Form.Item style={{ textAlign: 'center', margin: 0 }}>
+            <Form.Item style={styles.buttonWrapper}>
               <Button
                 type='primary'
                 htmlType='submit'
@@ -99,7 +100,20 @@ const styles = {
   button: {
     width: '150px',
     marginTop: '15px'
+  },
+  form: {
+    textAlign: 'left'
+  },
+  input: {
+    margin: 0
+  },
+  buttonWrapper: {
+    textAlign: 'center',
+    margin: 0
+  },
+  card: {
+    background: '#f5f5f5'
   }
 }
 
-export default LoginTab
+export default SignInTab

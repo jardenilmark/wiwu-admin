@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Card, Row, Col, Table, Typography, Button, message } from 'antd'
 import Video from 'twilio-video'
 import VideoModal from './VideoModal'
-import { getTwilioToken, resetTwilioToken } from '../actions/user/twilio.action'
+import { getTwilioToken } from '../actions/twilio/getTwilioToken.action'
+import { resetTwilioToken } from '../actions/twilio/resetTwilioToken.action'
 
 const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
-  // note: fix when variable is renamed (user.user)
-  const identity = useSelector(state => state.user.user.email)
-  const token = useSelector(state => state.user.token)
+  const identity = useSelector(state => state.admin.current.email)
+  const token = useSelector(state => state.twilio.token)
   const [roomName, setRoomName] = useState('')
   const [previewTracks, setPreviewTracks] = useState(null)
   const [localMediaAvailable, setLocalMediaAvailable] = useState(false)
@@ -137,7 +137,7 @@ const VideoVerification = () => {
       firstName: 'Luca',
       lastName: 'Brasi',
       phoneNumber: '09773513562',
-      email: 'sample1@email.com'
+      email: 'jevi.lanchinebre@gmail.com'
     },
     {
       firstName: 'Vito',

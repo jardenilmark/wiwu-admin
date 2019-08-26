@@ -1,0 +1,117 @@
+import React, { useEffect, useState, Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchResponders } from '../../actions/responder/fetchResponders.action'
+import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
+import { setClickedResponder } from '../../actions/responder/setClickedResponder.action'
+import { deleteResponder } from '../../actions/responder/deleteResponder.action'
+import { statuses } from '../../constants/User'
+import { List, Avatar, Icon, Tooltip, Tag, Popconfirm, Spin } from 'antd'
+
+import EditResponderModal from './EditResponderModal'
+
+const RespondersList = () => {
+  const dispatch = useDispatch()
+  const responders = useSelector(state => state.responder.responders)
+  const [fetching, setFetchingStatus] = useState(true)
+
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(fetchResponders())
+      setFetchingStatus(false)
+    }
+
+    fetchData()
+  }, [])
+
+  if (fetching) {
+    return (
+      <div style={styles.spinnerWrapper}>
+        <Spin
+          indicator={<Icon type='loading' style={styles.indicator} spin />}
+          tip={<span style={styles.tip}>Fetching responders...</span>}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div style={styles.listWrapper}>
+      <EditResponderModal />
+      <List
+        style={{ width: '70%', textAlign: 'left' }}
+        itemLayout='horizontal'
+        pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
+        dataSource={responders}
+        renderItem={responder => {
+          const color = responder.status === statuses.ACTIVE ? 'green' : 'red'
+          return (
+            <List.Item
+              actions={[
+                <Tooltip placement='top' title='Edit Responder'>
+                  <Icon
+                    type='edit'
+                    style={{ fontSize: 18 }}
+                    onClick={() => {
+                      dispatch(setClickedResponder(responder))
+                      dispatch(toggleEditModal())
+                    }}
+                  />
+                </Tooltip>,
+                <Popconfirm
+                  placement='top'
+                  title='Are you sure you want to delete this responder?'
+                  onConfirm={() => dispatch(deleteResponder(responder.id))}
+                  okText='Yes'
+                  cancelText='No'>
+                  <Icon type='delete' style={{ fontSize: 18 }} />
+                </Popconfirm>
+              ]}>
+              <List.Item.Meta
+                avatar={
+                  <Avatar
+                    src={require('../../assets/images/user-avatar.png')}
+                  />
+                }
+                title={
+                  <b>
+                    {responder.firstName} {responder.lastName} |{' '}
+                    <Tag color={color}>{responder.status.toUpperCase()}</Tag>
+                  </b>
+                }
+                description={
+                  <Fragment>
+                    <span>{responder.department}</span>
+                    <br />
+                    <span>{responder.phoneNumber}</span>
+                  </Fragment>
+                }
+              />
+            </List.Item>
+          )
+        }}
+      />
+    </div>
+  )
+}
+
+const styles = {
+  listWrapper: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  spinnerWrapper: {
+    height: 700,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  indicator: {
+    fontSize: 40,
+    marginBottom: 15
+  },
+  tip: {
+    fontSize: 16
+  }
+}
+
+export default RespondersList
