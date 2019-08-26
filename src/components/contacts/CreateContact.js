@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
 import { useDispatch } from 'react-redux'
-import { ResponderSignUpSchema } from '../../schema/user.schema'
+import { ContactSchema } from '../../schema/contact.schema'
 import { createContact } from '../../actions/contact/createContact.action'
 import { Form, Input, Button, Select } from 'antd'
 
@@ -19,7 +19,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
     <div style={styles.formWrapper}>
       <Formik
         initialValues={initialValues}
-        // validationSchema={ResponderSignUpSchema}
+        validationSchema={ContactSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(createContact(values))
           setSubmitting(false)
@@ -46,12 +46,8 @@ const CreateContact = ({ setDrawerVisibility }) => {
               style={styles.form}>
               <Form.Item
                 label='Name'
-                // help={
-                //   errors.firstName && touched.firstName ? errors.firstName : ''
-                // }
-                // validateStatus={
-                //   errors.firstName && touched.firstName ? 'error' : ''
-                // }
+                help={errors.name && touched.name ? errors.name : ''}
+                validateStatus={errors.name && touched.name ? 'error' : ''}
                 required
                 style={styles.input}
                 hasFeedback>
@@ -67,12 +63,10 @@ const CreateContact = ({ setDrawerVisibility }) => {
               </Form.Item>
               <Form.Item
                 label='Address'
-                // help={
-                //   errors.lastName && touched.lastName ? errors.lastName : ''
-                // }
-                // validateStatus={
-                //   errors.lastName && touched.lastName ? 'error' : ''
-                // }
+                help={errors.address && touched.address ? errors.address : ''}
+                validateStatus={
+                  errors.address && touched.address ? 'error' : ''
+                }
                 required
                 style={styles.input}
                 hasFeedback>
@@ -88,14 +82,14 @@ const CreateContact = ({ setDrawerVisibility }) => {
               </Form.Item>
               <Form.Item
                 label='Department'
-                // help={
-                //   errors.department && touched.department
-                //     ? errors.department
-                //     : ''
-                // }
-                // validateStatus={
-                //   errors.department && touched.department ? 'error' : ''
-                // }
+                help={
+                  errors.department && touched.department
+                    ? errors.department
+                    : ''
+                }
+                validateStatus={
+                  errors.department && touched.department ? 'error' : ''
+                }
                 required
                 style={styles.input}
                 hasFeedback>
@@ -103,6 +97,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   name='department'
                   placeholder='e.g. Medical'
                   disabled={isSubmitting}
+                  onBlur={handleBlur}
                   onChange={value => setFieldValue('department', value)}
                   value={values.department}>
                   <Option value='medical'>Medical</Option>
@@ -138,7 +133,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
                             icon='close'
                             disabled={isSubmitting}
                             style={{ float: 'right', marginLeft: 10 }}
-                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                            onClick={() => arrayHelpers.remove(index)}
                           />
                         </div>
                       ))}

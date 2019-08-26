@@ -3,15 +3,15 @@ import { Formik, FieldArray } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { editContact } from '../../actions/contact/editContact.action'
 import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
+import { ContactSchema } from '../../schema/contact.schema'
 import { Form, Input, Button, Select, Modal } from 'antd'
 
 const { Option } = Select
 
-const EditResponder = () => {
+const EditContact = () => {
   const dispatch = useDispatch()
   const contact = useSelector(state => state.contact.clickedContact)
   const visible = useSelector(state => state.contact.editModalVisibility)
-  console.log('contact', contact)
   return (
     <Modal
       centered={true}
@@ -23,7 +23,7 @@ const EditResponder = () => {
       onCancel={() => dispatch(toggleEditModal())}>
       <Formik
         initialValues={contact}
-        // validationSchema={ResponderSignUpSchema}
+        validationSchema={ContactSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(editContact(values, contact.id))
           resetForm()
@@ -50,12 +50,8 @@ const EditResponder = () => {
               style={styles.form}>
               <Form.Item
                 label='Name'
-                // help={
-                //   errors.firstName && touched.firstName ? errors.firstName : ''
-                // }
-                // validateStatus={
-                //   errors.firstName && touched.firstName ? 'error' : ''
-                // }
+                help={errors.name && touched.name ? errors.name : ''}
+                validateStatus={errors.name && touched.name ? 'error' : ''}
                 required
                 style={styles.input}
                 hasFeedback>
@@ -71,12 +67,10 @@ const EditResponder = () => {
               </Form.Item>
               <Form.Item
                 label='Address'
-                // help={
-                //   errors.lastName && touched.lastName ? errors.lastName : ''
-                // }
-                // validateStatus={
-                //   errors.lastName && touched.lastName ? 'error' : ''
-                // }
+                help={errors.address && touched.address ? errors.address : ''}
+                validateStatus={
+                  errors.address && touched.address ? 'error' : ''
+                }
                 required
                 style={styles.input}
                 hasFeedback>
@@ -92,14 +86,14 @@ const EditResponder = () => {
               </Form.Item>
               <Form.Item
                 label='Department'
-                // help={
-                //   errors.department && touched.department
-                //     ? errors.department
-                //     : ''
-                // }
-                // validateStatus={
-                //   errors.department && touched.department ? 'error' : ''
-                // }
+                help={
+                  errors.department && touched.department
+                    ? errors.department
+                    : ''
+                }
+                validateStatus={
+                  errors.department && touched.department ? 'error' : ''
+                }
                 required
                 style={styles.input}
                 hasFeedback>
@@ -193,4 +187,4 @@ const styles = {
   }
 }
 
-export default EditResponder
+export default EditContact

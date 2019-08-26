@@ -3,7 +3,7 @@ import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { roles } from '../../constants/User'
-import { AdminSignUpSchema } from '../../schema/user.schema'
+import { SignInAdminSchema } from '../../schema/admin.schema'
 import { signUp } from '../../actions/admin/signUp.action'
 
 const initialValues = {
@@ -20,7 +20,7 @@ const SignUpTab = () => {
     <Card bordered={false} style={styles.card}>
       <Formik
         initialValues={initialValues}
-        validationSchema={AdminSignUpSchema}
+        validationSchema={SignInAdminSchema}
         onSubmit={async (values, { setSubmitting }) => {
           await dispatch(signUp({ ...values, role: roles.ADMIN }))
           setSubmitting(false)
