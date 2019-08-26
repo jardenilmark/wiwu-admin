@@ -10,6 +10,7 @@ import Spinner from '../Spinner'
 const UsersList = () => {
   const dispatch = useDispatch()
   const users = useSelector(state => state.user.users)
+  const filteredUsers = useSelector(state => state.user.filteredUsers)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const UsersList = () => {
         style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 10, hideOnSinglePage: true, size: 'small' }}
-        dataSource={users}
+        dataSource={filteredUsers ? filteredUsers : users}
         renderItem={user => {
           const color = user.status === statuses.ACTIVE ? 'green' : 'red'
           return (

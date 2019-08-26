@@ -2,12 +2,14 @@ import {
   FETCH_USERS_FAILED,
   FETCH_USERS_SUCCESS,
   DELETE_USER_FAILED,
-  DELETE_USER_SUCCESS
+  DELETE_USER_SUCCESS,
+  SEARCH_USERS
 } from '../actions/user/user.constants.js'
 import { message } from 'antd'
 
 const initialState = {
-  users: []
+  users: [],
+  filteredUsers: null
 }
 
 export default function reducer(state = initialState, action) {
@@ -31,6 +33,11 @@ export default function reducer(state = initialState, action) {
       message.error(action.payload, 10)
       return {
         ...state
+      }
+    case SEARCH_USERS:
+      return {
+        ...state,
+        filteredUsers: action.payload
       }
     default:
       return {

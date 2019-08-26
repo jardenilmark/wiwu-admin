@@ -13,6 +13,9 @@ import Spinner from '../Spinner'
 const RespondersList = () => {
   const dispatch = useDispatch()
   const responders = useSelector(state => state.responder.responders)
+  const filteredResponders = useSelector(
+    state => state.responder.filteredResponders
+  )
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
@@ -35,7 +38,7 @@ const RespondersList = () => {
         style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-        dataSource={responders}
+        dataSource={filteredResponders ? filteredResponders : responders}
         renderItem={responder => {
           const color = responder.status === statuses.ACTIVE ? 'green' : 'red'
           return (

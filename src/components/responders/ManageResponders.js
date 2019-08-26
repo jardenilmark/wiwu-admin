@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Layout, Drawer, Button, Input } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { searchResponders } from '../../actions/responder/searchResponders'
 
 import CreateResponder from './CreateResponder'
 import RespondersList from './RespondersList'
@@ -7,7 +9,10 @@ import RespondersList from './RespondersList'
 const { Search } = Input
 
 const ManageResponders = () => {
+  const dispatch = useDispatch()
+  const responders = useSelector(state => state.responder.responders)
   const [drawerVisibility, setDrawerVisibility] = useState(false)
+
   return (
     <Layout.Content style={styles.content}>
       <Drawer
@@ -24,7 +29,7 @@ const ManageResponders = () => {
       <div style={styles.wrapper}>
         <Search
           placeholder='Search responder admins...'
-          onSearch={value => console.log(value)}
+          onSearch={value => dispatch(searchResponders(responders, value))}
           style={{ width: 300 }}
         />
         <Button
