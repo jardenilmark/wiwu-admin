@@ -32,7 +32,7 @@ const RespondersList = () => {
     <div style={styles.listWrapper}>
       <EditResponderModal />
       <List
-        style={{ width: '70%', textAlign: 'left' }}
+        style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
         dataSource={responders}
@@ -92,6 +92,10 @@ const styles = {
   listWrapper: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  list: {
+    width: '70%',
+    textAlign: 'left'
   }
 }
 

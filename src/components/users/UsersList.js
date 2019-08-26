@@ -28,7 +28,7 @@ const UsersList = () => {
   return (
     <div style={styles.listWrapper}>
       <List
-        style={{ width: '70%', textAlign: 'left' }}
+        style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 10, hideOnSinglePage: true, size: 'small' }}
         dataSource={users}
@@ -76,6 +76,10 @@ const styles = {
   listWrapper: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  list: {
+    width: '70%',
+    textAlign: 'left'
   }
 }
 

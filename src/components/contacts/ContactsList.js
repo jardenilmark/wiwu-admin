@@ -2,9 +2,12 @@ import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchContacts } from '../../actions/contact/fetchContacts.action'
 import { deleteContact } from '../../actions/contact/deleteContact.action'
-import { List, Avatar, Icon, Popconfirm } from 'antd'
+import { setClickedContact } from '../../actions/contact/setClickedContact.action'
+import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
+import { List, Avatar, Icon, Popconfirm, Tooltip } from 'antd'
 
 import Spinner from '../Spinner'
+import EditContactModal from './EditContactModal'
 
 const ContactsList = () => {
   const dispatch = useDispatch()
@@ -26,8 +29,9 @@ const ContactsList = () => {
 
   return (
     <div style={styles.listWrapper}>
+      <EditContactModal />
       <List
-        style={{ width: '70%', textAlign: 'left' }}
+        style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
         dataSource={contacts}
@@ -35,6 +39,16 @@ const ContactsList = () => {
           return (
             <List.Item
               actions={[
+                <Tooltip placement='top' title='Edit Contact'>
+                  <Icon
+                    type='edit'
+                    style={{ fontSize: 18 }}
+                    onClick={() => {
+                      dispatch(setClickedContact(contact))
+                      dispatch(toggleEditModal())
+                    }}
+                  />
+                </Tooltip>,
                 <Popconfirm
                   placement='top'
                   title='Are you sure you want to delete this contact?'
@@ -72,6 +86,10 @@ const styles = {
   listWrapper: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  list: {
+    width: '70%',
+    textAlign: 'left'
   }
 }
 

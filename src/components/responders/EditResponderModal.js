@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { UserEditSchema } from '../../schema/user.schema'
 import { editResponder } from '../../actions/responder/editResponder.action'
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
-import { fetchResponders } from '../../actions/responder/fetchResponders.action'
 import { Form, Input, Button, Select, Modal } from 'antd'
 
 const { Option } = Select
@@ -30,7 +29,6 @@ const EditResponder = () => {
           await dispatch(editResponder(values, responder.id))
           setSubmitting(false)
           dispatch(toggleEditModal())
-          dispatch(fetchResponders())
         }}>
         {({
           values,
