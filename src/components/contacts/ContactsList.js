@@ -12,6 +12,7 @@ import EditContactModal from './EditContactModal'
 const ContactsList = () => {
   const dispatch = useDispatch()
   const contacts = useSelector(state => state.contact.contacts)
+  const filteredContacts = useSelector(state => state.contact.filteredContacts)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const ContactsList = () => {
         style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-        dataSource={contacts}
+        dataSource={filteredContacts ? filteredContacts : contacts}
         renderItem={contact => {
           return (
             <List.Item

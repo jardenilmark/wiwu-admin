@@ -8,14 +8,16 @@ import {
   EDIT_CONTACT_FAILED,
   EDIT_CONTACT_SUCCESS,
   TOGGLE_EDIT_MODAL,
-  SET_CLICKED_CONTACT
+  SET_CLICKED_CONTACT,
+  SEARCH_CONTACTS
 } from '../actions/contact/contact.constants'
 import { message } from 'antd'
 
 const initialState = {
   clickedContact: null,
   editModalVisibility: false,
-  contacts: []
+  contacts: [],
+  filteredContacts: null
 }
 
 export default function reducer(state = initialState, action) {
@@ -69,6 +71,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         clickedContact: action.payload
+      }
+    case SEARCH_CONTACTS:
+      return {
+        ...state,
+        filteredContacts: action.payload
       }
     default:
       return {

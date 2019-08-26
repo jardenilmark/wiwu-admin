@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Layout, Input, Button, Drawer } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { searchContacts } from '../../actions/contact/searchContacts.action'
 
 import ContactsList from './ContactsList'
 import CreateContact from './CreateContact'
@@ -7,6 +9,8 @@ import CreateContact from './CreateContact'
 const { Search } = Input
 
 const Responders = () => {
+  const dispatch = useDispatch()
+  const contacts = useSelector(state => state.contact.contacts)
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
@@ -25,7 +29,7 @@ const Responders = () => {
       <div style={styles.wrapper}>
         <Search
           placeholder='Search contacts...'
-          onSearch={value => console.log(value)}
+          onSearch={value => dispatch(searchContacts(contacts, value))}
           style={{ width: 300 }}
         />
         <Button
