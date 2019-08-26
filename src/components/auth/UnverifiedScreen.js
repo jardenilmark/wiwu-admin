@@ -6,14 +6,10 @@ import Logo from '../Logo'
 
 const { Meta } = Card
 
-const VerifyScreen = () => {
+const UnverifiedScreen = () => {
   const dispatch = useDispatch()
   return (
-    <Row
-      style={{ height: '100vh' }}
-      type='flex'
-      justify='center'
-      align='middle'>
+    <Row style={styles.row} type='flex' justify='center' align='middle'>
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
         <div style={styles.logoWrapper}>
           <Logo height={90} />
@@ -45,7 +41,10 @@ const styles = {
   },
   card: {
     backgroundColor: '#f5f5f5'
+  },
+  row: {
+    height: '100vh'
   }
 }
 
-export default VerifyScreen
+export default UnverifiedScreen

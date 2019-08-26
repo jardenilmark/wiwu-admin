@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import AuthScreen from '../auth/AuthScreen'
-import VerifyScreen from '../auth/VerifyScreen'
+import UnverifiedScreen from '../auth/UnverifiedScreen'
 
 const AuthRoute = props => {
   const authenticated = useSelector(state => state.admin.authenticated)
@@ -19,7 +19,7 @@ const AuthRoute = props => {
           if (user && user.emailVerified) {
             return <Redirect to='/' />
           } else {
-            return <VerifyScreen />
+            return <UnverifiedScreen />
           }
         }
       }}
