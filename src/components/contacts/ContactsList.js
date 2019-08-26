@@ -2,7 +2,9 @@ import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchContacts } from '../../actions/contact/fetchContacts.action'
 import { deleteContact } from '../../actions/contact/deleteContact.action'
-import { List, Avatar, Icon, Popconfirm, Spin } from 'antd'
+import { List, Avatar, Icon, Popconfirm } from 'antd'
+
+import Spinner from '../Spinner'
 
 const ContactsList = () => {
   const dispatch = useDispatch()
@@ -19,14 +21,7 @@ const ContactsList = () => {
   }, [])
 
   if (fetching) {
-    return (
-      <div style={styles.spinnerWrapper}>
-        <Spin
-          indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<span style={styles.tip}>Fetching contacts...</span>}
-        />
-      </div>
-    )
+    return <Spinner tip='Fetching Contacts...' />
   }
 
   return (
@@ -52,7 +47,7 @@ const ContactsList = () => {
               <List.Item.Meta
                 avatar={
                   <Avatar
-                    src={require('../../assets/images/medical.png')}
+                    src={require(`../../assets/images/${contact.department}.png`)}
                     size={45}
                   />
                 }
@@ -77,19 +72,6 @@ const styles = {
   listWrapper: {
     display: 'flex',
     justifyContent: 'center'
-  },
-  spinnerWrapper: {
-    height: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  indicator: {
-    fontSize: 40,
-    marginBottom: 15
-  },
-  tip: {
-    fontSize: 16
   }
 }
 

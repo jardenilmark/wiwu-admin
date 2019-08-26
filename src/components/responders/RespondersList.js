@@ -5,9 +5,10 @@ import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
 import { setClickedResponder } from '../../actions/responder/setClickedResponder.action'
 import { deleteResponder } from '../../actions/responder/deleteResponder.action'
 import { statuses } from '../../constants/User'
-import { List, Avatar, Icon, Tooltip, Tag, Popconfirm, Spin } from 'antd'
+import { List, Avatar, Icon, Tooltip, Tag, Popconfirm } from 'antd'
 
 import EditResponderModal from './EditResponderModal'
+import Spinner from '../Spinner'
 
 const RespondersList = () => {
   const dispatch = useDispatch()
@@ -24,14 +25,7 @@ const RespondersList = () => {
   }, [])
 
   if (fetching) {
-    return (
-      <div style={styles.spinnerWrapper}>
-        <Spin
-          indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<span style={styles.tip}>Fetching responders...</span>}
-        />
-      </div>
-    )
+    return <Spinner tip='Fetching Responders...' />
   }
 
   return (
@@ -98,19 +92,6 @@ const styles = {
   listWrapper: {
     display: 'flex',
     justifyContent: 'center'
-  },
-  spinnerWrapper: {
-    height: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  indicator: {
-    fontSize: 40,
-    marginBottom: 15
-  },
-  tip: {
-    fontSize: 16
   }
 }
 

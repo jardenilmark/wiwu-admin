@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchUsers } from '../../actions/user/fetchUsers.action'
 import { deleteUser } from '../../actions/user/deleteUser.action'
 import { statuses } from '../../constants/User'
-import { List, Avatar, Icon, Tag, Popconfirm, Spin } from 'antd'
+import { List, Avatar, Icon, Tag, Popconfirm } from 'antd'
+
+import Spinner from '../Spinner'
 
 const UsersList = () => {
   const dispatch = useDispatch()
@@ -20,14 +22,7 @@ const UsersList = () => {
   }, [])
 
   if (fetching) {
-    return (
-      <div style={styles.spinnerWrapper}>
-        <Spin
-          indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<span style={styles.tip}>Fetching users...</span>}
-        />
-      </div>
-    )
+    return <Spinner tip='Fetching Users...' />
   }
 
   return (
@@ -81,19 +76,6 @@ const styles = {
   listWrapper: {
     display: 'flex',
     justifyContent: 'center'
-  },
-  spinnerWrapper: {
-    height: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  indicator: {
-    fontSize: 40,
-    marginBottom: 15
-  },
-  tip: {
-    fontSize: 16
   }
 }
 
