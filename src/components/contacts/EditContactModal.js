@@ -1,30 +1,34 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { editContact } from '../../actions/contact/editContact.action'
+import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
 import { ContactSchema } from '../../schema/contact.schema'
-import { createContact } from '../../actions/contact/createContact.action'
-import { Form, Input, Button, Select } from 'antd'
+import { Form, Input, Button, Select, Modal } from 'antd'
 
 const { Option } = Select
 
-const initialValues = {
-  name: '',
-  address: '',
-  numbers: ['']
-}
-
-const CreateContact = ({ setDrawerVisibility }) => {
+const EditContact = () => {
   const dispatch = useDispatch()
+  const contact = useSelector(state => state.contact.clickedContact)
+  const visible = useSelector(state => state.contact.editModalVisibility)
   return (
-    <div style={styles.formWrapper}>
+    <Modal
+      centered={true}
+      visible={visible}
+      footer={null}
+      destroyOnClose={true}
+      maskClosable={false}
+      title='Update Contact'
+      onCancel={() => dispatch(toggleEditModal())}>
       <Formik
-        initialValues={initialValues}
+        initialValues={contact}
         validationSchema={ContactSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await dispatch(createContact(values))
+          await dispatch(editContact(values, contact.id))
+          resetForm()
           setSubmitting(false)
-          resetForm(initialValues)
-          setDrawerVisibility(false)
+          dispatch(toggleEditModal())
         }}>
         {({
           values,
@@ -97,7 +101,6 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   name='department'
                   placeholder='e.g. Medical'
                   disabled={isSubmitting}
-                  onBlur={handleBlur}
                   onChange={value => setFieldValue('department', value)}
                   value={values.department}>
                   <Option value='medical'>Medical</Option>
@@ -162,7 +165,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
           )
         }}
       </Formik>
-    </div>
+    </Modal>
   )
 }
 
@@ -173,7 +176,7 @@ const styles = {
   },
   form: {
     textAlign: 'left',
-    width: '500px'
+    width: '100%'
   },
   input: {
     margin: 0
@@ -181,11 +184,7 @@ const styles = {
   buttonWrapper: {
     textAlign: 'center',
     margin: 0
-  },
-  formWrapper: {
-    display: 'flex',
-    justifyContent: 'center'
   }
 }
 
-export default CreateContact
+export default EditContact

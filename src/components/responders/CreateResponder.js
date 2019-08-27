@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { ResponderSignUpSchema } from '../../schema/user.schema'
+import { CreateResponderSchema } from '../../schema/responder.schema'
 import { createResponder } from '../../actions/responder/createResponder.action'
 import { Form, Input, Button, Select } from 'antd'
 
@@ -22,7 +22,7 @@ const CreateResponder = ({ setDrawerVisibility }) => {
     <div style={styles.formWrapper}>
       <Formik
         initialValues={initialValues}
-        validationSchema={ResponderSignUpSchema}
+        validationSchema={CreateResponderSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           await dispatch(createResponder(values))
           setSubmitting(false)

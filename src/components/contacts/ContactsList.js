@@ -2,11 +2,17 @@ import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchContacts } from '../../actions/contact/fetchContacts.action'
 import { deleteContact } from '../../actions/contact/deleteContact.action'
-import { List, Avatar, Icon, Popconfirm, Spin } from 'antd'
+import { setClickedContact } from '../../actions/contact/setClickedContact.action'
+import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
+import { List, Avatar, Icon, Popconfirm, Tooltip } from 'antd'
+
+import Spinner from '../Spinner'
+import EditContactModal from './EditContactModal'
 
 const ContactsList = () => {
   const dispatch = useDispatch()
   const contacts = useSelector(state => state.contact.contacts)
+  const filteredContacts = useSelector(state => state.contact.filteredContacts)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
@@ -19,27 +25,31 @@ const ContactsList = () => {
   }, [])
 
   if (fetching) {
-    return (
-      <div style={styles.spinnerWrapper}>
-        <Spin
-          indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<span style={styles.tip}>Fetching contacts...</span>}
-        />
-      </div>
-    )
+    return <Spinner tip='Fetching Contacts...' />
   }
 
   return (
     <div style={styles.listWrapper}>
+      <EditContactModal />
       <List
-        style={{ width: '70%', textAlign: 'left' }}
+        style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-        dataSource={contacts}
+        dataSource={filteredContacts ? filteredContacts : contacts}
         renderItem={contact => {
           return (
             <List.Item
               actions={[
+                <Tooltip placement='top' title='Edit Contact'>
+                  <Icon
+                    type='edit'
+                    style={{ fontSize: 18 }}
+                    onClick={() => {
+                      dispatch(setClickedContact(contact))
+                      dispatch(toggleEditModal())
+                    }}
+                  />
+                </Tooltip>,
                 <Popconfirm
                   placement='top'
                   title='Are you sure you want to delete this contact?'
@@ -52,7 +62,7 @@ const ContactsList = () => {
               <List.Item.Meta
                 avatar={
                   <Avatar
-                    src={require('../../assets/images/medical.png')}
+                    src={require(`../../assets/images/${contact.department}.png`)}
                     size={45}
                   />
                 }
@@ -78,18 +88,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'center'
   },
-  spinnerWrapper: {
-    height: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  indicator: {
-    fontSize: 40,
-    marginBottom: 15
-  },
-  tip: {
-    fontSize: 16
+  list: {
+    width: '70%',
+    textAlign: 'left'
   }
 }
 

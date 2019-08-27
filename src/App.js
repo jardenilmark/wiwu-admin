@@ -9,6 +9,7 @@ import './App.css'
 import AuthRoute from './components/routes/AuthRoute'
 import PrivateRoute from './components/routes/PrivateRoute'
 import AdminPage from './components/AdminPage'
+import Spinner from './components/Spinner'
 
 const App = props => {
   const dispatch = useDispatch()
@@ -25,14 +26,7 @@ const App = props => {
   })
 
   if (loading) {
-    return (
-      <div style={styles.spinnerWrapper}>
-        <Spin
-          indicator={<Icon type='loading' style={styles.indicator} spin />}
-          tip={<span style={styles.tip}>Please wait for a while...</span>}
-        />
-      </div>
-    )
+    return <Spinner tip='Please wait for a while...' />
   }
 
   return (
@@ -41,23 +35,6 @@ const App = props => {
       <AuthRoute path='/auth' />
     </div>
   )
-}
-
-const styles = {
-  spinnerWrapper: {
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  indicator: {
-    fontSize: 40,
-    marginBottom: 15
-  },
-  tip: {
-    fontSize: 16
-  }
 }
 
 export default App

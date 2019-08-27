@@ -1,10 +1,9 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { UserEditSchema } from '../../schema/user.schema'
+import { EditResponderSchema } from '../../schema/responder.schema'
 import { editResponder } from '../../actions/responder/editResponder.action'
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
-import { fetchResponders } from '../../actions/responder/fetchResponders.action'
 import { Form, Input, Button, Select, Modal } from 'antd'
 
 const { Option } = Select
@@ -25,12 +24,11 @@ const EditResponder = () => {
       <Formik
         enableReinitialize={true}
         initialValues={responder}
-        validationSchema={UserEditSchema}
+        validationSchema={EditResponderSchema}
         onSubmit={async (values, { setSubmitting }) => {
           await dispatch(editResponder(values, responder.id))
           setSubmitting(false)
           dispatch(toggleEditModal())
-          dispatch(fetchResponders())
         }}>
         {({
           values,

@@ -6,7 +6,7 @@ const NoMatch = () => {
     <div style={styles.wrapper}>
       <Result
         status='404'
-        title='404: Page not Found'
+        title='404: Page not found'
         subTitle='Sorry, the page you visited does not exist.'
       />
     </div>
