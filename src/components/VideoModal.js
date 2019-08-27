@@ -11,7 +11,6 @@ const VideoModal = ({
   leaveRoom,
   remoteMediaAvailable
 }) => {
-  console.log('record', record)
   const showLocalTrack = localMediaAvailable ? (
     <div className='flex-item'>
       <div ref={localMedia} />

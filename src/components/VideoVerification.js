@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Card, Row, Col, Table, Typography, Button, message } from 'antd'
+import { Row, Col, Table, Button, message } from 'antd'
 import Video from 'twilio-video'
 import VideoModal from './VideoModal'
 import { getTwilioToken } from '../actions/twilio/getTwilioToken.action'
@@ -8,7 +8,7 @@ import { resetTwilioToken } from '../actions/twilio/resetTwilioToken.action'
 
 const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
-  // todo change to admin.current.displayName
+  // todo change to admin.current.displayName or something
   const identity = 'Jess'
   const token = useSelector(state => state.twilio.token)
   const [roomName, setRoomName] = useState('')
@@ -20,6 +20,7 @@ const VideoVerification = () => {
   const [activeRoom, setActiveRoom] = useState(null)
   const [remoteMedia, setRemoteMedia] = useState(createRef())
   const [remoteMediaAvailable, setRemoteMediaAvailable] = useState(false)
+  const [record, setRecord] = useState({})
   const dispatch = useDispatch()
   useEffect(() => {
     if (hasLeftRoom) {
@@ -133,7 +134,21 @@ const VideoVerification = () => {
     detachTracks(tracks)
   }
 
-  const { Title } = Typography
+  const renderActions = (text, record) => (
+    <span>
+      <Button
+        type='primary'
+        icon='video-camera'
+        onClick={() => {
+          setRoomName(record.email)
+          setRecord(record)
+          dispatch(getTwilioToken(identity, record.email))
+        }}>
+        Join Video Chat
+      </Button>
+    </span>
+  )
+
   const sampleData = [
     {
       firstName: 'Luca',
@@ -167,46 +182,31 @@ const VideoVerification = () => {
     {
       title: 'Actions',
       key: 'actions',
-      render: function renderActions(text, record) {
-        return (
-          <span>
-            <Button
-              type='primary'
-              icon='video-camera'
-              onClick={() => {
-                setRoomName(record.email)
-                dispatch(getTwilioToken(identity, record.email))
-              }}>
-              Join Video Chat
-            </Button>
-            <VideoModal
-              record={record}
-              isModalVisible={isModalVisible}
-              localMediaAvailable={localMediaAvailable}
-              localMedia={localMedia}
-              remoteMedia={remoteMedia}
-              leaveRoom={leaveRoom}
-              remoteMediaAvailable={remoteMediaAvailable}
-            />
-          </span>
-        )
-      }
+      render: (text, record) => renderActions(text, record)
     }
   ]
   return (
-    <Card>
-      <Row style={{ margin: '8px' }}>
-        <Col span={4}>
-          <Title level={4}>Video Verification</Title>
-        </Col>
-        <Col span={20} />
-      </Row>
+    <div>
       <Row style={{ margin: '8px' }}>
         <Col span={24}>
-          <Table dataSource={sampleData} columns={columns} rowKey='email' />
+          <Table
+            dataSource={sampleData}
+            columns={columns}
+            rowKey='email'
+            title={() => 'Pending Verifications'}
+          />
         </Col>
       </Row>
-    </Card>
+      <VideoModal
+        record={record}
+        isModalVisible={isModalVisible}
+        localMediaAvailable={localMediaAvailable}
+        localMedia={localMedia}
+        remoteMedia={remoteMedia}
+        leaveRoom={leaveRoom}
+        remoteMediaAvailable={remoteMediaAvailable}
+      />
+    </div>
   )
 }
 
