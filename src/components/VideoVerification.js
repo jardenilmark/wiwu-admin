@@ -8,18 +8,19 @@ import { resetTwilioToken } from '../actions/twilio/resetTwilioToken.action'
 
 const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
-  const identity = useSelector(state => state.admin.current.email)
+  // todo change to admin.current.displayName
+  const identity = 'Jess'
   const token = useSelector(state => state.twilio.token)
   const [roomName, setRoomName] = useState('')
   const [previewTracks, setPreviewTracks] = useState(null)
+  const [localMedia, setLocalMedia] = useState(createRef())
   const [localMediaAvailable, setLocalMediaAvailable] = useState(false)
   const [hasJoinedRoom, setHasJoinedRoom] = useState(false)
   const [hasLeftRoom, setHasLeftRoom] = useState(false)
   const [activeRoom, setActiveRoom] = useState(null)
-  const [localMedia, setLocalMedia] = useState(createRef())
   const [remoteMedia, setRemoteMedia] = useState(createRef())
+  const [remoteMediaAvailable, setRemoteMediaAvailable] = useState(false)
   const dispatch = useDispatch()
-
   useEffect(() => {
     if (hasLeftRoom) {
       setHasLeftRoom(false)
@@ -36,15 +37,15 @@ const VideoVerification = () => {
       setActiveRoom(room)
       setLocalMediaAvailable(true)
       setHasJoinedRoom(true)
-      const previewContainer = localMedia.current
       if (localMedia) {
-        attachParticipantTracks(room.localParticipant, previewContainer)
+        attachParticipantTracks(room.localParticipant, localMedia.current)
       }
       room.participants.forEach(participant => {
         // todo: replace this
         console.log(`Already in room ${participant.identity}`)
-        const previewContainer = remoteMedia
-        attachParticipantTracks(participant, previewContainer)
+        if (remoteMedia) {
+          attachParticipantTracks(participant, remoteMedia.current)
+        }
       })
       room.on('participantConnected', participant => {
         // todo: replace this
@@ -53,8 +54,9 @@ const VideoVerification = () => {
       room.on('trackAdded', (track, participant) => {
         // todo: replace this
         console.log(`${participant.identity} added track: ${track.kind}`)
-        const previewContainer = remoteMedia
-        attachTracks([track], previewContainer)
+        if (remoteMedia) {
+          attachTracks([track], remoteMedia.current)
+        }
       })
       room.on('trackRemoved', (track, participant) => {
         // todo: replace this
@@ -137,13 +139,13 @@ const VideoVerification = () => {
       firstName: 'Luca',
       lastName: 'Brasi',
       phoneNumber: '09773513562',
-      email: 'jevi.lanchinebre@gmail.com'
+      email: 'jvcl122@gmail.com'
     },
     {
       firstName: 'Vito',
       lastName: 'Corleone',
       phoneNumber: '09773513562',
-      email: 'sample2@email.com'
+      email: 'jvcl1225@gmail.com'
     }
   ]
   const columns = [
@@ -184,13 +186,13 @@ const VideoVerification = () => {
               localMedia={localMedia}
               remoteMedia={remoteMedia}
               leaveRoom={leaveRoom}
+              remoteMediaAvailable={remoteMediaAvailable}
             />
           </span>
         )
       }
     }
   ]
-
   return (
     <Card>
       <Row style={{ margin: '8px' }}>

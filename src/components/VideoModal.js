@@ -8,14 +8,23 @@ const VideoModal = ({
   localMediaAvailable,
   localMedia,
   remoteMedia,
-  leaveRoom
+  leaveRoom,
+  remoteMediaAvailable
 }) => {
+  console.log('record', record)
   const showLocalTrack = localMediaAvailable ? (
     <div className='flex-item'>
       <div ref={localMedia} />
     </div>
   ) : (
-    <Spin size='large' tip='Connecting Video...' />
+    <Spin size='large' tip='...Connecting Local Video...' />
+  )
+  const showRemoteTrack = remoteMediaAvailable ? (
+    <div className='flex-item'>
+      <div ref={remoteMedia} />
+    </div>
+  ) : (
+    <Spin size='large' tip='...Connecting Remote Video...' />
   )
   return (
     <span>
@@ -46,9 +55,7 @@ const VideoModal = ({
           </Button>
         ]}>
         {showLocalTrack}
-        <div className='flex-item'>
-          <div ref={remoteMedia} />
-        </div>
+        {showRemoteTrack}
         <Descriptions title='User Info' bordered size='small' layout='vertical'>
           <Descriptions.Item label='First Name'>
             {record.firstName}
