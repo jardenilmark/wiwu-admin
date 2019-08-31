@@ -10,7 +10,7 @@ const { Search } = Input
 
 const ManageResponders = () => {
   const dispatch = useDispatch()
-  const responders = useSelector(state => state.responder.responders)
+  const responders = useSelector(state => state.admin.responders)
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (

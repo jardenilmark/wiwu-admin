@@ -9,7 +9,7 @@ const { Search } = Input
 
 const Responders = () => {
   const dispatch = useDispatch()
-  const users = useSelector(state => state.user.users)
+  const users = useSelector(state => state.admin.users)
 
   return (
     <Layout.Content style={styles.content}>

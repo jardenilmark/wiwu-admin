@@ -9,8 +9,8 @@ import Spinner from '../Spinner'
 
 const UsersList = () => {
   const dispatch = useDispatch()
-  const users = useSelector(state => state.user.users)
-  const filteredUsers = useSelector(state => state.user.filteredUsers)
+  const users = useSelector(state => state.admin.users)
+  const filteredUsers = useSelector(state => state.admin.filteredUsers)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {

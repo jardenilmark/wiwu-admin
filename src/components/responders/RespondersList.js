@@ -12,9 +12,9 @@ import Spinner from '../Spinner'
 
 const RespondersList = () => {
   const dispatch = useDispatch()
-  const responders = useSelector(state => state.responder.responders)
+  const responders = useSelector(state => state.admin.responders)
   const filteredResponders = useSelector(
-    state => state.responder.filteredResponders
+    state => state.admin.filteredResponders
   )
   const [fetching, setFetchingStatus] = useState(true)
 

@@ -11,8 +11,8 @@ import EditContactModal from './EditContactModal'
 
 const ContactsList = () => {
   const dispatch = useDispatch()
-  const contacts = useSelector(state => state.contact.contacts)
-  const filteredContacts = useSelector(state => state.contact.filteredContacts)
+  const contacts = useSelector(state => state.admin.contacts)
+  const filteredContacts = useSelector(state => state.admin.filteredContacts)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
