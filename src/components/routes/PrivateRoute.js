@@ -13,7 +13,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         authenticated && user.emailVerified ? (
           <Component {...props} />
         ) : (
-          <Redirect to='/auth' />
+          <Redirect to='/auth/signIn' />
         )
       }
     />

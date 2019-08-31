@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import { signOut } from '../actions/admin/signOut.action'
+import { history } from '../history'
 import { useDispatch } from 'react-redux'
 import Logo from './Logo'
 
-const Sidebar = ({ history, location }) => {
+const Sidebar = () => {
   const dispatch = useDispatch()
-  const pathname = location.pathname.split('/')[1]
-  const selectedKeys = pathname === '' ? ['dashboard'] : [pathname]
   const [collapsed, toggleCollapse] = useState(false)
+  const [selectedKeys, setSelectedKeys] = useState(['manage-responders'])
 
   return (
     <Layout.Sider
@@ -26,29 +26,46 @@ const Sidebar = ({ history, location }) => {
         selectedKeys={selectedKeys}>
         <Menu.Item
           key='manage-responders'
-          onClick={() => history.push('/manage-responders')}>
+          onClick={() => {
+            history.push('/manage-responders')
+            setSelectedKeys(['manage-responders'])
+          }}>
           <Icon type='safety' />
           <span>Manage Responders</span>
         </Menu.Item>
         <Menu.Item
           key='manage-users'
-          onClick={() => history.push('/manage-users')}>
+          onClick={() => {
+            history.push('/manage-users')
+            setSelectedKeys(['manage-users'])
+          }}>
           <Icon type='team' />
           <span>Manage Users</span>
         </Menu.Item>
         <Menu.Item
           key='manage-contacts'
-          onClick={() => history.push('/manage-contacts')}>
+          onClick={() => {
+            history.push('/manage-contacts')
+            setSelectedKeys(['manage-contacts'])
+          }}>
           <Icon type='phone' />
           <span>Manage Contacts</span>
         </Menu.Item>
         <Menu.Item
           key='verification'
-          onClick={() => history.push('/verification')}>
+          onClick={() => {
+            history.push('/verification')
+            setSelectedKeys(['verification'])
+          }}>
           <Icon type='check-circle' />
           <span>User Verification</span>
         </Menu.Item>
-        <Menu.Item key='settings' onClick={() => history.push('/settings')}>
+        <Menu.Item
+          key='settings'
+          onClick={() => {
+            history.push('/settings')
+            setSelectedKeys(['settings'])
+          }}>
           <Icon type='setting' />
           <span>Settings</span>
         </Menu.Item>

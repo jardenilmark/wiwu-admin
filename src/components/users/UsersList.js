@@ -31,7 +31,7 @@ const UsersList = () => {
       <List
         style={styles.list}
         itemLayout='horizontal'
-        pagination={{ pageSize: 10, hideOnSinglePage: true, size: 'small' }}
+        pagination={{ pageSize: 9, hideOnSinglePage: true, size: 'small' }}
         dataSource={filteredUsers ? filteredUsers : users}
         renderItem={user => {
           const color = user.status === statuses.ACTIVE ? 'green' : 'red'

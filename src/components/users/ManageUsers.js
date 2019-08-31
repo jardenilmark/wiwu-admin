@@ -33,7 +33,7 @@ const styles = {
   wrapper: {
     width: '70%',
     marginLeft: '15%',
-    marginTop: 30,
+    marginTop: 40,
     marginBottom: 20,
     textAlign: 'left'
   }

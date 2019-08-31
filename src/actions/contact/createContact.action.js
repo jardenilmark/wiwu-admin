@@ -18,7 +18,10 @@ const getCoordinates = async address => {
     console.log('geocode error: ', error.message)
   }
 
-  return location
+  return {
+    latitude: location.lat,
+    longitude: location.lng
+  }
 }
 
 export const createContact = ({ address, ...rest }) => {
