@@ -10,7 +10,7 @@ import AuthScreen from './components/auth/AuthScreen'
 import AdminPage from './components/AdminPage'
 import Spinner from './components/Spinner'
 
-const App = () => {
+const App = props => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.admin.loading)
   const authenticated = useSelector(state => state.admin.authenticated)
