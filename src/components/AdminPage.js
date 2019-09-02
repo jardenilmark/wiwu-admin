@@ -1,7 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd'
 import { Switch } from 'react-router'
-import { useSelector } from 'react-redux'
 
 import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
@@ -12,12 +11,9 @@ import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
 
 const AdminPage = () => {
-  const authenticated = useSelector(state => state.admin.authenticated)
-  const user = useSelector(state => state.admin.current)
-
   return (
     <Layout style={styles.layout}>
-      {user && user.emailVerified && authenticated && <Sidebar />}
+      <Sidebar />
       <Layout>
         <Switch>
           <PrivateRoute exact path='/' component={ManageResponders} />

@@ -20,8 +20,8 @@ const AuthScreen = ({ history }) => {
           <Tabs
             activeKey={activeKey}
             onTabClick={key => {
-              history.push(`/auth/${key}`)
               setActiveKey(key)
+              history.push(`/auth/${key}`)
             }}
             tabBarStyle={styles.tabBar}
             tabBarGutter={15}>

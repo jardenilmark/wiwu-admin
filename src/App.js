@@ -6,12 +6,15 @@ import 'antd/dist/antd.css'
 import './App.css'
 
 import AuthRoute from './components/routes/AuthRoute'
+import AuthScreen from './components/auth/AuthScreen'
 import AdminPage from './components/AdminPage'
 import Spinner from './components/Spinner'
 
 const App = () => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.admin.loading)
+  const authenticated = useSelector(state => state.admin.authenticated)
+  const user = useSelector(state => state.admin.current)
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -29,9 +32,8 @@ const App = () => {
 
   return (
     <div className='App'>
-      <AuthRoute exact path='/auth/signIn' />
-      <AuthRoute exact path='/auth/signUp' />
-      <AdminPage />
+      <AuthRoute path='/auth' component={AuthScreen} />
+      {user && user.emailVerified && authenticated && <AdminPage />}
     </div>
   )
 }
