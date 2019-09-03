@@ -30,7 +30,7 @@ const Sidebar = () => {
             history.push('/manage-responders')
             setSelectedKeys(['manage-responders'])
           }}>
-          <Icon type='safety' />
+          <Icon type='alert' />
           <span>Manage Responders</span>
         </Menu.Item>
         <Menu.Item

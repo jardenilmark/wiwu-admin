@@ -4,10 +4,21 @@ import { fetchContacts } from '../../actions/contact/fetchContacts.action'
 import { deleteContact } from '../../actions/contact/deleteContact.action'
 import { setClickedContact } from '../../actions/contact/setClickedContact.action'
 import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
-import { List, Avatar, Icon, Popconfirm, Tooltip } from 'antd'
+import {
+  List,
+  Avatar,
+  Icon,
+  Popconfirm,
+  Tooltip,
+  Modal,
+  Typography
+} from 'antd'
 
 import Spinner from '../Spinner'
 import EditContactModal from './EditContactModal'
+import Map from '../Map'
+
+const { Text } = Typography
 
 const ContactsList = () => {
   const dispatch = useDispatch()
@@ -57,7 +68,24 @@ const ContactsList = () => {
                   okText='Yes'
                   cancelText='No'>
                   <Icon type='delete' style={{ fontSize: 18 }} />
-                </Popconfirm>
+                </Popconfirm>,
+                <Icon
+                  type='environment'
+                  style={{ fontSize: 18 }}
+                  onClick={() => {
+                    Modal.info({
+                      title: contact.address,
+                      width: 660,
+                      centered: true,
+                      icon: null,
+                      keyboard: false,
+                      maskClosable: false,
+                      okText: 'Close',
+                      okType: 'danger',
+                      content: <Map location={contact.location} />
+                    })
+                  }}
+                />
               ]}>
               <List.Item.Meta
                 avatar={
@@ -71,7 +99,7 @@ const ContactsList = () => {
                   <Fragment>
                     <span>{contact.address}</span>
                     <br />
-                    <span>{contact.numbers.join(', ')}</span>
+                    <Text copyable>{contact.numbers.join(', ')}</Text>
                   </Fragment>
                 }
               />
