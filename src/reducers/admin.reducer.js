@@ -34,7 +34,8 @@ import {
   CREATE_CONTACT_SUCCESS,
   EDIT_CONTACT_FAILED,
   EDIT_CONTACT_SUCCESS,
-  SEARCH_CONTACTS
+  SEARCH_CONTACTS,
+  FILTER_CONTACTS
 } from '../actions/contact/contact.constants'
 import { message } from 'antd'
 
@@ -198,6 +199,11 @@ export default function reducer(state = initialState, action) {
         ...state
       }
     case SEARCH_CONTACTS:
+      return {
+        ...state,
+        filteredContacts: action.payload
+      }
+    case FILTER_CONTACTS:
       return {
         ...state,
         filteredContacts: action.payload

@@ -9,7 +9,7 @@ const MapContainer = ({ google, location }) => {
       <Map
         google={google}
         zoom={18}
-        style={{ width: '600px', height: '500px' }}
+        style={{ width: '600px', height: '500px', border: '2px dashed black' }}
         initialCenter={{ lat: lat, lng: lng }}>
         <Marker position={{ lat: lat, lng: lng }} />
       </Map>

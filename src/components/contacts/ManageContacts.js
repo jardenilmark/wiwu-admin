@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Layout, Input, Button, Drawer } from 'antd'
+import { Layout, Input, Button, Drawer, Radio } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { searchContacts } from '../../actions/contact/searchContacts.action'
+import { filterContacts } from '../../actions/contact/filterContacts.action'
 
 import ContactsList from './ContactsList'
 import CreateContact from './CreateContact'
@@ -11,6 +12,7 @@ const { Search } = Input
 const Responders = () => {
   const dispatch = useDispatch()
   const contacts = useSelector(state => state.admin.contacts)
+  const [radioValue, setRadioValue] = useState('all')
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
@@ -30,13 +32,33 @@ const Responders = () => {
         <Search
           placeholder='Search contacts...'
           onSearch={value => dispatch(searchContacts(contacts, value))}
-          style={{ width: 300 }}
+          style={{ width: 200 }}
         />
+        <Radio.Group
+          value={radioValue}
+          buttonStyle='solid'
+          onChange={e => {
+            setRadioValue(e.target.value)
+            dispatch(filterContacts(contacts, e.target.value))
+          }}>
+          <Radio.Button value='all'>
+            <strong>All</strong>
+          </Radio.Button>
+          <Radio.Button value='police'>
+            <strong>Police</strong>
+          </Radio.Button>
+          <Radio.Button value='medical'>
+            <strong>Medical</strong>
+          </Radio.Button>
+          <Radio.Button value='fire'>
+            <strong>Fire</strong>
+          </Radio.Button>
+        </Radio.Group>
         <Button
           icon='plus'
           type='dashed'
           onClick={() => setDrawerVisibility(true)}
-          style={{ float: 'right' }}>
+          style={{ float: 'right', width: 180 }}>
           Add Contact
         </Button>
       </div>
@@ -54,8 +76,9 @@ const styles = {
     width: '70%',
     marginLeft: '15%',
     marginTop: 40,
-    marginBottom: 20,
-    textAlign: 'left'
+    marginBottom: 30,
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 }
 

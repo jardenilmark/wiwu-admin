@@ -51,7 +51,7 @@ const ContactsList = () => {
           return (
             <List.Item
               actions={[
-                <Tooltip placement='top' title='Edit Contact'>
+                <Tooltip placement='left' title='Edit Contact'>
                   <Icon
                     type='edit'
                     style={{ fontSize: 18 }}
@@ -61,31 +61,40 @@ const ContactsList = () => {
                     }}
                   />
                 </Tooltip>,
-                <Popconfirm
-                  placement='top'
-                  title='Are you sure you want to delete this contact?'
-                  onConfirm={() => dispatch(deleteContact(contact.id))}
-                  okText='Yes'
-                  cancelText='No'>
-                  <Icon type='delete' style={{ fontSize: 18 }} />
-                </Popconfirm>,
-                <Icon
-                  type='environment'
-                  style={{ fontSize: 18 }}
-                  onClick={() => {
-                    Modal.info({
-                      title: contact.address,
-                      width: 660,
-                      centered: true,
-                      icon: null,
-                      keyboard: false,
-                      maskClosable: false,
-                      okText: 'Close',
-                      okType: 'danger',
-                      content: <Map location={contact.location} />
-                    })
-                  }}
-                />
+                <Tooltip placement='left' title='Delete Contact'>
+                  <Popconfirm
+                    placement='top'
+                    title='Are you sure you want to delete this contact?'
+                    onConfirm={() => dispatch(deleteContact(contact.id))}
+                    okText='Yes'
+                    cancelText='No'>
+                    <Icon type='delete' style={{ fontSize: 18 }} />
+                  </Popconfirm>
+                </Tooltip>,
+                <Tooltip placement='left' title='Show Location'>
+                  <Icon
+                    type='environment'
+                    style={{ fontSize: 18 }}
+                    onClick={() => {
+                      Modal.info({
+                        title: (
+                          <div>
+                            <Text strong>{contact.name}</Text>
+                            <br />
+                            <Text secondary>{contact.address}</Text>
+                          </div>
+                        ),
+                        width: 660,
+                        icon: null,
+                        keyboard: false,
+                        maskClosable: false,
+                        okText: 'Close',
+                        okType: 'danger',
+                        content: <Map location={contact.location} />
+                      })
+                    }}
+                  />
+                </Tooltip>
               ]}>
               <List.Item.Meta
                 avatar={
