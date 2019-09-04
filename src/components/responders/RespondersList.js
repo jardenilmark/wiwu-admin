@@ -5,8 +5,7 @@ import { List, Avatar, Icon, Tooltip, Tag, Popconfirm } from 'antd'
 import { fetchResponders } from '../../actions/responder/fetchResponders.action'
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
 import { setClickedResponder } from '../../actions/responder/setClickedResponder.action'
-import { deleteResponder } from '../../actions/responder/deleteResponder.action'
-
+import { archiveResponder } from '../../actions/responder/archiveResponder.action'
 import { statuses } from '../../constants/User'
 
 import EditResponderModal from './EditResponderModal'
@@ -62,7 +61,7 @@ const RespondersList = () => {
                   <Popconfirm
                     placement='top'
                     title='Are you sure you want to archive this responder?'
-                    onConfirm={() => dispatch(deleteResponder(responder.id))}
+                    onConfirm={() => dispatch(archiveResponder(responder.id))}
                     okText='Yes'
                     cancelText='No'>
                     <Icon type='history' style={{ fontSize: 18 }} />
@@ -73,6 +72,7 @@ const RespondersList = () => {
                 avatar={
                   <Avatar
                     src={require('../../assets/images/user-avatar.png')}
+                    size={45}
                   />
                 }
                 title={

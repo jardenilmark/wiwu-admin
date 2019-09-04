@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUsers } from '../../actions/user/fetchUsers.action'
-import { deleteUser } from '../../actions/user/deleteUser.action'
+import { archiveUser } from '../../actions/user/archiveUser.action'
 import { statuses } from '../../constants/User'
 import {
   List,
@@ -55,7 +55,7 @@ const UsersList = () => {
                   <Popconfirm
                     placement='top'
                     title='Are you sure you want to archive this contact?'
-                    onConfirm={() => dispatch(deleteUser(user.id))}
+                    onConfirm={() => dispatch(archiveUser(user.id))}
                     okText='Yes'
                     cancelText='No'>
                     <Icon type='history' style={{ fontSize: 18 }} />
@@ -92,6 +92,7 @@ const UsersList = () => {
                 avatar={
                   <Avatar
                     src={require('../../assets/images/user-avatar.png')}
+                    size={45}
                   />
                 }
                 title={
