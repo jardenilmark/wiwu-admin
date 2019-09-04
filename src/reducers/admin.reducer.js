@@ -14,7 +14,9 @@ import {
   EDIT_RESPONDER,
   DELETE_RESPONDER,
   CREATE_RESPONDER,
-  SEARCH_RESPONDERS
+  SEARCH_RESPONDERS,
+  CHANGE_RESPONDER_STATUS,
+  FILTER_RESPONDERS
 } from '../actions/responder/responder.constants'
 import {
   FETCH_CONTACTS,
@@ -27,7 +29,7 @@ import {
 
 const initialState = {
   current: null,
-  loading: false,
+  loading: true,
   authenticated: false,
   responders: [],
   filteredResponders: null,
@@ -77,12 +79,22 @@ export default function reducer(state = initialState, action) {
         ...state,
         responders: action.payload
       }
+    case CHANGE_RESPONDER_STATUS:
+      return {
+        ...state,
+        responders: action.payload
+      }
     case FETCH_RESPONDERS:
       return {
         ...state,
         responders: action.payload
       }
     case SEARCH_RESPONDERS:
+      return {
+        ...state,
+        filteredResponders: action.payload
+      }
+    case FILTER_RESPONDERS:
       return {
         ...state,
         filteredResponders: action.payload

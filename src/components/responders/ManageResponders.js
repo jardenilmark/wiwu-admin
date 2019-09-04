@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Layout, Drawer, Button, Input, Radio } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import { searchResponders } from '../../actions/responder/searchResponders'
+import { searchResponders } from '../../actions/responder/searchResponders.action'
+import { filterResponders } from '../../actions/responder/filterResponders.action'
 
 import CreateResponder from './CreateResponder'
 import RespondersList from './RespondersList'
@@ -38,6 +39,7 @@ const ManageResponders = () => {
           buttonStyle='solid'
           onChange={e => {
             setRadioValue(e.target.value)
+            dispatch(filterResponders(responders, e.target.value))
           }}>
           <Radio.Button value='all'>
             <strong>All</strong>

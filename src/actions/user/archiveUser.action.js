@@ -1,20 +1,30 @@
+import _ from 'lodash'
+import { message } from 'antd'
 import { firestore as db } from '../../firebase'
-import { ARCHIVE_USER_FAILED, ARCHIVE_USER_SUCCESS } from './user.constants'
+import { ARCHIVE_USER } from './user.constants'
 import { createAction } from 'redux-actions'
-import { fetchUsers } from './fetchUsers.action'
+import { statuses } from '../../constants/User'
 
-export const archiveUser = userId => {
-  return async dispatch => {
+export const archiveUser = id => {
+  return async (dispatch, getState) => {
     try {
       await db
         .collection('users')
-        .doc(userId)
-        .delete()
-      dispatch(fetchUsers())
-      dispatch(createAction(ARCHIVE_USER_SUCCESS)())
+        .doc(id)
+        .update({ status: statuses.ARCHIVED })
+
+      const {
+        admin: { users }
+      } = getState()
+
+      const index = _.findIndex(users, e => e.id === id)
+      const editedUsers = [...users]
+      editedUsers[index].status = statuses.ARCHIVED
+
+      message.success('User archived successfully!', 10)
+      dispatch(createAction(ARCHIVE_USER)(editedUsers))
     } catch (error) {
-      alert(error.message)
-      dispatch(createAction(ARCHIVE_USER_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

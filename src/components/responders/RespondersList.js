@@ -1,15 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState, Fragment } from 'react'
-import { List, Avatar, Icon, Tooltip, Tag, Popconfirm } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { List, Avatar, Tag } from 'antd'
 
 import { fetchResponders } from '../../actions/responder/fetchResponders.action'
-import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
-import { setClickedResponder } from '../../actions/responder/setClickedResponder.action'
-import { archiveResponder } from '../../actions/responder/archiveResponder.action'
-import { statuses } from '../../constants/User'
+import { getTagColor } from '../../helpers/responder/getTagColor'
+import { getListItemActions } from '../../helpers/responder/getListItemActions'
 
 import EditResponderModal from './EditResponderModal'
-
 import Spinner from '../Spinner'
 
 const RespondersList = () => {
@@ -43,31 +40,10 @@ const RespondersList = () => {
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
         dataSource={filteredResponders || responders}
         renderItem={responder => {
-          const color = responder.status === statuses.ACTIVE ? 'green' : 'red'
+          const color = getTagColor(responder.status)
+          const actions = getListItemActions(responder, dispatch)
           return (
-            <List.Item
-              actions={[
-                <Tooltip placement='left' title='Edit Responder'>
-                  <Icon
-                    type='edit'
-                    style={{ fontSize: 18 }}
-                    onClick={() => {
-                      dispatch(setClickedResponder(responder))
-                      dispatch(toggleEditModal())
-                    }}
-                  />
-                </Tooltip>,
-                <Tooltip placement='left' title='Archive Responder'>
-                  <Popconfirm
-                    placement='top'
-                    title='Are you sure you want to archive this responder?'
-                    onConfirm={() => dispatch(archiveResponder(responder.id))}
-                    okText='Yes'
-                    cancelText='No'>
-                    <Icon type='history' style={{ fontSize: 18 }} />
-                  </Popconfirm>
-                </Tooltip>
-              ]}>
+            <List.Item actions={actions}>
               <List.Item.Meta
                 avatar={
                   <Avatar
