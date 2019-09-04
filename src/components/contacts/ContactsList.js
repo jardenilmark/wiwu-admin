@@ -36,7 +36,7 @@ const ContactsList = () => {
   }, [])
 
   if (fetching) {
-    return <Spinner tip='Fetching Contacts...' />
+    return <Spinner tip='Fetching Contacts...' height={700} />
   }
 
   return (
@@ -81,7 +81,7 @@ const ContactsList = () => {
                           <div>
                             <Text strong>{contact.name}</Text>
                             <br />
-                            <Text secondary>{contact.address}</Text>
+                            <Text type='secondary'>{contact.address}</Text>
                           </div>
                         ),
                         width: 660,
@@ -90,7 +90,12 @@ const ContactsList = () => {
                         maskClosable: false,
                         okText: 'Close',
                         okType: 'danger',
-                        content: <Map location={contact.location} />
+                        content: (
+                          <Map
+                            location={contact.location}
+                            label={contact.name}
+                          />
+                        )
                       })
                     }}
                   />

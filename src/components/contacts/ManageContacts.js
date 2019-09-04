@@ -31,7 +31,10 @@ const Responders = () => {
       <div style={styles.wrapper}>
         <Search
           placeholder='Search contacts...'
-          onSearch={value => dispatch(searchContacts(contacts, value))}
+          onSearch={value => {
+            setRadioValue('all')
+            dispatch(searchContacts(contacts, value))
+          }}
           style={{ width: 200 }}
         />
         <Radio.Group

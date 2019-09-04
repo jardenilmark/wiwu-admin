@@ -1,9 +1,9 @@
 import React from 'react'
 import { Spin, Icon } from 'antd'
 
-const Spinner = ({ tip }) => {
+const Spinner = ({ tip, height }) => {
   return (
-    <div style={styles.spinnerWrapper}>
+    <div style={{ ...styles.spinnerWrapper, height }}>
       <Spin
         indicator={<Icon type='loading' style={styles.indicator} spin />}
         tip={<span style={styles.tip}>{tip}</span>}
@@ -14,7 +14,6 @@ const Spinner = ({ tip }) => {
 
 const styles = {
   spinnerWrapper: {
-    height: 700,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'

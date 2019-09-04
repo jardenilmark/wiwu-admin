@@ -8,7 +8,9 @@ import Logo from '../Logo'
 const { TabPane } = Tabs
 
 const AuthScreen = ({ history }) => {
-  const [activeKey, setActiveKey] = useState('signIn')
+  const pathname = window.location.pathname
+  const paths = pathname.split('/')
+  const [activeKey, setActiveKey] = useState(paths[2])
 
   return (
     <Row style={styles.row} type='flex' justify='center' align='middle'>

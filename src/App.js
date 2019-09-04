@@ -27,7 +27,7 @@ const App = props => {
   })
 
   if (loading) {
-    return <Spinner tip='Please wait for a while...' />
+    return <Spinner tip='Please wait for a while...' height={800} />
   }
 
   return (

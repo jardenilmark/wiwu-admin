@@ -1,22 +1,35 @@
 import React from 'react'
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react'
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
 
-const MapContainer = ({ google, location }) => {
-  const lat = location.latitude
-  const lng = location.longitude
-  return (
-    <div style={{ width: '600px', height: '500px' }}>
-      <Map
-        google={google}
+import Spinner from './Spinner'
+
+const Map = ({ location, label }) => {
+  const position = {
+    lat: location.latitude,
+    lng: location.longitude
+  }
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM'
+  })
+
+  const renderMap = () => {
+    return (
+      <GoogleMap
+        center={position}
+        mapTypeId='hybrid'
+        labels={true}
         zoom={18}
-        style={{ width: '600px', height: '500px', border: '2px dashed black' }}
-        initialCenter={{ lat: lat, lng: lng }}>
-        <Marker position={{ lat: lat, lng: lng }} />
-      </Map>
-    </div>
-  )
+        mapContainerStyle={{ height: '500px', width: '600px' }}>
+        <Marker position={position} title={label} />
+      </GoogleMap>
+    )
+  }
+
+  if (loadError) {
+    return <div>Map cannot be loaded right now, sorry.</div>
+  }
+
+  return isLoaded ? renderMap() : <Spinner tip='Loading Map...' height={500} />
 }
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM'
-})(MapContainer)
+export default Map

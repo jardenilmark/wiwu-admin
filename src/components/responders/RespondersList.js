@@ -28,7 +28,7 @@ const RespondersList = () => {
   }, [])
 
   if (fetching) {
-    return <Spinner tip='Fetching Responders...' />
+    return <Spinner tip='Fetching Responders...' height={700} />
   }
 
   return (
@@ -44,7 +44,7 @@ const RespondersList = () => {
           return (
             <List.Item
               actions={[
-                <Tooltip placement='top' title='Edit Responder'>
+                <Tooltip placement='left' title='Edit Responder'>
                   <Icon
                     type='edit'
                     style={{ fontSize: 18 }}
@@ -54,14 +54,16 @@ const RespondersList = () => {
                     }}
                   />
                 </Tooltip>,
-                <Popconfirm
-                  placement='top'
-                  title='Are you sure you want to delete this responder?'
-                  onConfirm={() => dispatch(deleteResponder(responder.id))}
-                  okText='Yes'
-                  cancelText='No'>
-                  <Icon type='delete' style={{ fontSize: 18 }} />
-                </Popconfirm>
+                <Tooltip placement='left' title='Archive Responder'>
+                  <Popconfirm
+                    placement='top'
+                    title='Are you sure you want to archive this responder?'
+                    onConfirm={() => dispatch(deleteResponder(responder.id))}
+                    okText='Yes'
+                    cancelText='No'>
+                    <Icon type='history' style={{ fontSize: 18 }} />
+                  </Popconfirm>
+                </Tooltip>
               ]}>
               <List.Item.Meta
                 avatar={

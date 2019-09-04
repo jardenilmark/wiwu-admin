@@ -8,7 +8,9 @@ import Logo from './Logo'
 const Sidebar = () => {
   const dispatch = useDispatch()
   const [collapsed, toggleCollapse] = useState(false)
-  const [selectedKeys, setSelectedKeys] = useState(['manage-responders'])
+  const [selectedKeys, setSelectedKeys] = useState([
+    window.location.pathname.slice(1)
+  ])
 
   return (
     <Layout.Sider
