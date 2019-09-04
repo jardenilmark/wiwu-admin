@@ -3,9 +3,12 @@ import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { CreateResponderSchema } from '../../schema/responder.schema'
 import { createResponder } from '../../actions/responder/createResponder.action'
+import { departments } from '../../constants/User'
 import { Form, Input, Button, Select } from 'antd'
+import * as PropTypes from 'prop-types'
 
 const { Option } = Select
+const { FIREMEN, MEDICAL, POLICE } = departments
 
 const initialValues = {
   emailAddress: '',
@@ -13,11 +16,12 @@ const initialValues = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
-  department: 'Philippine National Police Iloilo'
+  department: POLICE
 }
 
 const CreateResponder = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
+
   return (
     <div style={styles.formWrapper}>
       <Formik
@@ -154,15 +158,9 @@ const CreateResponder = ({ setDrawerVisibility }) => {
                   disabled={isSubmitting}
                   onChange={value => setFieldValue('department', value)}
                   value={values.department}>
-                  <Option value='Philippine National Police Iloilo'>
-                    Philippine National Police Iloilo
-                  </Option>
-                  <Option value='Bureau of Fire Protection Iloilo'>
-                    Bureau of Fire Protection Iloilo
-                  </Option>
-                  <Option value='Iloilo City Emergency Response Team'>
-                    Iloilo City Emergency Response Team
-                  </Option>
+                  <Option value={POLICE}>{POLICE}</Option>
+                  <Option value={FIREMEN}>{FIREMEN}</Option>
+                  <Option value={MEDICAL}>{MEDICAL}</Option>
                 </Select>
               </Form.Item>
               <Form.Item
@@ -202,6 +200,10 @@ const CreateResponder = ({ setDrawerVisibility }) => {
       </Formik>
     </div>
   )
+}
+
+CreateResponder.propTypes = {
+  setDrawerVisibility: PropTypes.func.isRequired
 }
 
 const styles = {

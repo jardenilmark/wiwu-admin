@@ -9,3 +9,9 @@ export const roles = {
   VOLUNTEER: 'volunteer',
   USER: 'user'
 }
+
+export const departments = {
+  FIREMEN: 'Bureau of Fire Protection Iloilo',
+  POLICE: 'Philippine National Police Iloilo',
+  MEDICAL: 'Iloilo City Emergency Response Team'
+}
