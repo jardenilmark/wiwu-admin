@@ -1,10 +1,9 @@
-import { firestore as db } from '../../firebase'
-import {
-  DELETE_RESPONDER_FAILED,
-  DELETE_RESPONDER_SUCCESS
-} from './responder.constants'
+import { message } from 'antd'
 import { createAction } from 'redux-actions'
-import { fetchResponders } from './fetchResponders.action'
+
+import { firestore as db } from '../../firebase'
+
+import { DELETE_RESPONDER } from './responder.constants'
 
 export const deleteResponder = responderId => {
   /* 
@@ -12,17 +11,22 @@ export const deleteResponder = responderId => {
     Firebase Auth requires that the user must input his/her credentials 
     before his/her account gets deleted
   */
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       await db
         .collection('users')
         .doc(responderId)
         .delete()
-      dispatch(fetchResponders())
-      dispatch(createAction(DELETE_RESPONDER_SUCCESS)())
+
+      const {
+        admin: { responders }
+      } = getState()
+      const payload = responders.filter(e => e.id !== responderId)
+
+      dispatch(createAction(DELETE_RESPONDER)(payload))
     } catch (error) {
       alert(error.message)
-      dispatch(createAction(DELETE_RESPONDER_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

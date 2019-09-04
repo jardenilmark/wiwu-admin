@@ -1,20 +1,33 @@
-import { firestore as db } from '../../firebase'
-import { EDIT_CONTACT_FAILED, EDIT_CONTACT_SUCCESS } from './contact.constants'
+import _ from 'lodash'
+import { message } from 'antd'
 import { createAction } from 'redux-actions'
-import { fetchContacts } from './fetchContacts.action'
+
+import { firestore as db } from '../../firebase'
+
+import { EDIT_CONTACT } from './contact.constants'
 
 export const editContact = (values, id) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
+      // TODO what if the location is being edited
       await db
         .collection('contacts')
         .doc(id)
         .update(values)
-      dispatch(createAction(EDIT_CONTACT_SUCCESS)())
-      dispatch(fetchContacts())
+
+      const {
+        admin: { contacts }
+      } = getState()
+
+      const index = _.findIndex(contacts, e => e.id === id)
+      const editedContacts = [...contacts]
+      editedContacts[index] = values
+
+      message.success('Contact updated successfully!', 10)
+      dispatch(createAction(EDIT_CONTACT)(editedContacts))
     } catch (error) {
       alert(error.message)
-      dispatch(createAction(EDIT_CONTACT_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

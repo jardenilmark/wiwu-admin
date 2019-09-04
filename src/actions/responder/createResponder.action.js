@@ -1,37 +1,43 @@
-import { firestore as db, secondaryAuth } from '../../firebase'
-import {
-  CREATE_RESPONDER_SUCCESS,
-  CREATE_RESPONDER_FAILED
-} from './responder.constants'
-import { fetchResponders } from '../responder/fetchResponders.action'
-import { statuses, roles } from '../../constants/User'
+import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
-export const createResponder = ({ emailAddress, password, ...rest }) => {
+import { firestore as db, secondaryAuth } from '../../firebase'
+
+import { CREATE_RESPONDER } from './responder.constants'
+
+import { statuses, roles } from '../../constants/User'
+
+export const createResponder = ({ emailAddress: email, password, ...rest }) => {
   return async dispatch => {
     try {
-      await secondaryAuth.createUserWithEmailAndPassword(emailAddress, password)
+      await secondaryAuth.createUserWithEmailAndPassword(email, password)
       const user = secondaryAuth.currentUser
+
+      const payload = {
+        ...rest,
+        role: roles.RESPONDER,
+        status: statuses.ACTIVE,
+        emergencies: []
+      }
+
       await db
         .collection('users')
         .doc(user.uid)
-        .set({
-          ...rest,
-          role: roles.RESPONDER,
-          status: statuses.ACTIVE,
-          emergencies: []
-        })
+        .set(payload)
 
       const actionCodeSettings = {
         url: 'http://localhost:3000/'
       }
 
+      payload.id = user.uid
+
       await user.sendEmailVerification(actionCodeSettings)
       await secondaryAuth.signOut()
-      dispatch(fetchResponders())
-      dispatch(createAction(CREATE_RESPONDER_SUCCESS)())
+
+      message.success('Responder created successfully!', 10)
+      dispatch(createAction(CREATE_RESPONDER)(payload))
     } catch (error) {
-      dispatch(createAction(CREATE_RESPONDER_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

@@ -25,7 +25,7 @@ const Sidebar = () => {
         theme='dark'
         mode='inline'
         style={styles.menu}
-        selectedKeys={selectedKeys}>
+        selectedKeys={selectedKeys || null}>
         <Menu.Item
           key='manage-responders'
           onClick={() => {
@@ -52,6 +52,15 @@ const Sidebar = () => {
           }}>
           <Icon type='phone' />
           <span>Manage Contacts</span>
+        </Menu.Item>
+        <Menu.Item
+          key='emergency-list'
+          onClick={() => {
+            history.push('/emergency-list')
+            setSelectedKeys(['emergency-list'])
+          }}>
+          <Icon type='alert' />
+          <span>Emergency List</span>
         </Menu.Item>
         <Menu.Item
           key='verification'

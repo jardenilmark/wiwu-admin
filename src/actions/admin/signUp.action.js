@@ -1,31 +1,46 @@
-import { auth, firestore as db } from '../../firebase'
-import { SIGNUP_SUCCESS, SIGNUP_FAILED } from './admin.constants'
-import { statuses, roles } from '../../constants/User'
+import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
-export const signUp = ({ emailAddress, password, ...rest }) => {
+import { auth, firestore as db } from '../../firebase'
+
+import { SIGNUP } from './admin.constants'
+
+import { statuses, roles } from '../../constants/User'
+
+export const signUp = ({ emailAddress: email, password, ...rest }) => {
   return async dispatch => {
     try {
-      await auth.createUserWithEmailAndPassword(emailAddress, password)
+      await auth.createUserWithEmailAndPassword(email, password)
       const user = auth.currentUser
+
+      const firestorePayload = {
+        ...rest,
+        role: roles.ADMIN,
+        status: statuses.ACTIVE,
+        emergencies: []
+      }
+
       await db
         .collection('users')
         .doc(user.uid)
-        .set({
-          ...rest,
-          role: roles.ADMIN,
-          status: statuses.ACTIVE,
-          emergencies: []
-        })
+        .set(firestorePayload)
 
       const actionCodeSettings = {
         url: 'http://localhost:3000/'
       }
 
       await user.sendEmailVerification(actionCodeSettings)
-      dispatch(createAction(SIGNUP_SUCCESS)())
+
+      const userPayload = {
+        ...firestorePayload,
+        email,
+        uid: user.uid,
+        emailVerified: false
+      }
+
+      dispatch(createAction(SIGNUP)(userPayload))
     } catch (error) {
-      dispatch(createAction(SIGNUP_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

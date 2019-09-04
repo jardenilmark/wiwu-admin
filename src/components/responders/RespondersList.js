@@ -1,13 +1,16 @@
-import React, { useEffect, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState, Fragment } from 'react'
+import { List, Avatar, Icon, Tooltip, Tag, Popconfirm } from 'antd'
+
 import { fetchResponders } from '../../actions/responder/fetchResponders.action'
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
 import { setClickedResponder } from '../../actions/responder/setClickedResponder.action'
 import { deleteResponder } from '../../actions/responder/deleteResponder.action'
+
 import { statuses } from '../../constants/User'
-import { List, Avatar, Icon, Tooltip, Tag, Popconfirm } from 'antd'
 
 import EditResponderModal from './EditResponderModal'
+
 import Spinner from '../Spinner'
 
 const RespondersList = () => {
@@ -19,6 +22,7 @@ const RespondersList = () => {
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
+    // TODO -R
     async function fetchData() {
       await dispatch(fetchResponders())
       setFetchingStatus(false)
@@ -38,7 +42,7 @@ const RespondersList = () => {
         style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-        dataSource={filteredResponders ? filteredResponders : responders}
+        dataSource={filteredResponders || responders}
         renderItem={responder => {
           const color = responder.status === statuses.ACTIVE ? 'green' : 'red'
           return (

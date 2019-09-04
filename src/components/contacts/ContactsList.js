@@ -27,6 +27,7 @@ const ContactsList = () => {
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
+    // TODO -R
     async function fetchData() {
       await dispatch(fetchContacts())
       setFetchingStatus(false)
@@ -46,7 +47,7 @@ const ContactsList = () => {
         style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-        dataSource={filteredContacts ? filteredContacts : contacts}
+        dataSource={filteredContacts || contacts}
         renderItem={contact => {
           return (
             <List.Item

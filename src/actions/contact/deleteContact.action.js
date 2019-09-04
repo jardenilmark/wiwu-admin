@@ -1,23 +1,29 @@
-import { firestore as db } from '../../firebase'
-import {
-  DELETE_CONTACT_FAILED,
-  DELETE_CONTACT_SUCCESS
-} from './contact.constants'
+import { message } from 'antd'
 import { createAction } from 'redux-actions'
-import { fetchContacts } from './fetchContacts.action'
+
+import { firestore as db } from '../../firebase'
+
+import { DELETE_CONTACT } from './contact.constants'
 
 export const deleteContact = contactId => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       await db
         .collection('contacts')
         .doc(contactId)
         .delete()
-      dispatch(fetchContacts())
-      dispatch(createAction(DELETE_CONTACT_SUCCESS)())
+
+      const {
+        admin: { contacts }
+      } = getState()
+
+      const payload = contacts.filter(e => e.id !== contactId)
+
+      message.success('Contact deleted successfully!', 10)
+      dispatch(createAction(DELETE_CONTACT)(payload))
     } catch (error) {
       alert(error.message)
-      dispatch(createAction(DELETE_CONTACT_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

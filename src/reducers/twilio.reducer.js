@@ -1,10 +1,7 @@
 import {
-  GET_TWILIO_TOKEN_SUCCESS,
-  GET_TWILIO_TOKEN_FAILED,
-  RESET_TWILIO_TOKEN_SUCCESS,
-  RESET_TWILIO_TOKEN_FAILED
+  GET_TWILIO_TOKEN,
+  RESET_TWILIO_TOKEN
 } from '../actions/twilio/twilio.constants.js'
-import { message } from 'antd'
 
 const initialState = {
   token: ''
@@ -12,25 +9,14 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case GET_TWILIO_TOKEN_SUCCESS:
+    case GET_TWILIO_TOKEN:
       return {
         ...state,
         token: action.payload
       }
-    case GET_TWILIO_TOKEN_FAILED:
-      message.error(action.payload, 10)
+    case RESET_TWILIO_TOKEN:
       return {
-        ...state
-      }
-    case RESET_TWILIO_TOKEN_SUCCESS:
-      return {
-        ...state,
-        token: action.payload
-      }
-    case RESET_TWILIO_TOKEN_FAILED:
-      message.error(action.payload, 10)
-      return {
-        ...state
+        ...initialState
       }
     default:
       return {

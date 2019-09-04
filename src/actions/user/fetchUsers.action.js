@@ -1,8 +1,12 @@
-import { firestore as db } from '../../firebase'
+import { message } from 'antd'
 import Geocode from 'react-geocode'
-import { FETCH_USERS_FAILED, FETCH_USERS_SUCCESS } from './user.constants'
-import { roles } from '../../constants/User'
 import { createAction } from 'redux-actions'
+
+import { firestore as db } from '../../firebase'
+
+import { FETCH_USERS } from './user.constants'
+
+import { roles } from '../../constants/User'
 
 const getAddress = async location => {
   let address
@@ -22,23 +26,24 @@ const getAddress = async location => {
 }
 
 export const fetchUsers = () => {
-  let users = []
   return async dispatch => {
     try {
       const usersRef = await db
         .collection('users')
         .where('role', '==', roles.USER)
         .get()
-      users = usersRef.docs.map(user => {
+
+      const users = usersRef.docs.map(user => {
         return {
           ...user.data(),
           id: user.id,
           address: getAddress(user.data()).homeCoordinates
         }
       })
-      dispatch(createAction(FETCH_USERS_SUCCESS)(users))
+
+      dispatch(createAction(FETCH_USERS)(users))
     } catch (error) {
-      dispatch(createAction(FETCH_USERS_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }
