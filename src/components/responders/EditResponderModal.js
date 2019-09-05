@@ -10,7 +10,7 @@ const { Option } = Select
 
 const EditResponder = () => {
   const dispatch = useDispatch()
-  const responder = useSelector(state => state.responder.clickedResponder)
+  const responder = useSelector(state => state.responder.selectedResponder)
   const visible = useSelector(state => state.responder.editModalVisibility)
   return (
     <Modal

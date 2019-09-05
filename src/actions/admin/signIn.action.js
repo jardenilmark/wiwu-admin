@@ -1,14 +1,35 @@
-import { auth } from '../../firebase'
-import { SIGNIN_SUCCESS, SIGNIN_FAILED } from './admin.constants'
+import { message } from 'antd'
+
 import { createAction } from 'redux-actions'
+
+import { auth, firestore } from '../../firebase'
+
+import { SIGNIN } from './admin.constants'
 
 export const signIn = ({ emailAddress, password }) => {
   return async dispatch => {
     try {
-      await auth.signInWithEmailAndPassword(emailAddress, password)
-      dispatch(createAction(SIGNIN_SUCCESS)())
+      const ref = await auth.signInWithEmailAndPassword(emailAddress, password)
+
+      const {
+        user: { uid, email, emailVerified }
+      } = ref
+
+      const user = await firestore
+        .collection('users')
+        .doc(ref.user.uid)
+        .get()
+      const userData = user.data()
+
+      const payload = {
+        uid,
+        email,
+        emailVerified,
+        ...userData
+      }
+      dispatch(createAction(SIGNIN)(payload))
     } catch (error) {
-      dispatch(createAction(SIGNIN_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

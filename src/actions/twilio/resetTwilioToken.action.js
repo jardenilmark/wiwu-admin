@@ -1,15 +1,14 @@
-import {
-  RESET_TWILIO_TOKEN_SUCCESS,
-  RESET_TWILIO_TOKEN_FAILED
-} from './twilio.constants'
+import { message } from 'antd'
 import { createAction } from 'redux-actions'
+
+import { RESET_TWILIO_TOKEN } from './twilio.constants'
 
 export const resetTwilioToken = () => {
   return dispatch => {
     try {
-      dispatch(createAction(RESET_TWILIO_TOKEN_SUCCESS)())
+      dispatch(createAction(RESET_TWILIO_TOKEN)())
     } catch (error) {
-      dispatch(createAction(RESET_TWILIO_TOKEN_FAILED)(error.message))
+      message.error(error.message, 10)
     }
   }
 }

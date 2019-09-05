@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Row, Col, Tabs } from 'antd'
 
 import SignInTab from './SignInTab'
@@ -7,10 +7,10 @@ import Logo from '../Logo'
 
 const { TabPane } = Tabs
 
-const AuthScreen = ({ history, location }) => {
-  const pathName = location.pathname
-  const paths = pathName.split('/')
-  const activeKey = paths.length > 2 ? paths[2] : 'signIn'
+const AuthScreen = ({ history }) => {
+  const pathname = window.location.pathname
+  const paths = pathname.split('/')
+  const [activeKey, setActiveKey] = useState(paths[2])
 
   return (
     <Row style={styles.row} type='flex' justify='center' align='middle'>
@@ -21,7 +21,10 @@ const AuthScreen = ({ history, location }) => {
         <Card bordered={false} style={styles.card}>
           <Tabs
             activeKey={activeKey}
-            onTabClick={key => history.push(`/auth/${key}`)}
+            onTabClick={key => {
+              setActiveKey(key)
+              history.push(`/auth/${key}`)
+            }}
             tabBarStyle={styles.tabBar}
             tabBarGutter={15}>
             <TabPane tab='SIGN IN' key='signIn'>

@@ -1,9 +1,12 @@
 import React from 'react'
-import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
+import { Button, Form, Input, Card } from 'antd'
+
 import { roles } from '../../constants/User'
+
 import { SignInAdminSchema } from '../../schema/admin.schema'
+
 import { signUp } from '../../actions/admin/signUp.action'
 
 const initialValues = {
@@ -16,6 +19,8 @@ const initialValues = {
 
 const SignUpTab = () => {
   const dispatch = useDispatch()
+
+  // TODO onAuthStateChanged
   return (
     <Card bordered={false} style={styles.card}>
       <Formik

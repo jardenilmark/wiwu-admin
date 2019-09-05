@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Modal, Spin, Descriptions } from 'antd'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 
 const VideoModal = ({
   record,
@@ -78,7 +78,8 @@ VideoModal.propTypes = {
   localMediaAvailable: PropTypes.bool.isRequired,
   localMedia: PropTypes.object,
   leaveRoom: PropTypes.func.isRequired,
-  remoteMedia: PropTypes.object
+  remoteMedia: PropTypes.object,
+  remoteMediaAvailable: PropTypes.bool.isRequired
 }
 
 export default VideoModal

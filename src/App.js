@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { setAuthDetails } from './actions/admin/setAuthDetails.action'
-import { Spin, Icon } from 'antd'
+
 import { auth } from './firebase'
-import 'antd/dist/antd.css'
-import './App.css'
 
 import AuthRoute from './components/routes/AuthRoute'
-import PrivateRoute from './components/routes/PrivateRoute'
+import AuthScreen from './components/auth/AuthScreen'
 import AdminPage from './components/AdminPage'
 import Spinner from './components/Spinner'
 
-const App = props => {
+import 'antd/dist/antd.css'
+import './App.css'
+
+const App = () => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.admin.loading)
+  const authenticated = useSelector(state => state.admin.authenticated)
+  const user = useSelector(state => state.admin.current)
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -23,16 +27,16 @@ const App = props => {
         dispatch(setAuthDetails(user, false, false))
       }
     })
-  })
+  }, [])
 
   if (loading) {
-    return <Spinner tip='Please wait for a while...' />
+    return <Spinner tip='Please wait for a while...' height={800} />
   }
 
   return (
     <div className='App'>
-      <PrivateRoute path='/' component={AdminPage} />
-      <AuthRoute path='/auth' />
+      <AuthRoute path='/auth' component={AuthScreen} />
+      {user && user.emailVerified && authenticated && <AdminPage />}
     </div>
   )
 }
