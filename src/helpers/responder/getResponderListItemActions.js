@@ -29,20 +29,32 @@ export const getResponderListItemActions = (responder, dispatch) => {
         cancelText='No'>
         <Icon type='history' style={{ fontSize: 18 }} />
       </Popconfirm>
+    </Tooltip>,
+    <Tooltip placement='left' title='Block Responder'>
+      <Popconfirm
+        placement='top'
+        title='Are you sure you want to block this responder?'
+        onConfirm={() =>
+          dispatch(changeResponderStatus(responder.id, statuses.BLOCKED))
+        }
+        okText='Yes'
+        cancelText='No'>
+        <Icon type='stop' style={{ fontSize: 18 }} />
+      </Popconfirm>
     </Tooltip>
   ]
 
-  const archivedResponderActions = [
-    <Tooltip placement='left' title='Restore Responder'>
+  const inactiveResponderActions = [
+    <Tooltip placement='left' title='Activate Responder'>
       <Popconfirm
         placement='top'
-        title='Are you sure you want to restore this responder?'
+        title='Are you sure you want to activate this responder?'
         onConfirm={() =>
           dispatch(changeResponderStatus(responder.id, statuses.ACTIVE))
         }
         okText='Yes'
         cancelText='No'>
-        <Icon type='history' style={{ fontSize: 18 }} />
+        <Icon type='undo' style={{ fontSize: 18 }} />
       </Popconfirm>
     </Tooltip>
   ]
@@ -51,7 +63,9 @@ export const getResponderListItemActions = (responder, dispatch) => {
     case statuses.ACTIVE:
       return activeResponderActions
     case statuses.ARCHIVED:
-      return archivedResponderActions
+      return inactiveResponderActions
+    case statuses.BLOCKED:
+      return inactiveResponderActions
     default:
       return []
   }

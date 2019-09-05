@@ -10,16 +10,6 @@ const { Text } = Typography
 
 export const getUserListItemActions = (user, dispatch) => {
   const activeUserActions = [
-    <Tooltip placement='left' title='Archive User'>
-      <Popconfirm
-        placement='top'
-        title='Are you sure you want to archive this user?'
-        onConfirm={() => dispatch(changeUserStatus(user.id, statuses.ARCHIVED))}
-        okText='Yes'
-        cancelText='No'>
-        <Icon type='history' style={{ fontSize: 18 }} />
-      </Popconfirm>
-    </Tooltip>,
     <Tooltip placement='left' title='Show Location'>
       <Icon
         type='environment'
@@ -45,18 +35,38 @@ export const getUserListItemActions = (user, dispatch) => {
           })
         }}
       />
-    </Tooltip>
-  ]
-
-  const archivedUserActions = [
-    <Tooltip placement='left' title='Restore User'>
+    </Tooltip>,
+    <Tooltip placement='left' title='Archive User'>
       <Popconfirm
         placement='top'
-        title='Are you sure you want to restore this user?'
-        onConfirm={() => dispatch(changeUserStatus(user.id, statuses.ACTIVE))}
+        title='Are you sure you want to archive this user?'
+        onConfirm={() => dispatch(changeUserStatus(user.id, statuses.ARCHIVED))}
         okText='Yes'
         cancelText='No'>
         <Icon type='history' style={{ fontSize: 18 }} />
+      </Popconfirm>
+    </Tooltip>,
+    <Tooltip placement='left' title='Block User'>
+      <Popconfirm
+        placement='top'
+        title='Are you sure you want to block this user?'
+        onConfirm={() => dispatch(changeUserStatus(user.id, statuses.BLOCKED))}
+        okText='Yes'
+        cancelText='No'>
+        <Icon type='stop' style={{ fontSize: 18 }} />
+      </Popconfirm>
+    </Tooltip>
+  ]
+
+  const inactiveUserActions = [
+    <Tooltip placement='left' title='Activate User'>
+      <Popconfirm
+        placement='top'
+        title='Are you sure you want to activate this user?'
+        onConfirm={() => dispatch(changeUserStatus(user.id, statuses.ACTIVE))}
+        okText='Yes'
+        cancelText='No'>
+        <Icon type='undo' style={{ fontSize: 18 }} />
       </Popconfirm>
     </Tooltip>
   ]
@@ -65,7 +75,9 @@ export const getUserListItemActions = (user, dispatch) => {
     case statuses.ACTIVE:
       return activeUserActions
     case statuses.ARCHIVED:
-      return archivedUserActions
+      return inactiveUserActions
+    case statuses.BLOCKED:
+      return inactiveUserActions
     default:
       return []
   }
