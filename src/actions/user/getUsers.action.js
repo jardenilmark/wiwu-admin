@@ -4,7 +4,7 @@ import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
 
-import { FETCH_USERS } from './user.constants'
+import { GET_USERS } from './user.constants'
 
 import { roles } from '../../constants/User'
 
@@ -25,7 +25,7 @@ const getAddress = async location => {
   return address
 }
 
-export const fetchUsers = () => {
+export const getUsers = () => {
   return async dispatch => {
     try {
       const usersRef = await db
@@ -41,7 +41,7 @@ export const fetchUsers = () => {
         }
       })
 
-      dispatch(createAction(FETCH_USERS)(users))
+      dispatch(createAction(GET_USERS)(users))
     } catch (error) {
       message.error(error.message, 10)
     }

@@ -9,6 +9,6 @@ export const getTagColor = status => {
     case statuses.BLOCKED:
       return 'red'
     default:
-      return 'green'
+      return null
   }
 }

@@ -5,7 +5,7 @@ import { searchResponders } from '../../actions/responder/searchResponders.actio
 import { filterResponders } from '../../actions/responder/filterResponders.action'
 
 import CreateResponder from './CreateResponder'
-import RespondersList from './RespondersList'
+import ResponderList from './ResponderList'
 
 const { Search } = Input
 
@@ -61,7 +61,7 @@ const ManageResponders = () => {
           Add Responder
         </Button>
       </div>
-      <RespondersList />
+      <ResponderList />
     </Layout.Content>
   )
 }

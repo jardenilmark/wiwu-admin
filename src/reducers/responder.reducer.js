@@ -1,10 +1,10 @@
 import {
   TOGGLE_EDIT_MODAL,
-  SET_CLICKED_RESPONDER
+  SET_SELECTED_RESPONDER
 } from '../actions/responder/responder.constants'
 
 const initialState = {
-  clickedResponder: null,
+  selectedResponder: null,
   editModalVisibility: false
 }
 
@@ -15,10 +15,10 @@ export default function reducer(state = initialState, action) {
         ...state,
         editModalVisibility: !state.editModalVisibility
       }
-    case SET_CLICKED_RESPONDER:
+    case SET_SELECTED_RESPONDER:
       return {
         ...state,
-        clickedResponder: action.payload
+        selectedResponder: action.payload
       }
     default:
       return {

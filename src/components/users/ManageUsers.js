@@ -3,7 +3,7 @@ import { Layout, Input } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchUsers } from '../../actions/user/searchUsers.action'
 
-import UsersList from './UsersList'
+import UserList from './UserList'
 
 const { Search } = Input
 
@@ -20,7 +20,7 @@ const Responders = () => {
           style={{ width: 300 }}
         />
       </div>
-      <UsersList />
+      <UserList />
     </Layout.Content>
   )
 }

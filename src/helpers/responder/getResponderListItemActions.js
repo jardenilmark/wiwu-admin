@@ -2,18 +2,18 @@ import React from 'react'
 import { Icon, Tooltip, Popconfirm } from 'antd'
 
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
-import { setClickedResponder } from '../../actions/responder/setClickedResponder.action'
+import { setSelectedResponder } from '../../actions/responder/setSelectedResponder.action'
 import { changeResponderStatus } from '../../actions/responder/changeResponderStatus.action'
 import { statuses } from '../../constants/User'
 
-export const getListItemActions = (responder, dispatch) => {
+export const getResponderListItemActions = (responder, dispatch) => {
   const activeResponderActions = [
     <Tooltip placement='left' title='Edit Responder'>
       <Icon
         type='edit'
         style={{ fontSize: 18 }}
         onClick={() => {
-          dispatch(setClickedResponder(responder))
+          dispatch(setSelectedResponder(responder))
           dispatch(toggleEditModal())
         }}
       />

@@ -5,12 +5,13 @@ import {
   SIGNOUT
 } from '../actions/admin/admin.constants'
 import {
-  FETCH_USERS,
+  GET_USERS,
   DELETE_USER,
-  SEARCH_USERS
+  SEARCH_USERS,
+  CHANGE_USER_STATUS
 } from '../actions/user/user.constants'
 import {
-  FETCH_RESPONDERS,
+  GET_RESPONDERS,
   EDIT_RESPONDER,
   DELETE_RESPONDER,
   CREATE_RESPONDER,
@@ -19,7 +20,7 @@ import {
   FILTER_RESPONDERS
 } from '../actions/responder/responder.constants'
 import {
-  FETCH_CONTACTS,
+  GET_CONTACTS,
   DELETE_CONTACT,
   CREATE_CONTACT,
   EDIT_CONTACT,
@@ -84,7 +85,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         responders: action.payload
       }
-    case FETCH_RESPONDERS:
+    case GET_RESPONDERS:
       return {
         ...state,
         responders: action.payload
@@ -99,7 +100,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         filteredResponders: action.payload
       }
-    case FETCH_USERS:
+    case GET_USERS:
       return {
         ...state,
         users: action.payload
@@ -114,7 +115,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         filteredUsers: action.payload
       }
-    case FETCH_CONTACTS:
+    case CHANGE_USER_STATUS:
+      return {
+        ...state,
+        users: action.payload
+      }
+    case GET_CONTACTS:
       return {
         ...state,
         contacts: action.payload

@@ -10,7 +10,7 @@ const { Option } = Select
 
 const EditContact = () => {
   const dispatch = useDispatch()
-  const contact = useSelector(state => state.contact.clickedContact)
+  const contact = useSelector(state => state.contact.selectedContact)
   const visible = useSelector(state => state.contact.editModalVisibility)
   return (
     <Modal

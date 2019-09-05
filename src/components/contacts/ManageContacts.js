@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { searchContacts } from '../../actions/contact/searchContacts.action'
 import { filterContacts } from '../../actions/contact/filterContacts.action'
 
-import ContactsList from './ContactsList'
+import ContactsList from './ContactList'
 import CreateContact from './CreateContact'
 
 const { Search } = Input
