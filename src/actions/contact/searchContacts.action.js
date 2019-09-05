@@ -1,6 +1,7 @@
-import { SEARCH_CONTACTS } from './contact.constants'
 import FuzzySearch from 'fuzzy-search'
 import { createAction } from 'redux-actions'
+
+import { SEARCH_CONTACTS } from './contact.constants'
 
 export const searchContacts = (contacts, input) => {
   return dispatch => {

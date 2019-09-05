@@ -1,5 +1,6 @@
-import { FILTER_USERS } from './user.constants'
 import { createAction } from 'redux-actions'
+
+import { FILTER_USERS } from './user.constants'
 
 export const filterUsers = (users, filter) => {
   return dispatch => {

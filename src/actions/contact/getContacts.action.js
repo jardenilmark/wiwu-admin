@@ -2,7 +2,6 @@ import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
-
 import { GET_CONTACTS } from './contact.constants'
 
 export const getContacts = () => {
@@ -16,7 +15,7 @@ export const getContacts = () => {
 
       dispatch(createAction(GET_CONTACTS)(contacts))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

@@ -1,7 +1,6 @@
 import { createAction } from 'redux-actions'
 
 import { firestore } from '../../firebase'
-
 import { SET_AUTH_DETAILS } from './admin.constants'
 
 export const setAuthDetails = (user, loading, authenticated) => {

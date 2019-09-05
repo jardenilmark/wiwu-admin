@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { List } from 'antd'
 
 import EditResponderModal from './EditResponderModal'
-import RespondersListItem from './ResponderListItem'
+import ResponderListItem from './ResponderListItem'
 import Spinner from '../Spinner'
 
 import { getResponders } from '../../actions/responder/getResponders.action'
 
-const RespondersList = () => {
+const ResponderList = () => {
   const dispatch = useDispatch()
   const [fetching, setFetchingStatus] = useState(true)
   const responders = useSelector(state => state.admin.responders)
@@ -39,7 +39,7 @@ const RespondersList = () => {
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
         dataSource={filteredResponders || responders}
         renderItem={responder => {
-          return <RespondersListItem responder={responder} />
+          return <ResponderListItem responder={responder} />
         }}
       />
     </div>
@@ -57,4 +57,4 @@ const styles = {
   }
 }
 
-export default RespondersList
+export default ResponderList

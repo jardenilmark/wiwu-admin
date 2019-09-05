@@ -3,13 +3,14 @@ import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
-
+import { getCoordinates } from '../../helpers/common/getCoordinates'
 import { EDIT_CONTACT } from './contact.constants'
 
-export const editContact = (values, id) => {
+export const editContact = ({ address, ...rest }, id) => {
   return async (dispatch, getState) => {
+    const location = getCoordinates(address)
+    const values = { ...rest, location, address }
     try {
-      // TODO what if the location is being edited
       await db
         .collection('contacts')
         .doc(id)
@@ -23,11 +24,11 @@ export const editContact = (values, id) => {
       const editedContacts = [...contacts]
       editedContacts[index] = values
 
-      message.success('Contact updated successfully!', 10)
+      message.success('Contact updated successfully!', 5)
       dispatch(createAction(EDIT_CONTACT)(editedContacts))
     } catch (error) {
       alert(error.message)
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

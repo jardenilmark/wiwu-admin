@@ -8,7 +8,7 @@ export const resetTwilioToken = () => {
     try {
       dispatch(createAction(RESET_TWILIO_TOKEN)())
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

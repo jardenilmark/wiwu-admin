@@ -21,7 +21,7 @@ export const getResponders = () => {
 
       dispatch(createAction(GET_RESPONDERS)(responders))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

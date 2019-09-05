@@ -1,9 +1,7 @@
 import { message } from 'antd'
-
 import { createAction } from 'redux-actions'
 
 import { auth, firestore } from '../../firebase'
-
 import { SIGNIN } from './admin.constants'
 
 export const signIn = ({ emailAddress, password }) => {
@@ -29,7 +27,7 @@ export const signIn = ({ emailAddress, password }) => {
       }
       dispatch(createAction(SIGNIN)(payload))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

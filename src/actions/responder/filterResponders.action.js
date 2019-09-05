@@ -1,5 +1,6 @@
-import { FILTER_RESPONDERS } from './responder.constants'
 import { createAction } from 'redux-actions'
+
+import { FILTER_RESPONDERS } from './responder.constants'
 
 export const filterResponders = (responders, filter) => {
   return dispatch => {

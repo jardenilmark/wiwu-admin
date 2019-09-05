@@ -1,29 +1,11 @@
 import { message } from 'antd'
-import Geocode from 'react-geocode'
 import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
+import { getAddress } from '../../helpers/common/getAddress'
 
 import { GET_USERS } from './user.constants'
-
 import { roles } from '../../constants/User'
-
-const getAddress = async location => {
-  let address
-
-  try {
-    Geocode.setApiKey('AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM')
-    const response = await Geocode.fromLatLng(
-      location.latitude,
-      location.longitude
-    )
-    address = response.results[0].formatted_address
-  } catch (error) {
-    console.log('geocode error: ', error.message)
-  }
-
-  return address
-}
 
 export const getUsers = () => {
   return async dispatch => {
@@ -43,7 +25,7 @@ export const getUsers = () => {
 
       dispatch(createAction(GET_USERS)(users))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

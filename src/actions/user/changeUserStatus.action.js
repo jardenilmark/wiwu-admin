@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import { message } from 'antd'
+import { createAction } from 'redux-actions'
+
 import { firestore as db } from '../../firebase'
 import { CHANGE_USER_STATUS } from './user.constants'
-import { createAction } from 'redux-actions'
 
 export const changeUserStatus = (id, status) => {
   return async (dispatch, getState) => {
@@ -20,10 +21,10 @@ export const changeUserStatus = (id, status) => {
       const editedUsers = [...users]
       editedUsers[index].status = status
 
-      message.success('User status changed successfully!', 10)
+      message.success('User status changed successfully!', 5)
       dispatch(createAction(CHANGE_USER_STATUS)(editedUsers))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }
