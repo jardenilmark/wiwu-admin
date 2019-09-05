@@ -6,13 +6,12 @@ import VideoModal from './VideoModal'
 import { getToken } from '../actions/twilio/getToken.action'
 import { resetToken } from '../actions/twilio/resetToken.action'
 
-const VideoVerification = () => {
+const UserVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
   // todo change to admin.current.displayName or something
   const identity = 'Admin'
   const token = useSelector(state => state.twilio.token)
   const [roomName, setRoomName] = useState('')
-  const [previewTracks, setPreviewTracks] = useState(null)
   const [localMediaAvailable, setLocalMediaAvailable] = useState(false)
   const [hasJoinedRoom, setHasJoinedRoom] = useState(false)
   const [hasLeftRoom, setHasLeftRoom] = useState(false)
@@ -63,12 +62,6 @@ const VideoVerification = () => {
         detachParticipantTracks(participant)
       })
       room.on('disconnected', () => {
-        if (previewTracks) {
-          previewTracks.forEach(track => {
-            track.stop()
-          })
-          setPreviewTracks(null)
-        }
         detachParticipantTracks(room.localParticipant)
         room.participants.forEach(detachParticipantTracks)
         setActiveRoom(null)
@@ -88,9 +81,6 @@ const VideoVerification = () => {
         name: roomName,
         audio: true,
         video: { width: 144 }
-      }
-      if (previewTracks) {
-        connectOptions.tracks = previewTracks
       }
       const room = await Video.connect(token, connectOptions)
       roomJoined(room)
@@ -244,4 +234,4 @@ const VideoVerification = () => {
   )
 }
 
-export default VideoVerification
+export default UserVerification
