@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Row, Col, Table, Button, message } from 'antd'
+import { Row, Col, Table, Button, message, Divider } from 'antd'
 import Video from 'twilio-video'
 import VideoModal from './VideoModal'
 import { getTwilioToken } from '../actions/twilio/getTwilioToken.action'
@@ -9,19 +9,20 @@ import { resetTwilioToken } from '../actions/twilio/resetTwilioToken.action'
 const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
   // todo change to admin.current.displayName or something
-  const identity = 'Jess'
+  const identity = 'Admin'
   const token = useSelector(state => state.twilio.token)
   const [roomName, setRoomName] = useState('')
   const [previewTracks, setPreviewTracks] = useState(null)
-  const [localMedia, setLocalMedia] = useState(createRef())
   const [localMediaAvailable, setLocalMediaAvailable] = useState(false)
   const [hasJoinedRoom, setHasJoinedRoom] = useState(false)
   const [hasLeftRoom, setHasLeftRoom] = useState(false)
   const [activeRoom, setActiveRoom] = useState(null)
-  const [remoteMedia, setRemoteMedia] = useState(createRef())
   const [remoteMediaAvailable, setRemoteMediaAvailable] = useState(false)
   const [record, setRecord] = useState({})
+  const [localMedia] = useState(createRef())
+  const [remoteMedia] = useState(createRef())
   const dispatch = useDispatch()
+
   useEffect(() => {
     if (hasLeftRoom) {
       setHasLeftRoom(false)
@@ -45,24 +46,16 @@ const VideoVerification = () => {
         // todo: replace this
         console.log(`Already in room ${participant.identity}`)
         if (remoteMedia) {
-          attachParticipantTracks(participant, remoteMedia.current)
+          setRemoteMediaAvailable(true)
+          participantConnected(participant, remoteMedia.current)
         }
       })
       room.on('participantConnected', participant => {
         // todo: replace this
+        console.log('participant', participant)
         console.log(`Joining ${participant.identity}`)
-      })
-      room.on('trackAdded', (track, participant) => {
-        // todo: replace this
-        console.log(`${participant.identity} added track: ${track.kind}`)
-        if (remoteMedia) {
-          attachTracks([track], remoteMedia.current)
-        }
-      })
-      room.on('trackRemoved', (track, participant) => {
-        // todo: replace this
-        console.log(`${participant.identity} removed track: ${track.kind}`)
-        detachTracks([track])
+        setRemoteMediaAvailable(true)
+        participantConnected(participant, remoteMedia.current)
       })
       room.on('participantDisconnected', participant => {
         // todo: replace this
@@ -74,6 +67,7 @@ const VideoVerification = () => {
           previewTracks.forEach(track => {
             track.stop()
           })
+          setPreviewTracks(null)
         }
         detachParticipantTracks(room.localParticipant)
         room.participants.forEach(detachParticipantTracks)
@@ -105,10 +99,20 @@ const VideoVerification = () => {
     }
   }
 
+  const attachTrack = (track, container) => {
+    console.log('track', track)
+    console.log('container', container)
+    container.appendChild(track.attach())
+  }
+
   const attachTracks = (tracks, container) => {
+    console.log(tracks)
     tracks.forEach(track => {
-      // note: track.attach() not a function; tutorial = fake news
-      container.appendChild(track.track.attach())
+      if (track.track) {
+        attachTrack(track.track, container)
+      } else {
+        attachTrack(track, container)
+      }
     })
   }
 
@@ -118,33 +122,63 @@ const VideoVerification = () => {
   }
 
   const leaveRoom = () => {
-    activeRoom.disconnect()
+    if (activeRoom) {
+      activeRoom.disconnect()
+    }
   }
 
-  const detachTracks = tracks => {
-    tracks.forEach(track => {
-      track.track.detach().forEach(detachedElement => {
-        detachedElement.remove()
-      })
-    })
+  const getTracks = participant => {
+    return Array.from(participant.tracks.values())
+      .filter(publication => publication.track)
+      .map(publication => publication.track)
+  }
+
+  const detachTrack = track => {
+    track.detach().forEach(detachedElement => detachedElement.remove())
   }
 
   const detachParticipantTracks = participant => {
-    const tracks = Array.from(participant.tracks.values())
-    detachTracks(tracks)
+    const tracks = getTracks(participant)
+    tracks.forEach(detachTrack)
   }
+
+  const trackPublished = (publication, container) => {
+    if (publication.isSubscribed) {
+      attachTrack(publication.track, container)
+    }
+    publication.on('subscribed', track => {
+      attachTrack(track, container)
+    })
+    publication.on('unsubscribed', detachTrack)
+  }
+
+  const participantConnected = (participant, container) => {
+    console.log(participant.tracks)
+    participant.tracks.forEach(publication => {
+      trackPublished(publication, container)
+    })
+    participant.on('trackPublished', publication =>
+      trackPublished(publication, container)
+    )
+  }
+
+  window.addEventListener('beforeunload', leaveRoom)
 
   const renderActions = (text, record) => (
     <span>
       <Button
-        type='primary'
         icon='video-camera'
+        size='small'
         onClick={() => {
           setRoomName(record.email)
           setRecord(record)
           dispatch(getTwilioToken(identity, record.email))
         }}>
-        Join Video Chat
+        Join Room
+      </Button>
+      <Divider type='vertical' />
+      <Button size='small' icon='video-camera' onClick={() => {}}>
+        Verify ID
       </Button>
     </span>
   )
@@ -154,7 +188,7 @@ const VideoVerification = () => {
       firstName: 'Luca',
       lastName: 'Brasi',
       phoneNumber: '09773513562',
-      email: 'jvcl122@gmail.com'
+      email: 'jevi.lanchinebre@gmail.com'
     },
     {
       firstName: 'Vito',

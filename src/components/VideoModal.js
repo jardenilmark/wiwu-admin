@@ -37,13 +37,6 @@ const VideoModal = ({
         }}
         footer={[
           <Button
-            key='back'
-            onClick={e => {
-              leaveRoom()
-            }}>
-            Cancel
-          </Button>,
-          <Button
             key='submit'
             type='primary'
             onClick={e => {
@@ -51,6 +44,13 @@ const VideoModal = ({
               leaveRoom()
             }}>
             Confirm Verification
+          </Button>,
+          <Button
+            key='back'
+            onClick={e => {
+              leaveRoom()
+            }}>
+            Cancel
           </Button>
         ]}>
         {showLocalTrack}

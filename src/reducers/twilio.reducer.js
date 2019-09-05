@@ -24,8 +24,7 @@ export default function reducer(state = initialState, action) {
       }
     case RESET_TWILIO_TOKEN_SUCCESS:
       return {
-        ...state,
-        token: action.payload
+        initialState
       }
     case RESET_TWILIO_TOKEN_FAILED:
       message.error(action.payload, 10)
