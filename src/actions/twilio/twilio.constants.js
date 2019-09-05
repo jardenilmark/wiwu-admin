@@ -1,2 +1,2 @@
-export const GET_TWILIO_TOKEN = 'GET_TWILIO_TOKEN'
-export const RESET_TWILIO_TOKEN = 'RESET_TWILIO_TOKEN'
+export const GET_TOKEN = 'GET_TOKEN'
+export const RESET_TOKEN = 'RESET_TOKEN'

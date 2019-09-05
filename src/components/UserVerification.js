@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Table, Button, message, Divider } from 'antd'
 import Video from 'twilio-video'
 import VideoModal from './VideoModal'
-import { getToken } from '../actions/twilio/getTwilioToken.action'
-import { resetToken } from '../actions/twilio/resetTwilioToken.action'
+import { getToken } from '../actions/twilio/getToken.action'
+import { resetToken } from '../actions/twilio/resetToken.action'
 
-const UserVerification = () => {
+const VideoVerification = () => {
   const [isModalVisible, toggleModal] = useState(false)
   // todo change to admin.current.displayName or something
   const identity = 'Admin'
@@ -244,4 +244,4 @@ const UserVerification = () => {
   )
 }
 
-export default UserVerification
+export default VideoVerification

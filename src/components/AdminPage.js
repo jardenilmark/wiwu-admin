@@ -6,7 +6,7 @@ import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
 import ManageUsers from './users/ManageUsers'
 import ManageContacts from './contacts/ManageContacts'
-import VideoVerification from './VideoVerification'
+import UserVerification from './UserVerification'
 import EmergencyList from './responders/EmergencyList'
 import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
@@ -25,7 +25,7 @@ const AdminPage = () => {
           <PrivateRoute path='/emergency-list' component={EmergencyList} />
           <PrivateRoute path='/manage-users' component={ManageUsers} />
           <PrivateRoute path='/manage-contacts' component={ManageContacts} />
-          <PrivateRoute path='/verification' component={VideoVerification} />
+          <PrivateRoute path='/verification' component={UserVerification} />
           <PrivateRoute component={NoMatch} />
         </Switch>
         <Layout.Footer style={styles.footer}>
