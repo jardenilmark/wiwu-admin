@@ -1,23 +1,20 @@
 import React, { useState, createRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Row, Col, Table, Button, message, Divider } from 'antd'
+import { message } from 'antd'
 import Video from 'twilio-video'
+import PropTypes from 'prop-types'
 import VideoModal from './VideoModal'
-import { getToken } from '../actions/twilio/getToken.action'
 import { resetToken } from '../actions/twilio/resetToken.action'
 
-const UserVerification = () => {
-  const [isModalVisible, toggleModal] = useState(false)
-  // todo change to admin.current.displayName or something
-  const identity = 'Admin'
+const TwilioVideo = props => {
+  const roomName = props.record.email
   const token = useSelector(state => state.twilio.token)
-  const [roomName, setRoomName] = useState('')
+  const [isModalVisible, toggleModal] = useState(false)
   const [localMediaAvailable, setLocalMediaAvailable] = useState(false)
   const [hasJoinedRoom, setHasJoinedRoom] = useState(false)
   const [hasLeftRoom, setHasLeftRoom] = useState(false)
   const [activeRoom, setActiveRoom] = useState(null)
   const [remoteMediaAvailable, setRemoteMediaAvailable] = useState(false)
-  const [record, setRecord] = useState({})
   const [localMedia] = useState(createRef())
   const [remoteMedia] = useState(createRef())
   const dispatch = useDispatch()
@@ -51,7 +48,6 @@ const UserVerification = () => {
       })
       room.on('participantConnected', participant => {
         // todo: replace this
-        console.log('participant', participant)
         console.log(`Joining ${participant.identity}`)
         setRemoteMediaAvailable(true)
         participantConnected(participant, remoteMedia.current)
@@ -90,13 +86,10 @@ const UserVerification = () => {
   }
 
   const attachTrack = (track, container) => {
-    console.log('track', track)
-    console.log('container', container)
     container.appendChild(track.attach())
   }
 
   const attachTracks = (tracks, container) => {
-    console.log(tracks)
     tracks.forEach(track => {
       if (track.track) {
         attachTrack(track.track, container)
@@ -143,7 +136,6 @@ const UserVerification = () => {
   }
 
   const participantConnected = (participant, container) => {
-    console.log(participant.tracks)
     participant.tracks.forEach(publication => {
       trackPublished(publication, container)
     })
@@ -154,84 +146,21 @@ const UserVerification = () => {
 
   window.addEventListener('beforeunload', leaveRoom)
 
-  const renderActions = (text, record) => (
-    <span>
-      <Button
-        icon='video-camera'
-        size='small'
-        onClick={() => {
-          setRoomName(record.email)
-          setRecord(record)
-          dispatch(getToken(identity, record.email))
-        }}>
-        Join Room
-      </Button>
-      <Divider type='vertical' />
-      <Button size='small' icon='video-camera' onClick={() => {}}>
-        Verify ID
-      </Button>
-    </span>
-  )
-
-  const sampleData = [
-    {
-      firstName: 'Luca',
-      lastName: 'Brasi',
-      phoneNumber: '09773513562',
-      email: 'jevi.lanchinebre@gmail.com'
-    },
-    {
-      firstName: 'Vito',
-      lastName: 'Corleone',
-      phoneNumber: '09773513562',
-      email: 'jvcl1225@gmail.com'
-    }
-  ]
-  const columns = [
-    {
-      title: 'First Name',
-      dataIndex: 'firstName',
-      key: 'firstName'
-    },
-    {
-      title: 'Last Name',
-      dataIndex: 'lastName',
-      key: 'lastName'
-    },
-    {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber'
-    },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (text, record) => renderActions(text, record)
-    }
-  ]
   return (
-    <div>
-      <Row style={{ margin: '8px' }}>
-        <Col span={24}>
-          <Table
-            dataSource={sampleData}
-            columns={columns}
-            rowKey='email'
-            title={() => 'Pending Verifications'}
-          />
-        </Col>
-      </Row>
-      <VideoModal
-        record={record}
-        isModalVisible={isModalVisible}
-        localMediaAvailable={localMediaAvailable}
-        localMedia={localMedia}
-        remoteMedia={remoteMedia}
-        leaveRoom={leaveRoom}
-        remoteMediaAvailable={remoteMediaAvailable}
-      />
-    </div>
+    <VideoModal
+      record={props.record}
+      isModalVisible={isModalVisible}
+      localMediaAvailable={localMediaAvailable}
+      localMedia={localMedia}
+      remoteMedia={remoteMedia}
+      leaveRoom={leaveRoom}
+      remoteMediaAvailable={remoteMediaAvailable}
+    />
   )
 }
 
-export default UserVerification
+TwilioVideo.propTypes = {
+  record: PropTypes.object.isRequired
+}
+
+export default TwilioVideo
