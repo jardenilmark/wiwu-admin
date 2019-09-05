@@ -8,6 +8,7 @@ import {
   GET_USERS,
   DELETE_USER,
   SEARCH_USERS,
+  FILTER_USERS,
   CHANGE_USER_STATUS
 } from '../actions/user/user.constants'
 import {
@@ -111,6 +112,11 @@ export default function reducer(state = initialState, action) {
         users: action.payload
       }
     case SEARCH_USERS:
+      return {
+        ...state,
+        filteredUsers: action.payload
+      }
+    case FILTER_USERS:
       return {
         ...state,
         filteredUsers: action.payload

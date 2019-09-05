@@ -1,4 +1,5 @@
 export const GET_USERS = 'FETCH_USERS'
 export const DELETE_USER = 'DELETE_USER'
 export const SEARCH_USERS = 'SEARCH_USERS'
+export const FILTER_USERS = 'FILTER_USERS'
 export const CHANGE_USER_STATUS = 'CHANGE_USER_STATUS'
