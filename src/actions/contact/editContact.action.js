@@ -8,8 +8,9 @@ import { EDIT_CONTACT } from './contact.constants'
 
 export const editContact = ({ address, ...rest }, id) => {
   return async (dispatch, getState) => {
-    const location = getCoordinates(address)
+    const location = await getCoordinates(address)
     const values = { ...rest, location, address }
+
     try {
       await db
         .collection('contacts')
