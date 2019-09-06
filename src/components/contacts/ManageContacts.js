@@ -31,14 +31,6 @@ const styles = {
   content: {
     height: '100%',
     overflowY: 'auto'
-  },
-  wrapper: {
-    width: '70%',
-    marginLeft: '15%',
-    marginTop: 40,
-    marginBottom: 30,
-    display: 'flex',
-    justifyContent: 'space-between'
   }
 }
 

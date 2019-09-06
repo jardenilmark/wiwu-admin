@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon, Divider } from 'antd'
 import { useDispatch } from 'react-redux'
 
 import { signOut } from '../actions/admin/signOut.action'
@@ -94,7 +94,7 @@ const styles = {
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    margin: '35px 0px 20px 0px'
+    margin: '25px 0px 15px 0px'
   },
   menu: {
     textAlign: 'left'

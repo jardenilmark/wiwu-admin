@@ -9,7 +9,7 @@ import { getActiveKey } from '../../helpers/common/getActiveKey'
 
 const { TabPane } = Tabs
 
-const AuthScreen = ({ history, location }) => {
+const AuthScreen = ({ history, location, match }) => {
   const [activeKey, setActiveKey] = useState(getActiveKey(location))
 
   return (
@@ -23,7 +23,7 @@ const AuthScreen = ({ history, location }) => {
             activeKey={activeKey}
             onTabClick={key => {
               setActiveKey(key)
-              history.push(`/auth-page/${key}`)
+              history.push(`${match.url}/${key}`)
             }}
             tabBarStyle={styles.tabBar}
             tabBarGutter={15}>

@@ -9,6 +9,7 @@ import ManageUsers from './users/ManageUsers'
 import ManageContacts from './contacts/ManageContacts'
 import VideoVerification from './VideoVerification'
 import EmergencyList from './responders/EmergencyList'
+import AdminSettings from './AdminSettings.js'
 import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
 
@@ -38,6 +39,10 @@ const AdminPage = props => {
           <PrivateRoute
             path={`${match.url}/verification`}
             component={VideoVerification}
+          />
+          <PrivateRoute
+            path={`${match.url}/settings`}
+            component={AdminSettings}
           />
           <Route component={NoMatch} />
         </Switch>
