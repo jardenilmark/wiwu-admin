@@ -1,12 +1,12 @@
 import { createAction } from 'redux-actions'
 
 import { firestore } from '../../firebase'
-import { SET_AUTH_DETAILS } from './admin.constants'
+import { SET_CURRENT_USER } from './admin.constants'
 
-export const setAuthDetails = (user, loading, authenticated) => {
+export const setCurrentUser = user => {
   return async dispatch => {
     try {
-      let userPayload
+      let userPayload = user
 
       if (user) {
         const { uid, email, emailVerified } = user
@@ -20,10 +20,9 @@ export const setAuthDetails = (user, loading, authenticated) => {
         userPayload = { uid, email, emailVerified, ...userData }
       }
 
-      dispatch(
-        createAction(SET_AUTH_DETAILS)({ userPayload, loading, authenticated })
-      )
+      dispatch(createAction(SET_CURRENT_USER)(userPayload))
     } catch (e) {
+      console.log('error', e.message)
       // TODO add proper catch
     }
   }

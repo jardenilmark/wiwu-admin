@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import { Switch } from 'react-router'
+import { Route } from 'react-router'
 
 import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
@@ -11,22 +12,34 @@ import EmergencyList from './responders/EmergencyList'
 import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
 
-const AdminPage = () => {
+const AdminPage = props => {
+  const { match } = props
   return (
     <Layout style={styles.layout}>
-      <Sidebar />
+      <Sidebar {...props} />
       <Layout>
         <Switch>
-          <PrivateRoute exact path='/' component={ManageResponders} />
           <PrivateRoute
-            path='/manage-responders'
+            path={`${match.url}/manage-responders`}
             component={ManageResponders}
           />
-          <PrivateRoute path='/emergency-list' component={EmergencyList} />
-          <PrivateRoute path='/manage-users' component={ManageUsers} />
-          <PrivateRoute path='/manage-contacts' component={ManageContacts} />
-          <PrivateRoute path='/verification' component={VideoVerification} />
-          <PrivateRoute component={NoMatch} />
+          <PrivateRoute
+            path={`${match.url}/emergency-list`}
+            component={EmergencyList}
+          />
+          <PrivateRoute
+            path={`${match.url}/manage-users`}
+            component={ManageUsers}
+          />
+          <PrivateRoute
+            path={`${match.url}/manage-contacts`}
+            component={ManageContacts}
+          />
+          <PrivateRoute
+            path={`${match.url}/verification`}
+            component={VideoVerification}
+          />
+          <Route component={NoMatch} />
         </Switch>
         <Layout.Footer style={styles.footer}>
           wiwu-admin ©2019 created by timwiwu

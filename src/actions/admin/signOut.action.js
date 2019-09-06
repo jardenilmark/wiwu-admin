@@ -11,7 +11,7 @@ export const signOut = () => {
       await auth.signOut()
 
       dispatch(createAction(SIGNOUT)())
-      history.push('/auth/signIn')
+      history.push('/auth-page/sign-in')
     } catch (error) {
       message.error(error.message, 5)
     }

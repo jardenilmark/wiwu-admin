@@ -1,8 +1,8 @@
 import {
   SIGNIN,
   SIGNUP,
-  SET_AUTH_DETAILS,
-  SIGNOUT
+  SIGNOUT,
+  SET_CURRENT_USER
 } from '../actions/admin/admin.constants'
 import {
   GET_USERS,
@@ -31,8 +31,6 @@ import {
 
 const initialState = {
   current: null,
-  loading: true,
-  authenticated: false,
   responders: [],
   filteredResponders: null,
   users: [],
@@ -57,14 +55,10 @@ export default function reducer(state = initialState, action) {
       return {
         ...initialState
       }
-    case SET_AUTH_DETAILS:
-      const { userPayload, loading, authenticated } = action.payload
-
+    case SET_CURRENT_USER:
       return {
         ...state,
-        current: userPayload,
-        loading,
-        authenticated
+        current: action.payload
       }
     case CREATE_RESPONDER:
       return {

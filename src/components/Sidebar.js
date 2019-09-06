@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Layout, Menu, Icon } from 'antd'
-import { signOut } from '../actions/admin/signOut.action'
-import { history } from '../history'
 import { useDispatch } from 'react-redux'
+
+import { signOut } from '../actions/admin/signOut.action'
+import { getActiveKey } from '../helpers/common/getActiveKey'
+
 import Logo from './Logo'
 
-const Sidebar = () => {
+const Sidebar = ({ history, location, match }) => {
   const dispatch = useDispatch()
   const [collapsed, toggleCollapse] = useState(false)
-  const [selectedKeys, setSelectedKeys] = useState([
-    window.location.pathname.slice(1)
-  ])
+  const [selectedKeys, setSelectedKeys] = useState([getActiveKey(location)])
 
   return (
     <Layout.Sider
@@ -29,7 +29,7 @@ const Sidebar = () => {
         <Menu.Item
           key='manage-responders'
           onClick={() => {
-            history.push('/manage-responders')
+            history.push(`${match.url}/manage-responders`)
             setSelectedKeys(['manage-responders'])
           }}>
           <Icon type='alert' />
@@ -38,7 +38,7 @@ const Sidebar = () => {
         <Menu.Item
           key='manage-users'
           onClick={() => {
-            history.push('/manage-users')
+            history.push(`${match.url}/manage-users`)
             setSelectedKeys(['manage-users'])
           }}>
           <Icon type='team' />
@@ -47,7 +47,7 @@ const Sidebar = () => {
         <Menu.Item
           key='manage-contacts'
           onClick={() => {
-            history.push('/manage-contacts')
+            history.push(`${match.url}/manage-contacts`)
             setSelectedKeys(['manage-contacts'])
           }}>
           <Icon type='phone' />
@@ -56,7 +56,7 @@ const Sidebar = () => {
         <Menu.Item
           key='emergency-list'
           onClick={() => {
-            history.push('/emergency-list')
+            history.push(`${match.url}/emergency-list`)
             setSelectedKeys(['emergency-list'])
           }}>
           <Icon type='alert' />
@@ -65,7 +65,7 @@ const Sidebar = () => {
         <Menu.Item
           key='verification'
           onClick={() => {
-            history.push('/verification')
+            history.push(`${match.url}/verification`)
             setSelectedKeys(['verification'])
           }}>
           <Icon type='check-circle' />
@@ -74,7 +74,7 @@ const Sidebar = () => {
         <Menu.Item
           key='settings'
           onClick={() => {
-            history.push('/settings')
+            history.push(`${match.url}/settings`)
             setSelectedKeys(['settings'])
           }}>
           <Icon type='setting' />
