@@ -3,7 +3,8 @@ import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
 
 import Spinner from './Spinner'
 
-const Map = ({ location, label }) => {
+const Map = ({ location, label, style }) => {
+  console.log(location)
   const position = {
     lat: location.latitude,
     lng: location.longitude
@@ -19,7 +20,7 @@ const Map = ({ location, label }) => {
         mapTypeId='hybrid'
         labels={true}
         zoom={18}
-        mapContainerStyle={{ height: '500px', width: '600px' }}>
+        mapContainerStyle={style || { height: '500px', width: '600px' }}>
         <Marker position={position} title={label} />
       </GoogleMap>
     )

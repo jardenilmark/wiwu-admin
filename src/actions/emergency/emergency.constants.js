@@ -1,0 +1,1 @@
+export const GET_EMERGENCIES = 'GET_EMERGENCIES'
