@@ -6,7 +6,7 @@ import { List } from 'antd'
 import UserListItem from './UserListItem'
 import Spinner from '../Spinner'
 
-const UsersList = () => {
+const UserList = () => {
   const dispatch = useDispatch()
   const users = useSelector(state => state.admin.users)
   const filteredUsers = useSelector(state => state.admin.filteredUsers)
@@ -51,4 +51,4 @@ const styles = {
   }
 }
 
-export default UsersList
+export default UserList

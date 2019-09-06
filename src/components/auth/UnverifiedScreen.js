@@ -11,7 +11,10 @@ const UnverifiedScreen = () => {
     <Row style={styles.row} type='flex' justify='center' align='middle'>
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
         <div style={styles.imageWrapper}>
-          <img src={require('../../assets/images/paper-plane.png')} />
+          <img
+            src={require('../../assets/images/paper-plane.png')}
+            alt='paper-plane'
+          />
         </div>
         <Card
           bordered={false}

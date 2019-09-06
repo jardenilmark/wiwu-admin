@@ -22,7 +22,6 @@ export const setCurrentUser = user => {
 
       dispatch(createAction(SET_CURRENT_USER)(userPayload))
     } catch (e) {
-      console.log('error', e.message)
       // TODO add proper catch
     }
   }

@@ -19,7 +19,7 @@ const initialValues = {
   department: POLICE
 }
 
-const CreateResponder = ({ setDrawerVisibility }) => {
+const CreateResponderForm = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
 
   return (
@@ -202,7 +202,7 @@ const CreateResponder = ({ setDrawerVisibility }) => {
   )
 }
 
-CreateResponder.propTypes = {
+CreateResponderForm.propTypes = {
   setDrawerVisibility: PropTypes.func.isRequired
 }
 
@@ -228,4 +228,4 @@ const styles = {
   }
 }
 
-export default CreateResponder
+export default CreateResponderForm

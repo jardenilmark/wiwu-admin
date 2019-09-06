@@ -1,18 +1,11 @@
 import React, { useState } from 'react'
-import { Layout, Drawer, Button, Input, Radio } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { searchResponders } from '../../actions/responder/searchResponders.action'
-import { filterResponders } from '../../actions/responder/filterResponders.action'
+import { Layout, Drawer } from 'antd'
 
-import CreateResponder from './CreateResponder'
+import CreateResponderForm from './CreateResponderForm'
 import ResponderList from './ResponderList'
-
-const { Search } = Input
+import ResponderListHeader from './ResponderListHeader'
 
 const ManageResponders = () => {
-  const dispatch = useDispatch()
-  const responders = useSelector(state => state.admin.responders)
-  const [radioValue, setRadioValue] = useState('all')
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
@@ -26,41 +19,9 @@ const ManageResponders = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateResponder setDrawerVisibility={setDrawerVisibility} />
+        <CreateResponderForm setDrawerVisibility={setDrawerVisibility} />
       </Drawer>
-      <div style={styles.wrapper}>
-        <Search
-          placeholder='Search responder admins...'
-          onSearch={value => dispatch(searchResponders(responders, value))}
-          style={{ width: 200 }}
-        />
-        <Radio.Group
-          value={radioValue}
-          buttonStyle='solid'
-          onChange={e => {
-            setRadioValue(e.target.value)
-            dispatch(filterResponders(responders, e.target.value))
-          }}>
-          <Radio.Button value='all'>
-            <strong>All</strong>
-          </Radio.Button>
-          <Radio.Button value='active'>
-            <strong>Active</strong>
-          </Radio.Button>
-          <Radio.Button value='blocked'>
-            <strong>Blocked</strong>
-          </Radio.Button>
-          <Radio.Button value='archived'>
-            <strong>Archived</strong>
-          </Radio.Button>
-        </Radio.Group>
-        <Button
-          icon='user-add'
-          type='dashed'
-          onClick={() => setDrawerVisibility(true)}>
-          Add Responder
-        </Button>
-      </div>
+      <ResponderListHeader setDrawerVisibility={setDrawerVisibility} />
       <ResponderList />
     </Layout.Content>
   )
@@ -70,14 +31,6 @@ const styles = {
   content: {
     height: '100%',
     overflowY: 'auto'
-  },
-  wrapper: {
-    width: '70%',
-    marginLeft: '15%',
-    marginTop: 40,
-    marginBottom: 30,
-    display: 'flex',
-    justifyContent: 'space-between'
   }
 }
 
