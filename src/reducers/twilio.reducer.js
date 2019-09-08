@@ -1,7 +1,4 @@
-import {
-  GET_TWILIO_TOKEN,
-  RESET_TWILIO_TOKEN
-} from '../actions/twilio/twilio.constants.js'
+import { GET_TOKEN, RESET_TOKEN } from '../actions/twilio/twilio.constants.js'
 
 const initialState = {
   token: ''
@@ -9,12 +6,12 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case GET_TWILIO_TOKEN:
+    case GET_TOKEN:
       return {
         ...state,
         token: action.payload
       }
-    case RESET_TWILIO_TOKEN:
+    case RESET_TOKEN:
       return {
         ...initialState
       }

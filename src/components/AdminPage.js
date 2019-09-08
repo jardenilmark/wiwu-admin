@@ -1,13 +1,12 @@
 import React from 'react'
 import { Layout } from 'antd'
-import { Switch } from 'react-router'
-import { Route } from 'react-router'
+import { Switch, Route } from 'react-router'
 
 import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
 import ManageUsers from './users/ManageUsers'
 import ManageContacts from './contacts/ManageContacts'
-import VideoVerification from './VideoVerification'
+import UserVerification from './users/UserVerification'
 import EmergencyList from './responders/EmergencyList'
 import AdminSettings from './AdminSettings.js'
 import Sidebar from './Sidebar'
@@ -38,7 +37,7 @@ const AdminPage = props => {
           />
           <PrivateRoute
             path={`${match.url}/verification`}
-            component={VideoVerification}
+            component={UserVerification}
           />
           <PrivateRoute
             path={`${match.url}/settings`}
