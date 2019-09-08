@@ -34,6 +34,8 @@ export const getEmergencies = () => {
 
       // reverse so the latest requests will come up first
       dispatch(createAction(GET_EMERGENCIES)(_.reverse(emergencies)))
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
