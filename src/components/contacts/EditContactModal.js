@@ -10,8 +10,9 @@ const { Option } = Select
 
 const EditContact = () => {
   const dispatch = useDispatch()
-  const contact = useSelector(state => state.contact.clickedContact)
+  const contact = useSelector(state => state.contact.selectedContact)
   const visible = useSelector(state => state.contact.editModalVisibility)
+
   return (
     <Modal
       centered={true}
@@ -19,7 +20,8 @@ const EditContact = () => {
       footer={null}
       destroyOnClose={true}
       maskClosable={false}
-      title='Update Contact'
+      bodyStyle={{ padding: 20, backgroundColor: '#f5f5f5' }}
+      title={<strong>Update Contact Details</strong>}
       onCancel={() => dispatch(toggleEditModal())}>
       <Formik
         initialValues={contact}

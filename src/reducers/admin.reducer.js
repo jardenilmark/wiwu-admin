@@ -1,23 +1,27 @@
 import {
   SIGNIN,
   SIGNUP,
-  SET_AUTH_DETAILS,
-  SIGNOUT
+  SIGNOUT,
+  SET_CURRENT_USER
 } from '../actions/admin/admin.constants'
 import {
-  FETCH_USERS,
+  GET_USERS,
   DELETE_USER,
-  SEARCH_USERS
+  SEARCH_USERS,
+  FILTER_USERS,
+  CHANGE_USER_STATUS
 } from '../actions/user/user.constants'
 import {
-  FETCH_RESPONDERS,
+  GET_RESPONDERS,
   EDIT_RESPONDER,
   DELETE_RESPONDER,
   CREATE_RESPONDER,
-  SEARCH_RESPONDERS
+  SEARCH_RESPONDERS,
+  CHANGE_RESPONDER_STATUS,
+  FILTER_RESPONDERS
 } from '../actions/responder/responder.constants'
 import {
-  FETCH_CONTACTS,
+  GET_CONTACTS,
   DELETE_CONTACT,
   CREATE_CONTACT,
   EDIT_CONTACT,
@@ -27,8 +31,6 @@ import {
 
 const initialState = {
   current: null,
-  loading: false,
-  authenticated: false,
   responders: [],
   filteredResponders: null,
   users: [],
@@ -53,14 +55,10 @@ export default function reducer(state = initialState, action) {
       return {
         ...initialState
       }
-    case SET_AUTH_DETAILS:
-      const { userPayload, loading, authenticated } = action.payload
-
+    case SET_CURRENT_USER:
       return {
         ...state,
-        current: userPayload,
-        loading,
-        authenticated
+        current: action.payload
       }
     case CREATE_RESPONDER:
       return {
@@ -77,7 +75,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         responders: action.payload
       }
-    case FETCH_RESPONDERS:
+    case CHANGE_RESPONDER_STATUS:
+      return {
+        ...state,
+        responders: action.payload
+      }
+    case GET_RESPONDERS:
       return {
         ...state,
         responders: action.payload
@@ -87,7 +90,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         filteredResponders: action.payload
       }
-    case FETCH_USERS:
+    case FILTER_RESPONDERS:
+      return {
+        ...state,
+        filteredResponders: action.payload
+      }
+    case GET_USERS:
       return {
         ...state,
         users: action.payload
@@ -102,7 +110,17 @@ export default function reducer(state = initialState, action) {
         ...state,
         filteredUsers: action.payload
       }
-    case FETCH_CONTACTS:
+    case FILTER_USERS:
+      return {
+        ...state,
+        filteredUsers: action.payload
+      }
+    case CHANGE_USER_STATUS:
+      return {
+        ...state,
+        users: action.payload
+      }
+    case GET_CONTACTS:
       return {
         ...state,
         contacts: action.payload

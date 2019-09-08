@@ -24,6 +24,19 @@ const CreateAdminSchema = yup.object().shape({
   lastName: yup.string().required('Last name is required')
 })
 
+const EditAdminSchema = yup.object().shape({
+  phoneNumber: yup
+    .string()
+    .matches(/^(09)[0-9]{9}$/, 'Phone number is not valid')
+    .required('Phone number is required'),
+  emailAddress: yup
+    .string()
+    .email('Please enter a valid email address')
+    .required('Email address is required'),
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required')
+})
+
 const SignInAdminSchema = yup.object().shape({
   emailAddress: yup
     .string()
@@ -32,4 +45,4 @@ const SignInAdminSchema = yup.object().shape({
   password: yup.string().required('Password is required')
 })
 
-export { CreateAdminSchema, SignInAdminSchema }
+export { CreateAdminSchema, SignInAdminSchema, EditAdminSchema }

@@ -1,10 +1,10 @@
 import {
   TOGGLE_EDIT_MODAL,
-  SET_CLICKED_CONTACT
+  SET_SELECTED_CONTACT
 } from '../actions/contact/contact.constants'
 
 const initialState = {
-  clickedContact: null,
+  selectedContact: null,
   editModalVisibility: false
 }
 
@@ -15,10 +15,10 @@ export default function reducer(state = initialState, action) {
         ...state,
         editModalVisibility: !state.editModalVisibility
       }
-    case SET_CLICKED_CONTACT:
+    case SET_SELECTED_CONTACT:
       return {
         ...state,
-        clickedContact: action.payload
+        selectedContact: action.payload
       }
     default:
       return {

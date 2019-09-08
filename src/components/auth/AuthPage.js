@@ -5,12 +5,12 @@ import SignInTab from './SignInTab'
 import SignUpTab from './SignUpTab'
 import Logo from '../Logo'
 
+import { getActiveKey } from '../../helpers/common/getActiveKey'
+
 const { TabPane } = Tabs
 
-const AuthScreen = ({ history }) => {
-  const pathname = window.location.pathname
-  const paths = pathname.split('/')
-  const [activeKey, setActiveKey] = useState(paths[2])
+const AuthScreen = ({ history, location, match }) => {
+  const [activeKey, setActiveKey] = useState(getActiveKey(location))
 
   return (
     <Row style={styles.row} type='flex' justify='center' align='middle'>
@@ -23,14 +23,14 @@ const AuthScreen = ({ history }) => {
             activeKey={activeKey}
             onTabClick={key => {
               setActiveKey(key)
-              history.push(`/auth/${key}`)
+              history.push(`${match.url}/${key}`)
             }}
             tabBarStyle={styles.tabBar}
             tabBarGutter={15}>
-            <TabPane tab='SIGN IN' key='signIn'>
+            <TabPane tab='SIGN IN' key='sign-in'>
               <SignInTab />
             </TabPane>
-            <TabPane tab='SIGN UP' key='signUp'>
+            <TabPane tab='SIGN UP' key='sign-up'>
               <SignUpTab />
             </TabPane>
           </Tabs>

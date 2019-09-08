@@ -2,10 +2,8 @@ import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
 import { firestore as db, secondaryAuth } from '../../firebase'
-
-import { CREATE_RESPONDER } from './responder.constants'
-
 import { statuses, roles } from '../../constants/User'
+import { CREATE_RESPONDER } from './responder.constants'
 
 export const createResponder = ({ emailAddress: email, password, ...rest }) => {
   return async dispatch => {
@@ -34,10 +32,10 @@ export const createResponder = ({ emailAddress: email, password, ...rest }) => {
       await user.sendEmailVerification(actionCodeSettings)
       await secondaryAuth.signOut()
 
-      message.success('Responder created successfully!', 10)
+      message.success('Responder created successfully!', 5)
       dispatch(createAction(CREATE_RESPONDER)(payload))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

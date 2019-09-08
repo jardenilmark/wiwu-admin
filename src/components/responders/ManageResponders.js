@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
-import { Layout, Drawer, Button, Input } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { searchResponders } from '../../actions/responder/searchResponders'
+import { Layout, Drawer } from 'antd'
 
-import CreateResponder from './CreateResponder'
-import RespondersList from './RespondersList'
-
-const { Search } = Input
+import CreateResponderForm from './CreateResponderForm'
+import ResponderList from './ResponderList'
+import ResponderListHeader from './ResponderListHeader'
 
 const ManageResponders = () => {
-  const dispatch = useDispatch()
-  const responders = useSelector(state => state.admin.responders)
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
@@ -24,23 +19,10 @@ const ManageResponders = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateResponder setDrawerVisibility={setDrawerVisibility} />
+        <CreateResponderForm setDrawerVisibility={setDrawerVisibility} />
       </Drawer>
-      <div style={styles.wrapper}>
-        <Search
-          placeholder='Search responder admins...'
-          onSearch={value => dispatch(searchResponders(responders, value))}
-          style={{ width: 300 }}
-        />
-        <Button
-          icon='user-add'
-          type='dashed'
-          onClick={() => setDrawerVisibility(true)}
-          style={{ float: 'right' }}>
-          Add Responder
-        </Button>
-      </div>
-      <RespondersList />
+      <ResponderListHeader setDrawerVisibility={setDrawerVisibility} />
+      <ResponderList />
     </Layout.Content>
   )
 }
@@ -49,13 +31,6 @@ const styles = {
   content: {
     height: '100%',
     overflowY: 'auto'
-  },
-  wrapper: {
-    width: '70%',
-    marginLeft: '15%',
-    marginTop: 40,
-    marginBottom: 30,
-    textAlign: 'left'
   }
 }
 

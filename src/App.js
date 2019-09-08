@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Switch, Route, Redirect } from 'react-router'
 
-import { setAuthDetails } from './actions/admin/setAuthDetails.action'
+import { setCurrentUser } from './actions/admin/setCurrentUser.action'
 
 import { auth } from './firebase'
 
+import PrivateRoute from './components/routes/PrivateRoute'
 import AuthRoute from './components/routes/AuthRoute'
-import AuthScreen from './components/auth/AuthScreen'
+import AuthPage from './components/auth/AuthPage'
 import AdminPage from './components/AdminPage'
+import NoMatch from './components/NoMatch'
 import Spinner from './components/Spinner'
 
 import 'antd/dist/antd.css'
@@ -15,17 +18,12 @@ import './App.css'
 
 const App = () => {
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.admin.loading)
-  const authenticated = useSelector(state => state.admin.authenticated)
-  const user = useSelector(state => state.admin.current)
+  const [loading, setLoadingStatus] = useState(true)
 
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        dispatch(setAuthDetails(user, false, true))
-      } else {
-        dispatch(setAuthDetails(user, false, false))
-      }
+    auth.onAuthStateChanged(async user => {
+      await dispatch(setCurrentUser(user))
+      setLoadingStatus(false)
     })
   }, [])
 
@@ -35,8 +33,12 @@ const App = () => {
 
   return (
     <div className='App'>
-      <AuthRoute path='/auth' component={AuthScreen} />
-      {user && user.emailVerified && authenticated && <AdminPage />}
+      <Switch>
+        <Redirect exact from='/' to='/admin-page/manage-responders' />
+        <PrivateRoute path='/admin-page' component={AdminPage} />
+        <AuthRoute path='/auth-page' component={AuthPage} />
+        <Route component={NoMatch} />
+      </Switch>
     </div>
   )
 }

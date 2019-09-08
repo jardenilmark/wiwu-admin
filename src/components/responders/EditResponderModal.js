@@ -10,8 +10,9 @@ const { Option } = Select
 
 const EditResponder = () => {
   const dispatch = useDispatch()
-  const responder = useSelector(state => state.responder.clickedResponder)
+  const responder = useSelector(state => state.responder.selectedResponder)
   const visible = useSelector(state => state.responder.editModalVisibility)
+
   return (
     <Modal
       centered={true}
@@ -19,7 +20,8 @@ const EditResponder = () => {
       footer={null}
       destroyOnClose={true}
       maskClosable={false}
-      title='Update Responder Details'
+      bodyStyle={{ padding: 20, backgroundColor: '#f5f5f5' }}
+      title={<strong>Update Responder Details</strong>}
       onCancel={() => dispatch(toggleEditModal())}>
       <Formik
         enableReinitialize={true}
@@ -104,6 +106,7 @@ const EditResponder = () => {
                 hasFeedback>
                 <Select
                   name='department'
+                  disabled={isSubmitting}
                   onChange={value => setFieldValue('department', value)}
                   value={values.department}>
                   <Option value='Philippine National Police Iloilo'>

@@ -20,7 +20,6 @@ const initialValues = {
 const SignUpTab = () => {
   const dispatch = useDispatch()
 
-  // TODO onAuthStateChanged
   return (
     <Card bordered={false} style={styles.card}>
       <Formik

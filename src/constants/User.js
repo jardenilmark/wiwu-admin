@@ -1,12 +1,12 @@
 export const statuses = {
   ACTIVE: 'active',
-  BLOCKED: 'blocked'
+  BLOCKED: 'blocked',
+  ARCHIVED: 'archived'
 }
 
 export const roles = {
   ADMIN: 'admin',
   RESPONDER: 'responder',
-  VOLUNTEER: 'volunteer',
   USER: 'user'
 }
 

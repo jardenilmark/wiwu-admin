@@ -1,6 +1,7 @@
-import { SEARCH_RESPONDERS } from './responder.constants'
 import FuzzySearch from 'fuzzy-search'
 import { createAction } from 'redux-actions'
+
+import { SEARCH_RESPONDERS } from './responder.constants'
 
 export const searchResponders = (responders, input) => {
   return dispatch => {

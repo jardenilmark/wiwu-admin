@@ -2,7 +2,6 @@ import React from 'react'
 import { Card, Row, Col, Button } from 'antd'
 import { useDispatch } from 'react-redux'
 import { signOut } from '../../actions/admin/signOut.action'
-import Logo from '../Logo'
 
 const { Meta } = Card
 
@@ -11,8 +10,11 @@ const UnverifiedScreen = () => {
   return (
     <Row style={styles.row} type='flex' justify='center' align='middle'>
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
-        <div style={styles.logoWrapper}>
-          <Logo height={90} />
+        <div style={styles.imageWrapper}>
+          <img
+            src={require('../../assets/images/paper-plane.png')}
+            alt='paper-plane'
+          />
         </div>
         <Card
           bordered={false}
@@ -34,7 +36,7 @@ const UnverifiedScreen = () => {
 }
 
 const styles = {
-  logoWrapper: {
+  imageWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'

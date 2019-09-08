@@ -3,11 +3,11 @@ import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
 
-import { FETCH_RESPONDERS } from './responder.constants'
+import { GET_RESPONDERS } from './responder.constants'
 
 import { roles } from '../../constants/User'
 
-export const fetchResponders = () => {
+export const getResponders = () => {
   return async dispatch => {
     try {
       const respondersRef = await db
@@ -19,9 +19,9 @@ export const fetchResponders = () => {
         return { ...responder.data(), id: responder.id }
       })
 
-      dispatch(createAction(FETCH_RESPONDERS)(responders))
+      dispatch(createAction(GET_RESPONDERS)(responders))
     } catch (error) {
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }

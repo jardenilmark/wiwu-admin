@@ -1,5 +1,6 @@
-import { FILTER_CONTACTS } from './contact.constants'
 import { createAction } from 'redux-actions'
+
+import { FILTER_CONTACTS } from './contact.constants'
 
 export const filterContacts = (contacts, filter) => {
   return dispatch => {

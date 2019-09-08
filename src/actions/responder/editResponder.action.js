@@ -3,7 +3,6 @@ import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
-
 import { EDIT_RESPONDER } from './responder.constants'
 
 export const editResponder = (values, id) => {
@@ -22,11 +21,11 @@ export const editResponder = (values, id) => {
       const editedResponders = [...responders]
       editedResponders[index] = values
 
-      message.success('Responder updated successfully!', 10)
+      message.success('Responder updated successfully!', 5)
       dispatch(createAction(EDIT_RESPONDER)(editedResponders))
     } catch (error) {
       alert(error.message)
-      message.error(error.message, 10)
+      message.error(error.message, 5)
     }
   }
 }
