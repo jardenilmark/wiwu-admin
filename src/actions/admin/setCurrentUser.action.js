@@ -6,8 +6,6 @@ import { SET_CURRENT_USER } from './admin.constants'
 export const setCurrentUser = user => {
   return async dispatch => {
     try {
-      let userPayload = user
-
       if (user) {
         const { uid, email, emailVerified } = user
 
@@ -17,10 +15,11 @@ export const setCurrentUser = user => {
           .get()
         const userData = ref.data()
 
-        userPayload = { uid, email, emailVerified, ...userData }
+        const userPayload = { uid, email, emailVerified, ...userData }
+        dispatch(createAction(SET_CURRENT_USER)(userPayload))
+      } else {
+        dispatch(createAction(SET_CURRENT_USER)(user))
       }
-
-      dispatch(createAction(SET_CURRENT_USER)(userPayload))
     } catch (e) {
       // TODO add proper catch
     }
