@@ -3,10 +3,12 @@ import * as yup from 'yup'
 const CreateAdminSchema = yup.object().shape({
   phoneNumber: yup
     .string()
+    .trim()
     .matches(/^(09)[0-9]{9}$/, 'Phone number is not valid')
     .required('Phone number is required'),
   emailAddress: yup
     .string()
+    .trim()
     .email('Please enter a valid email address')
     .required('Email address is required'),
   password: yup
@@ -20,17 +22,25 @@ const CreateAdminSchema = yup.object().shape({
       /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])(?!.* ).{8,}$/,
       'Password must contain a lowercase letter, an uppercase letter, a number and one of the following characters: !@#$&*'
     ),
-  firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required')
+  firstName: yup
+    .string()
+    .trim()
+    .required('First name is required'),
+  lastName: yup
+    .string()
+    .trim()
+    .required('Last name is required')
 })
 
 const EditAdminSchema = yup.object().shape({
   phoneNumber: yup
     .string()
+    .trim()
     .matches(/^(09)[0-9]{9}$/, 'Phone number is not valid')
     .required('Phone number is required'),
   emailAddress: yup
     .string()
+    .trim()
     .email('Please enter a valid email address')
     .required('Email address is required'),
   firstName: yup.string().required('First name is required'),
@@ -40,6 +50,7 @@ const EditAdminSchema = yup.object().shape({
 const SignInAdminSchema = yup.object().shape({
   emailAddress: yup
     .string()
+    .trim()
     .email('Please enter a valid email address')
     .required('Email address is required'),
   password: yup.string().required('Password is required')

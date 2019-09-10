@@ -10,6 +10,7 @@ const { Option } = Select
 const initialValues = {
   name: '',
   address: '',
+  department: 'medical',
   numbers: ['']
 }
 
@@ -95,7 +96,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
                 hasFeedback>
                 <Select
                   name='department'
-                  placeholder='e.g. Medical'
+                  allowClear
                   disabled={isSubmitting}
                   onBlur={handleBlur}
                   onChange={value => setFieldValue('department', value)}
@@ -105,7 +106,11 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   <Option value='fire'>Fire</Option>
                 </Select>
               </Form.Item>
-              <Form.Item label='Phone Number(s)' required style={styles.input}>
+              <Form.Item
+                label='Phone Number(s)'
+                help={errors.numbers && touched.numbers ? errors.numbers : ''}
+                required
+                style={styles.input}>
                 <FieldArray
                   name='numbers'
                   render={arrayHelpers => (

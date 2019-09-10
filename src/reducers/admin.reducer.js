@@ -2,6 +2,7 @@ import {
   SIGNIN,
   SIGNUP,
   SIGNOUT,
+  EDIT_ADMIN,
   SET_CURRENT_USER
 } from '../actions/admin/admin.constants'
 import {
@@ -55,6 +56,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...initialState
       }
+    case EDIT_ADMIN:
+      return {
+        ...initialState,
+        current: { ...state.current, ...action.payload }
+      }
     case SET_CURRENT_USER:
       return {
         ...state,
@@ -63,7 +69,7 @@ export default function reducer(state = initialState, action) {
     case CREATE_RESPONDER:
       return {
         ...state,
-        responders: [...state.responders, action.payload]
+        responders: [action.payload, ...state.responders]
       }
     case EDIT_RESPONDER:
       return {
@@ -133,7 +139,7 @@ export default function reducer(state = initialState, action) {
     case CREATE_CONTACT:
       return {
         ...state,
-        contacts: [...state.contacts, action.payload]
+        contacts: [action.payload, ...state.contacts]
       }
     case EDIT_CONTACT:
       return {

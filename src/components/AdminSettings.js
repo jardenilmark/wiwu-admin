@@ -3,6 +3,8 @@ import { Layout, Form, Input, Button, Avatar } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik } from 'formik'
 
+import { editAdmin } from '../actions/admin/editAdmin.action'
+
 import { EditAdminSchema } from '../schema/admin.schema'
 
 const AdminSettings = () => {
@@ -22,7 +24,7 @@ const AdminSettings = () => {
           }}
           validationSchema={EditAdminSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            // await dispatch(signUp({ ...values, role: roles.ADMIN }))
+            await dispatch(editAdmin(values, user.uid))
             setSubmitting(false)
           }}>
           {({
@@ -151,7 +153,7 @@ const styles = {
     marginTop: '15px'
   },
   form: {
-    width: 600,
+    width: 550,
     marginTop: 20
   },
   input: {
