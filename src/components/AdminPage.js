@@ -63,7 +63,7 @@ const AdminPage = props => {
             if (change.type === 'added') {
               if (!firstRender) {
                 setCount(count + 1)
-                toast('New emergency has been added!', {
+                toast(`New emergency has been added! ${count}`, {
                   type: 'error',
                   position: 'bottom-right',
                   onClose: () => {
