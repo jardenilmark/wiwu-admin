@@ -1,9 +1,14 @@
 import _ from 'lodash'
 import { createAction } from 'redux-actions'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout } from 'antd'
 import { Switch, Route } from 'react-router'
 import { useDispatch } from 'react-redux'
+import UIfx from 'uifx'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import soundfile from '../assets/sounds/alert.mp3'
 
 import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
@@ -19,12 +24,22 @@ import { firestore as db } from '../firebase'
 
 import { GET_EMERGENCIES } from '../actions/emergency/emergency.constants'
 
+const alert = new UIfx(soundfile, {
+  volume: 1, // number between 0.0 ~ 1.0
+  throttleMs: 100
+})
+
 const AdminPage = props => {
   const { match } = props
+  const [count, setCount] = useState(0)
+
   const dispatch = useDispatch()
+
+  toast.configure()
 
   useEffect(() => {
     try {
+      let firstRender = true
       // listens for new documents and updates
       const snapshot = db
         .collection('emergencies')
@@ -41,6 +56,25 @@ const AdminPage = props => {
             })
           )
           dispatch(createAction(GET_EMERGENCIES)(data))
+
+          e.docChanges().forEach(change => {
+            if (change.type === 'added') {
+              if (!firstRender) {
+                setCount(count + 1)
+                toast('New emergency has been added!', {
+                  type: 'error',
+                  position: 'bottom-right',
+                  onClose: () => {
+                    setCount(0)
+                  }
+                })
+                alert.play()
+              }
+            }
+          })
+          if (firstRender) {
+            firstRender = false
+          }
         })
 
       return function cleanup() {
