@@ -4,7 +4,6 @@ import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
 import Spinner from './Spinner'
 
 const Map = ({ location, label, style }) => {
-  console.log(location)
   const position = {
     lat: location.latitude,
     lng: location.longitude

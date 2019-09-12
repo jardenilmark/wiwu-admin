@@ -1,9 +1,12 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
 import { useDispatch } from 'react-redux'
+import { Form, Input, Button, Select } from 'antd'
+
 import { ContactSchema } from '../../schema/contact.schema'
 import { createContact } from '../../actions/contact/createContact.action'
-import { Form, Input, Button, Select } from 'antd'
+
+import SearchAddress from './SearchAddress'
 
 const { Option } = Select
 
@@ -16,6 +19,7 @@ const initialValues = {
 
 const CreateContact = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
+
   return (
     <div style={styles.formWrapper}>
       <Formik
@@ -62,24 +66,8 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   style={styles.input}
                 />
               </Form.Item>
-              <Form.Item
-                label='Address'
-                help={errors.address && touched.address ? errors.address : ''}
-                validateStatus={
-                  errors.address && touched.address ? 'error' : ''
-                }
-                required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='address'
-                  placeholder='e.g. Lopez Jaena St. Jaro, Iloilo City'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.address}
-                  style={styles.input}
-                />
+              <Form.Item style={styles.input}>
+                <SearchAddress />
               </Form.Item>
               <Form.Item
                 label='Department'
