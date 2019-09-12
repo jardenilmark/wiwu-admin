@@ -1,5 +1,6 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useDispatch, useSelector } from 'react-redux'
 import { editContact } from '../../actions/contact/editContact.action'
 import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
@@ -67,23 +68,35 @@ const EditContact = () => {
                   style={styles.input}
                 />
               </Form.Item>
-              <Form.Item
-                label='Address'
-                help={errors.address && touched.address ? errors.address : ''}
-                validateStatus={
-                  errors.address && touched.address ? 'error' : ''
-                }
-                required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='address'
-                  placeholder='e.g. Lopez Jaena St. Jaro, Iloilo City'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.address}
-                  style={styles.input}
+              <Form.Item label='Address' style={styles.input}>
+                <GooglePlacesAutocomplete
+                  debounce={200}
+                  required={true}
+                  initialValue={values.address}
+                  autocompletionRequest={{
+                    componentRestrictions: {
+                      country: 'ph'
+                    }
+                  }}
+                  renderInput={props => (
+                    <Input
+                      {...props}
+                      disabled={isSubmitting}
+                      name='address'
+                      placeholder='e.g. Jaro, Iloilo City'
+                      style={{ textOverflow: 'ellipsis' }}
+                    />
+                  )}
+                  suggestionsStyles={{
+                    suggestion: {
+                      fontSize: 15,
+                      borderBottom: '1px solid black',
+                      cursor: 'pointer'
+                    }
+                  }}
+                  onSelect={({ description }) => {
+                    setFieldValue('address', description)
+                  }}
                 />
               </Form.Item>
               <Form.Item

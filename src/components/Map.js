@@ -34,8 +34,8 @@ const Map = ({ location, label, style }) => {
 }
 
 Map.propTypes = {
-  label: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
+  label: PropTypes.string,
   style: PropTypes.object
 }
 

@@ -1,12 +1,11 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useDispatch } from 'react-redux'
 import { Form, Input, Button, Select } from 'antd'
 
 import { ContactSchema } from '../../schema/contact.schema'
 import { createContact } from '../../actions/contact/createContact.action'
-
-import SearchAddress from './SearchAddress'
 
 const { Option } = Select
 
@@ -66,8 +65,42 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   style={styles.input}
                 />
               </Form.Item>
-              <Form.Item label='Address' style={styles.input}>
-                <SearchAddress />
+              <Form.Item
+                label='Address'
+                help={errors.address && touched.address ? errors.address : ''}
+                validateStatus={
+                  errors.address && touched.address ? 'error' : ''
+                }
+                required
+                style={styles.input}>
+                <GooglePlacesAutocomplete
+                  debounce={200}
+                  disabled={isSubmitting}
+                  initialValue={values.address}
+                  autocompletionRequest={{
+                    componentRestrictions: {
+                      country: 'ph'
+                    }
+                  }}
+                  renderInput={props => (
+                    <Input
+                      {...props}
+                      name='address'
+                      placeholder='e.g. Jaro, Iloilo City'
+                      style={{ textOverflow: 'ellipsis' }}
+                    />
+                  )}
+                  suggestionsStyles={{
+                    suggestion: {
+                      fontSize: 15,
+                      borderBottom: '1px solid black',
+                      cursor: 'pointer'
+                    }
+                  }}
+                  onSelect={({ description }) => {
+                    setFieldValue('address', description)
+                  }}
+                />
               </Form.Item>
               <Form.Item
                 label='Department'
@@ -96,7 +129,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
               </Form.Item>
               <Form.Item
                 label='Phone Number(s)'
-                help={errors.numbers && touched.numbers ? errors.numbers : ''}
+                // help={errors.numbers && touched.numbers ? errors.numbers : ''}
                 required
                 style={styles.input}>
                 <FieldArray
