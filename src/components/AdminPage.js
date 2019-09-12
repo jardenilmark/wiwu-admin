@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { createAction } from 'redux-actions'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Layout } from 'antd'
 import { Switch, Route } from 'react-router'
 import { useDispatch } from 'react-redux'
@@ -31,7 +31,6 @@ const alert = new UIfx(soundfile, {
 
 const AdminPage = props => {
   const { match } = props
-  const [count, setCount] = useState(0)
 
   const dispatch = useDispatch()
 
@@ -41,6 +40,7 @@ const AdminPage = props => {
     try {
       // placed inside so it won't reset when state is changed
       let firstRender = true
+      let count = 0
       // listens for new documents and updates
       const snapshot = db
         .collection('emergencies')
@@ -62,12 +62,13 @@ const AdminPage = props => {
           e.docChanges().forEach(change => {
             if (change.type === 'added') {
               if (!firstRender) {
-                setCount(count + 1)
+                count += 1
+
                 toast(`New emergency has been added! ${count}`, {
                   type: 'error',
                   position: 'bottom-right',
                   onClose: () => {
-                    setCount(0)
+                    count = 0
                   }
                 })
                 alert.play()
