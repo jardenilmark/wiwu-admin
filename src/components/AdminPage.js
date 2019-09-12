@@ -39,6 +39,7 @@ const AdminPage = props => {
 
   useEffect(() => {
     try {
+      // placed inside so it won't reset when state is changed
       let firstRender = true
       // listens for new documents and updates
       const snapshot = db
@@ -55,6 +56,7 @@ const AdminPage = props => {
               }
             })
           )
+
           dispatch(createAction(GET_EMERGENCIES)(data))
 
           e.docChanges().forEach(change => {
@@ -72,9 +74,8 @@ const AdminPage = props => {
               }
             }
           })
-          if (firstRender) {
-            firstRender = false
-          }
+
+          firstRender = false
         })
 
       return function cleanup() {
