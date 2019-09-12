@@ -66,7 +66,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   style={styles.input}
                 />
               </Form.Item>
-              <Form.Item style={styles.input}>
+              <Form.Item label='Address' style={styles.input}>
                 <SearchAddress />
               </Form.Item>
               <Form.Item

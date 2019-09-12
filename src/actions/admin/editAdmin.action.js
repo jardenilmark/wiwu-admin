@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { message } from 'antd'
 import { createAction } from 'redux-actions'
 

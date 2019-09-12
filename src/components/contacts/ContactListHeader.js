@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Input, Button, Radio } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -51,6 +52,10 @@ const ContactListHeader = ({ setDrawerVisibility }) => {
       </Button>
     </div>
   )
+}
+
+ContactListHeader.propTypes = {
+  setDrawerVisibility: PropTypes.func.isRequired
 }
 
 const styles = {

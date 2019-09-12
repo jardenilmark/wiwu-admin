@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
 
 import Spinner from './Spinner'
@@ -30,6 +31,12 @@ const Map = ({ location, label, style }) => {
   }
 
   return isLoaded ? renderMap() : <Spinner tip='Loading Map...' height={500} />
+}
+
+Map.propTypes = {
+  label: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
+  style: PropTypes.object
 }
 
 export default Map

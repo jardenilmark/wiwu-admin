@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Input, Radio } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { searchResponders } from '../../actions/responder/searchResponders.action'
@@ -47,6 +48,10 @@ const ResponderListHeader = ({ setDrawerVisibility }) => {
       </Button>
     </div>
   )
+}
+
+ResponderListHeader.propTypes = {
+  setDrawerVisibility: PropTypes.func.isRequired
 }
 
 const styles = {

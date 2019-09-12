@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { List, Avatar, Tag } from 'antd'
 
@@ -32,6 +33,10 @@ const UserListItem = ({ user }) => {
       />
     </List.Item>
   )
+}
+
+UserListItem.propTypes = {
+  user: PropTypes.object.isRequired
 }
 
 export default UserListItem

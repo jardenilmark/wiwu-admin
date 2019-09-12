@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Card, Row, Col, Tabs } from 'antd'
 
 import SignInTab from './SignInTab'
@@ -38,6 +39,12 @@ const AuthScreen = ({ history, location, match }) => {
       </Col>
     </Row>
   )
+}
+
+AuthScreen.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 const styles = {

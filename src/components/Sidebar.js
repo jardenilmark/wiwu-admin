@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Layout, Menu, Icon, Divider } from 'antd'
+import PropTypes from 'prop-types'
+import { Layout, Menu, Icon } from 'antd'
 import { useDispatch } from 'react-redux'
 
 import { signOut } from '../actions/admin/signOut.action'
@@ -87,6 +88,12 @@ const Sidebar = ({ history, location, match }) => {
       </Menu>
     </Layout.Sider>
   )
+}
+
+Sidebar.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 const styles = {

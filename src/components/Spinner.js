@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Spin, Icon } from 'antd'
 
 const Spinner = ({ tip, height }) => {
@@ -10,6 +11,11 @@ const Spinner = ({ tip, height }) => {
       />
     </div>
   )
+}
+
+Spinner.propTypes = {
+  height: PropTypes.number.isRequired,
+  tip: PropTypes.string.isRequired
 }
 
 const styles = {

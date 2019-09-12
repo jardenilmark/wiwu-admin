@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { List, Avatar, Tag } from 'antd'
 
@@ -34,6 +35,10 @@ const ResponderListItem = ({ responder }) => {
       />
     </List.Item>
   )
+}
+
+ResponderListItem.propTypes = {
+  responder: PropTypes.object.isRequired
 }
 
 export default ResponderListItem

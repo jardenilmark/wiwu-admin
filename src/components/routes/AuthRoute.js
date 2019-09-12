@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -23,6 +24,10 @@ const AuthRoute = ({ component: Component, ...rest }) => {
       }}
     />
   )
+}
+
+AuthRoute.propTypes = {
+  Component: PropTypes.node
 }
 
 export default AuthRoute
