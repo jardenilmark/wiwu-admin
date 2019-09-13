@@ -80,28 +80,6 @@ const EmergencyColumn = props => {
                 title === 'COMPLETED'
                   ? [
                       <Button
-                        icon='audio'
-                        key={`${item.id}broadcastcompleted`}
-                        shape='round'
-                        onClick={() =>
-                          sendNotification({
-                            app_id: '99a5a234-ed7d-48a6-9738-4cf5a7a4fbec',
-                            contents: {
-                              en: 'An emergency is near your area!'
-                            },
-                            android_group: ['All'],
-                            filters: [
-                              {
-                                field: 'location',
-                                radius: '1000', // within 1000 meters
-                                lat: item.location.latitude,
-                                long: item.location.longitude
-                              }
-                            ]
-                          })
-                        }
-                      />,
-                      <Button
                         icon='global'
                         key={`${item.id}globalcompleted`}
                         shape='round'
