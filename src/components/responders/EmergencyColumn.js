@@ -35,6 +35,7 @@ const EmergencyColumn = props => {
           renderItem={item => (
             <Card
               title={item.id}
+              key={item.id}
               cover={
                 <img
                   width={210}
@@ -48,6 +49,7 @@ const EmergencyColumn = props => {
                   ? [
                       <Button
                         icon='global'
+                        key={`${item.id}globalcompleted`}
                         shape='round'
                         onClick={() =>
                           Modal.info({
@@ -62,6 +64,7 @@ const EmergencyColumn = props => {
                       <Button
                         icon='global'
                         shape='round'
+                        key={`${item.id}globalpending`}
                         onClick={() =>
                           Modal.info({
                             width: 720,
@@ -73,6 +76,7 @@ const EmergencyColumn = props => {
                       <Button
                         icon='arrow-right'
                         shape='round'
+                        key={`${item.id}arrowpending`}
                         onClick={() => dispatch(completeEmergency(item.id))}
                       />
                     ]
