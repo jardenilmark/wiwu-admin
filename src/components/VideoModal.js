@@ -1,6 +1,8 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Button, Modal, Spin, Descriptions } from 'antd'
 import * as PropTypes from 'prop-types'
+import { verifyUser } from '../actions/user/verifyUser.action'
 
 const VideoModal = ({
   record,
@@ -11,6 +13,8 @@ const VideoModal = ({
   leaveRoom,
   remoteMediaAvailable
 }) => {
+  const dispatch = useDispatch()
+
   const showLocalTrack = localMediaAvailable ? (
     <div className='flex-item'>
       <div ref={localMedia} />
@@ -18,6 +22,7 @@ const VideoModal = ({
   ) : (
     <Spin size='large' tip='...Connecting Local Video...' />
   )
+
   const showRemoteTrack = remoteMediaAvailable ? (
     <div className='flex-item'>
       <div ref={remoteMedia} />
@@ -25,6 +30,7 @@ const VideoModal = ({
   ) : (
     <Spin size='large' tip='...Connecting Remote Video...' />
   )
+
   return (
     <span>
       <Modal
@@ -39,9 +45,9 @@ const VideoModal = ({
           <Button
             key='submit'
             type='primary'
-            onClick={e => {
-              // todo: dispatch action to confirm verification
-              leaveRoom()
+            onClick={async e => {
+              await leaveRoom()
+              await dispatch(verifyUser(record.id))
             }}>
             Confirm Verification
           </Button>,

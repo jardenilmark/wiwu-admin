@@ -1,14 +1,34 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Table, Button, Divider } from 'antd'
 import { getToken } from '../../actions/twilio/getToken.action'
+import { getUsers } from '../../actions/user/getUsers.action'
 import TwilioVideo from '../TwilioVideo'
+import Spinner from '../Spinner'
 
 const UserVerification = () => {
   // todo change to admin.current.displayName or something
   const identity = 'Admin'
   const [record, setRecord] = useState({})
+  const [fetching, setFetchingStatus] = useState(true)
+  const pendingUsers = useSelector(state =>
+    state.admin.users.filter(
+      user => user.isUserVerified === false && user.status === 'active'
+    )
+  )
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(getUsers())
+      setFetchingStatus(false)
+    }
+    fetchData()
+  })
+
+  if (fetching) {
+    return <Spinner tip='Fetching pending users...' height={700} />
+  }
 
   const renderActions = (text, record) => (
     <span>
@@ -23,25 +43,19 @@ const UserVerification = () => {
       </Button>
       <Divider type='vertical' />
       <Button size='small' icon='video-camera' onClick={() => {}}>
-        Verify ID
+        View ID
       </Button>
     </span>
   )
-
-  const sampleData = [
-    {
-      firstName: 'Luca',
-      lastName: 'Brasi',
-      phoneNumber: '09773513562',
-      email: 'jevi.lanchinebre@gmail.com'
-    },
-    {
-      firstName: 'Vito',
-      lastName: 'Corleone',
-      phoneNumber: '09773513562',
-      email: 'jvcl1225@gmail.com'
-    }
-  ]
+  //  todo: remove after testing purposes
+  // const sampleData = [
+  //   {
+  //     firstName: 'Luca',
+  //     lastName: 'Brasi',
+  //     phoneNumber: '09773513562',
+  //     email: 'jevi.lanchinebre@gmail.com'
+  //   }
+  // ]
   const columns = [
     {
       title: 'First Name',
@@ -64,12 +78,13 @@ const UserVerification = () => {
       render: (text, record) => renderActions(text, record)
     }
   ]
+
   return (
     <div>
       <Row style={{ margin: '8px' }}>
         <Col span={24}>
           <Table
-            dataSource={sampleData}
+            dataSource={pendingUsers}
             columns={columns}
             rowKey='email'
             title={() => 'Pending Verifications'}
