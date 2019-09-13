@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { createAction } from 'redux-actions'
 import React, { useEffect } from 'react'
 import { Layout } from 'antd'
@@ -46,18 +45,24 @@ const AdminPage = props => {
         .collection('emergencies')
         .orderBy('date')
         .startAfter(new Date().getTime())
-        .onSnapshot(e => {
+        .onSnapshot(async e => {
           // TODO filter by department once routing is completed
-          const data = _.reverse(
-            e.docs.map(e => {
+          const emergencies = await Promise.all(
+            e.docs.map(async emergency => {
+              const userRef = await emergency.data().userId.get()
+
+              const { firstName, lastName, phoneNumber } = userRef.data()
+
               return {
-                ...e.data(),
-                id: e.id
+                ...emergency.data(),
+                id: emergency.id,
+                name: `${firstName} ${lastName}`,
+                phoneNumber
               }
             })
           )
 
-          dispatch(createAction(GET_EMERGENCIES)(data))
+          dispatch(createAction(GET_EMERGENCIES)(emergencies))
 
           e.docChanges().forEach(change => {
             if (change.type === 'added') {
