@@ -21,8 +21,6 @@ export const getUserListItemActions = (user, dispatch) => {
                 <Text strong>
                   {user.firstName} {user.lastName}{' '}
                 </Text>
-                <br />
-                <Text type='secondary'>{user.address}</Text>
               </div>
             ),
             width: 660,

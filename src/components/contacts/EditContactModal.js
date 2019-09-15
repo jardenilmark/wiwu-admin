@@ -1,11 +1,13 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useDispatch, useSelector } from 'react-redux'
+import { Form, Input, Button, Select, Modal } from 'antd'
+
 import { editContact } from '../../actions/contact/editContact.action'
 import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
 import { ContactSchema } from '../../schema/contact.schema'
-import { Form, Input, Button, Select, Modal } from 'antd'
+
+import AddressSearchInput from './AddressSearchInput'
 
 const { Option } = Select
 
@@ -69,34 +71,10 @@ const EditContact = () => {
                 />
               </Form.Item>
               <Form.Item label='Address' style={styles.input}>
-                <GooglePlacesAutocomplete
-                  debounce={200}
-                  required={true}
-                  initialValue={values.address}
-                  autocompletionRequest={{
-                    componentRestrictions: {
-                      country: 'ph'
-                    }
-                  }}
-                  renderInput={props => (
-                    <Input
-                      {...props}
-                      disabled={isSubmitting}
-                      name='address'
-                      placeholder='e.g. Jaro, Iloilo City'
-                      style={{ textOverflow: 'ellipsis' }}
-                    />
-                  )}
-                  suggestionsStyles={{
-                    suggestion: {
-                      fontSize: 15,
-                      borderBottom: '1px solid black',
-                      cursor: 'pointer'
-                    }
-                  }}
-                  onSelect={({ description }) => {
-                    setFieldValue('address', description)
-                  }}
+                <AddressSearchInput
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
                 />
               </Form.Item>
               <Form.Item

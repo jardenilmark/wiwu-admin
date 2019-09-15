@@ -1,11 +1,12 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useDispatch } from 'react-redux'
 import { Form, Input, Button, Select } from 'antd'
 
 import { ContactSchema } from '../../schema/contact.schema'
 import { createContact } from '../../actions/contact/createContact.action'
+
+import AddressSearchInput from './AddressSearchInput'
 
 const { Option } = Select
 
@@ -16,7 +17,7 @@ const initialValues = {
   numbers: ['']
 }
 
-const CreateContact = ({ setDrawerVisibility }) => {
+const CreateContactForm = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
 
   return (
@@ -53,8 +54,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
                 help={errors.name && touched.name ? errors.name : ''}
                 validateStatus={errors.name && touched.name ? 'error' : ''}
                 required
-                style={styles.input}
-                hasFeedback>
+                style={styles.input}>
                 <Input
                   name='name'
                   placeholder='e.g. Iloilo Mission Hospital'
@@ -73,33 +73,10 @@ const CreateContact = ({ setDrawerVisibility }) => {
                 }
                 required
                 style={styles.input}>
-                <GooglePlacesAutocomplete
-                  debounce={200}
-                  disabled={isSubmitting}
-                  initialValue={values.address}
-                  autocompletionRequest={{
-                    componentRestrictions: {
-                      country: 'ph'
-                    }
-                  }}
-                  renderInput={props => (
-                    <Input
-                      {...props}
-                      name='address'
-                      placeholder='e.g. Jaro, Iloilo City'
-                      style={{ textOverflow: 'ellipsis' }}
-                    />
-                  )}
-                  suggestionsStyles={{
-                    suggestion: {
-                      fontSize: 15,
-                      borderBottom: '1px solid black',
-                      cursor: 'pointer'
-                    }
-                  }}
-                  onSelect={({ description }) => {
-                    setFieldValue('address', description)
-                  }}
+                <AddressSearchInput
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  handleBlur={handleBlur}
                 />
               </Form.Item>
               <Form.Item
@@ -127,11 +104,7 @@ const CreateContact = ({ setDrawerVisibility }) => {
                   <Option value='fire'>Fire</Option>
                 </Select>
               </Form.Item>
-              <Form.Item
-                label='Phone Number(s)'
-                // help={errors.numbers && touched.numbers ? errors.numbers : ''}
-                required
-                style={styles.input}>
+              <Form.Item label='Phone Number(s)' required style={styles.input}>
                 <FieldArray
                   name='numbers'
                   render={arrayHelpers => (
@@ -144,15 +117,29 @@ const CreateContact = ({ setDrawerVisibility }) => {
                             display: 'flex',
                             marginBottom: 10
                           }}>
-                          <Input
-                            name={`numbers.${index}`}
-                            style={styles.input}
-                            placeholder='e.g. 333-8484'
-                            disabled={isSubmitting}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={number}
-                          />
+                          <Form.Item
+                            style={{
+                              width: '100%',
+                              margin: 0
+                            }}
+                            help={
+                              errors.numbers && touched.numbers
+                                ? errors.numbers
+                                : ''
+                            }
+                            validateStatus={
+                              errors.numbers && touched.numbers ? 'error' : ''
+                            }>
+                            <Input
+                              name={`numbers.${index}`}
+                              style={styles.input}
+                              placeholder='e.g. 333-8484'
+                              disabled={isSubmitting}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={number}
+                            />
+                          </Form.Item>
                           <Button
                             shape='circle'
                             type='dashed'
@@ -214,4 +201,4 @@ const styles = {
   }
 }
 
-export default CreateContact
+export default CreateContactForm

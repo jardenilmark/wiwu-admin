@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Layout, Drawer } from 'antd'
 
-import ContactsList from './ContactList'
-import CreateContact from './CreateContact'
+import ContactList from './ContactList'
+import CreateContactForm from './CreateContactForm'
 import ContactListHeader from './ContactListHeader'
 
 const ManageContacts = () => {
@@ -19,10 +19,10 @@ const ManageContacts = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateContact setDrawerVisibility={setDrawerVisibility} />
+        <CreateContactForm setDrawerVisibility={setDrawerVisibility} />
       </Drawer>
       <ContactListHeader setDrawerVisibility={setDrawerVisibility} />
-      <ContactsList />
+      <ContactList />
     </Layout.Content>
   )
 }

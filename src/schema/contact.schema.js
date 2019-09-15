@@ -1,5 +1,8 @@
 import * as yup from 'yup'
 
+/* 
+TODO: fix validation schema
+*/
 const ContactSchema = yup.object().shape({
   name: yup
     .string()
@@ -20,7 +23,7 @@ const ContactSchema = yup.object().shape({
       yup
         .string()
         .trim()
-        .required('Invalid phone number')
+        .required('Empty phone number is not allowed.')
     )
 })
 
