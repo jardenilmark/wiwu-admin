@@ -44,7 +44,8 @@ const VideoModal = ({
             onClick={async e => {
               await leaveRoom()
               await dispatch(verifyUser(record.id))
-            }}>
+            }}
+            disabled={!record.awaitingVideo}>
             Confirm Verification
           </Button>,
           <Button

@@ -23,7 +23,8 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             onClick={async e => {
               await dispatch(verifyUser(record.id))
               toggleIdModal(false)
-            }}>
+            }}
+            disabled={!record.idImage}>
             Confirm Verification
           </Button>,
           <Button
