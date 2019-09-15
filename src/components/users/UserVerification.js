@@ -5,6 +5,7 @@ import { getToken } from '../../actions/twilio/getToken.action'
 import { getUsers } from '../../actions/user/getUsers.action'
 import { searchUsers } from '../../actions/user/searchUsers.action'
 import TwilioVideo from '../TwilioVideo'
+import IdModal from '../IdModal'
 import Spinner from '../Spinner'
 
 const { Search } = Input
@@ -13,11 +14,20 @@ const UserVerification = () => {
   const identity = 'Admin'
   const [record, setRecord] = useState({})
   const [fetching, setFetchingStatus] = useState(true)
-  const pendingUsers = useSelector(state =>
-    state.admin.users.filter(
-      user => user.isUserVerified === false && user.status === 'active'
-    )
-  )
+  const [isIdModalVisible, toggleIdModal] = useState(false)
+  // const pendingUsers = useSelector(state =>
+  //   state.admin.users.filter(
+  //     user => user.isUserVerified === false && user.status === 'active'
+  //   )
+  // )
+  const pendingUsers = [
+    {
+      firstName: 'Jess',
+      lastName: 'Lanchinebre',
+      email: 'jevi.lanchinebre@gmail.com',
+      phoneNumber: '09773513562'
+    }
+  ]
   const filteredUsers = useSelector(state => state.admin.filteredUsers)
   const dispatch = useDispatch()
 
@@ -45,7 +55,13 @@ const UserVerification = () => {
         Join Room
       </Button>
       <Divider type='vertical' />
-      <Button size='small' icon='video-camera' onClick={() => {}}>
+      <Button
+        size='small'
+        icon='video-camera'
+        onClick={() => {
+          setRecord(record)
+          toggleIdModal(true)
+        }}>
         View ID
       </Button>
     </span>
@@ -112,6 +128,11 @@ const UserVerification = () => {
         </Row>
       </div>
       <TwilioVideo record={record} />
+      <IdModal
+        record={record}
+        isIdModalVisible={isIdModalVisible}
+        toggleIdModal={toggleIdModal}
+      />
     </div>
   )
 }
