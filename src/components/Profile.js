@@ -7,7 +7,7 @@ import { editAdmin } from '../actions/admin/editAdmin.action'
 
 import { EditAdminSchema } from '../schema/admin.schema'
 
-const AdminSettings = () => {
+const Profile = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.admin.current)
 
@@ -166,4 +166,4 @@ const styles = {
   }
 }
 
-export default AdminSettings
+export default Profile

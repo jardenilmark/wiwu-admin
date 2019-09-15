@@ -2,12 +2,11 @@ import { createAction } from 'redux-actions'
 import React, { useEffect } from 'react'
 import { Layout } from 'antd'
 import { Switch, Route } from 'react-router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { firestore as db } from '../firebase'
 import UIfx from 'uifx'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-import soundfile from '../assets/sounds/alert.mp3'
 
 import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
@@ -15,80 +14,97 @@ import ManageUsers from './users/ManageUsers'
 import ManageContacts from './contacts/ManageContacts'
 import UserVerification from './users/UserVerification'
 import EmergencyList from './responders/EmergencyList'
-import AdminSettings from './AdminSettings.js'
+import Profile from './Profile.js'
 import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
 
-import { firestore as db } from '../firebase'
-
 import { GET_EMERGENCIES } from '../actions/emergency/emergency.constants'
+import soundfile from '../assets/sounds/alert.mp3'
+import { roles } from '../constants/User'
 
 const alert = new UIfx(soundfile, {
   volume: 1, // number between 0.0 ~ 1.0
   throttleMs: 100
 })
 
-const AdminPage = props => {
-  const { match } = props
+const adminRoutes = [
+  { path: 'manage-responders', component: ManageResponders },
+  { path: 'manage-users', component: ManageUsers },
+  { path: 'manage-contacts', component: ManageContacts },
+  { path: 'profile', component: Profile }
+]
 
+const responderRoutes = [
+  { path: 'manage-contacts', component: ManageContacts },
+  { path: 'verification', component: UserVerification },
+  { path: 'emergency-list', component: EmergencyList },
+  { path: 'profile', component: Profile }
+]
+
+const AdminPage = props => {
   const dispatch = useDispatch()
+  const { match } = props
+  const { role } = useSelector(state => state.admin.current)
+  const routes = role === roles.ADMIN ? adminRoutes : responderRoutes
 
   toast.configure()
 
   useEffect(() => {
-    try {
-      // placed inside so it won't reset when state is changed
-      let firstRender = true
-      let count = 0
-      // listens for new documents and updates
-      const snapshot = db
-        .collection('emergencies')
-        .orderBy('date')
-        .startAfter(new Date().getTime())
-        .onSnapshot(async e => {
-          // TODO filter by department once routing is completed
-          const emergencies = await Promise.all(
-            e.docs.map(async emergency => {
-              const userRef = await emergency.data().userId.get()
+    if (role === roles.RESPONDER) {
+      try {
+        // placed inside so it won't reset when state is changed
+        let firstRender = true
+        let count = 0
+        // listens for new documents and updates
+        const snapshot = db
+          .collection('emergencies')
+          .orderBy('date')
+          .startAfter(new Date().getTime())
+          .onSnapshot(async e => {
+            // TODO filter by department once routing is completed
+            const emergencies = await Promise.all(
+              e.docs.map(async emergency => {
+                const userRef = await emergency.data().userId.get()
 
-              const { firstName, lastName, phoneNumber } = userRef.data()
+                const { firstName, lastName, phoneNumber } = userRef.data()
 
-              return {
-                ...emergency.data(),
-                id: emergency.id,
-                name: `${firstName} ${lastName}`,
-                phoneNumber
+                return {
+                  ...emergency.data(),
+                  id: emergency.id,
+                  name: `${firstName} ${lastName}`,
+                  phoneNumber
+                }
+              })
+            )
+
+            dispatch(createAction(GET_EMERGENCIES)(emergencies))
+
+            e.docChanges().forEach(change => {
+              if (change.type === 'added') {
+                if (!firstRender) {
+                  count += 1
+
+                  toast(`New emergency has been added! ${count}`, {
+                    type: 'error',
+                    position: 'bottom-right',
+                    onClose: () => {
+                      count = 0
+                    }
+                  })
+                  alert.play()
+                }
               }
             })
-          )
 
-          dispatch(createAction(GET_EMERGENCIES)(emergencies))
-
-          e.docChanges().forEach(change => {
-            if (change.type === 'added') {
-              if (!firstRender) {
-                count += 1
-
-                toast(`New emergency has been added! ${count}`, {
-                  type: 'error',
-                  position: 'bottom-right',
-                  onClose: () => {
-                    count = 0
-                  }
-                })
-                alert.play()
-              }
-            }
+            firstRender = false
           })
 
-          firstRender = false
-        })
-
-      return function cleanup() {
-        snapshot()
+        return function cleanup() {
+          snapshot()
+        }
+      } catch (e) {
+        console.log(e)
       }
-    } catch (e) {
-      console.log(e)
     }
   }, [])
 
@@ -97,30 +113,13 @@ const AdminPage = props => {
       <Sidebar {...props} />
       <Layout>
         <Switch>
-          <PrivateRoute
-            path={`${match.url}/manage-responders`}
-            component={ManageResponders}
-          />
-          <PrivateRoute
-            path={`${match.url}/emergency-list`}
-            component={EmergencyList}
-          />
-          <PrivateRoute
-            path={`${match.url}/manage-users`}
-            component={ManageUsers}
-          />
-          <PrivateRoute
-            path={`${match.url}/manage-contacts`}
-            component={ManageContacts}
-          />
-          <PrivateRoute
-            path={`${match.url}/verification`}
-            component={UserVerification}
-          />
-          <PrivateRoute
-            path={`${match.url}/settings`}
-            component={AdminSettings}
-          />
+          {routes.map(({ path, component: Component }, index) => (
+            <PrivateRoute
+              key={index}
+              path={`${match.url}/${path}`}
+              component={Component}
+            />
+          ))}
           <Route component={NoMatch} />
         </Switch>
         <Layout.Footer style={styles.footer}>

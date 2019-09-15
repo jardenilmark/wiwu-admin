@@ -1,15 +1,32 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Layout, Menu, Icon } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { signOut } from '../actions/admin/signOut.action'
 import { getActiveKey } from '../helpers/common/getActiveKey'
+import { roles } from '../constants/User'
 
 import Logo from './Logo'
 
+const adminMenuItems = [
+  { key: 'manage-responders', icon: 'safety', title: 'Manage Responders' },
+  { key: 'manage-users', icon: 'team', title: 'Manage Users' },
+  { key: 'manage-contacts', icon: 'phone', title: 'Manage Contacts' },
+  { key: 'profile', icon: 'user', title: 'Profile' }
+]
+
+const responderMenuItems = [
+  { key: 'manage-contacts', icon: 'phone', title: 'Manage Contacts' },
+  { key: 'verification', icon: 'check-circle', title: 'User Verification' },
+  { key: 'emergency-list', icon: 'alert', title: 'Emergency List' },
+  { key: 'profile', icon: 'user', title: 'Profile' }
+]
+
 const Sidebar = ({ history, location, match }) => {
   const dispatch = useDispatch()
+  const { role } = useSelector(state => state.admin.current)
+  const menuItems = role === roles.ADMIN ? adminMenuItems : responderMenuItems
   const [collapsed, toggleCollapse] = useState(false)
   const [selectedKeys, setSelectedKeys] = useState([getActiveKey(location)])
 
@@ -27,60 +44,17 @@ const Sidebar = ({ history, location, match }) => {
         mode='inline'
         style={styles.menu}
         selectedKeys={selectedKeys || null}>
-        <Menu.Item
-          key='manage-responders'
-          onClick={() => {
-            history.push(`${match.url}/manage-responders`)
-            setSelectedKeys(['manage-responders'])
-          }}>
-          <Icon type='alert' />
-          <span>Manage Responders</span>
-        </Menu.Item>
-        <Menu.Item
-          key='manage-users'
-          onClick={() => {
-            history.push(`${match.url}/manage-users`)
-            setSelectedKeys(['manage-users'])
-          }}>
-          <Icon type='team' />
-          <span>Manage Users</span>
-        </Menu.Item>
-        <Menu.Item
-          key='manage-contacts'
-          onClick={() => {
-            history.push(`${match.url}/manage-contacts`)
-            setSelectedKeys(['manage-contacts'])
-          }}>
-          <Icon type='phone' />
-          <span>Manage Contacts</span>
-        </Menu.Item>
-        <Menu.Item
-          key='emergency-list'
-          onClick={() => {
-            history.push(`${match.url}/emergency-list`)
-            setSelectedKeys(['emergency-list'])
-          }}>
-          <Icon type='alert' />
-          <span>Emergency List</span>
-        </Menu.Item>
-        <Menu.Item
-          key='verification'
-          onClick={() => {
-            history.push(`${match.url}/verification`)
-            setSelectedKeys(['verification'])
-          }}>
-          <Icon type='check-circle' />
-          <span>User Verification</span>
-        </Menu.Item>
-        <Menu.Item
-          key='settings'
-          onClick={() => {
-            history.push(`${match.url}/settings`)
-            setSelectedKeys(['settings'])
-          }}>
-          <Icon type='setting' />
-          <span>Settings</span>
-        </Menu.Item>
+        {menuItems.map(({ key, icon, title }) => (
+          <Menu.Item
+            key={key}
+            onClick={() => {
+              history.push(`${match.url}/${key}`)
+              setSelectedKeys([key])
+            }}>
+            <Icon type={icon} />
+            <span>{title}</span>
+          </Menu.Item>
+        ))}
         <Menu.Item key='logout' onClick={() => dispatch(signOut())}>
           <Icon type='poweroff' />
           <span>Logout</span>
