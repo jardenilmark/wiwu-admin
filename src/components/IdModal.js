@@ -1,68 +1,40 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Modal, Spin, Descriptions } from 'antd'
+import { Button, Modal, Descriptions, Empty } from 'antd'
 import * as PropTypes from 'prop-types'
 import { verifyUser } from '../actions/user/verifyUser.action'
 
-const VideoModal = ({
-  record,
-  isModalVisible,
-  localMediaAvailable,
-  localMedia,
-  remoteMedia,
-  leaveRoom,
-  remoteMediaAvailable
-}) => {
+const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const dispatch = useDispatch()
-
-  const showLocalTrack = localMediaAvailable ? (
-    <div ref={localMedia} />
-  ) : (
-    <Spin size='large' tip='...Connecting Local Video...' />
-  )
-
-  const showRemoteTrack = remoteMediaAvailable ? (
-    <div ref={remoteMedia} />
-  ) : (
-    <Spin size='large' tip='...Connecting Remote Video...' />
-  )
-
   return (
     <span>
       <Modal
-        visible={isModalVisible}
+        visible={isIdModalVisible}
         onOk={e => {
-          leaveRoom()
+          toggleIdModal(false)
         }}
         onCancel={e => {
-          leaveRoom()
+          toggleIdModal(false)
         }}
         footer={[
           <Button
             key='submit'
             type='primary'
             onClick={async e => {
-              await leaveRoom()
               await dispatch(verifyUser(record.id))
+              toggleIdModal(false)
             }}>
             Confirm Verification
           </Button>,
           <Button
             key='back'
             onClick={e => {
-              leaveRoom()
+              toggleIdModal(false)
             }}>
             Cancel
           </Button>
         ]}>
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: 1, margin: '8px', height: '300px' }}>
-            <div>{showLocalTrack}</div>
-          </div>
-          <div style={{ flex: 1, margin: '8px', height: '300px' }}>
-            <div>{showRemoteTrack}</div>
-          </div>
-        </div>
+        {record.idImage ? <img src={record.idImage} alt='ID' /> : <Empty />}
         <Descriptions title='User Info' bordered size='small' layout='vertical'>
           <Descriptions.Item label='First Name'>
             {record.firstName}
@@ -80,14 +52,10 @@ const VideoModal = ({
   )
 }
 
-VideoModal.propTypes = {
+IdModal.propTypes = {
   record: PropTypes.object.isRequired,
-  isModalVisible: PropTypes.bool.isRequired,
-  localMediaAvailable: PropTypes.bool.isRequired,
-  localMedia: PropTypes.object,
-  leaveRoom: PropTypes.func.isRequired,
-  remoteMedia: PropTypes.object,
-  remoteMediaAvailable: PropTypes.bool.isRequired
+  isIdModalVisible: PropTypes.bool.isRequired,
+  toggleIdModal: PropTypes.func.isRequired
 }
 
-export default VideoModal
+export default IdModal
