@@ -14,7 +14,8 @@ const initialValues = {
   password: '',
   firstName: '',
   lastName: '',
-  phoneNumber: ''
+  phoneNumber: '',
+  adminKey: ''
 }
 
 const SignUpTab = () => {
@@ -147,6 +148,20 @@ const SignUpTab = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phoneNumber}
+                  style={styles.input}
+                />
+              </Form.Item>
+              <Form.Item
+                label='Admin Key'
+                required
+                style={styles.input}
+                hasFeedback>
+                <Input
+                  name='adminKey'
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.adminKey}
                   style={styles.input}
                 />
               </Form.Item>
