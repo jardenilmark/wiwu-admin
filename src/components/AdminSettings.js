@@ -1,12 +1,13 @@
 import React from 'react'
 import { Layout, Form, Input, Button, Avatar } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Formik } from 'formik'
+
+import { generateKey } from '../helpers/secretKey/generateKey'
 
 import { EditAdminSchema } from '../schema/admin.schema'
 
 const AdminSettings = () => {
-  const dispatch = useDispatch()
   const user = useSelector(state => state.admin.current)
 
   return (
@@ -127,6 +128,14 @@ const AdminSettings = () => {
                     disabled={!dirty}
                     loading={isSubmitting}>
                     Submit Details
+                  </Button>
+                  <Button
+                    type='danger'
+                    shape='round'
+                    style={styles.button}
+                    disabled={isSubmitting}
+                    onClick={() => generateKey()}>
+                    Generate Key
                   </Button>
                 </Form.Item>
               </Form>
