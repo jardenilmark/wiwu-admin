@@ -20,6 +20,12 @@ export const signUp = ({
 
       if (!key.exists) {
         throw new Error('Admin key does not exist!')
+      } else {
+        const { user } = key.data()
+
+        if (user) {
+          throw new Error('Admin key already used')
+        }
       }
 
       await auth.createUserWithEmailAndPassword(email, password)
