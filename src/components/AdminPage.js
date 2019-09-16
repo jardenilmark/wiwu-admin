@@ -1,6 +1,13 @@
-import React from 'react'
+import { createAction } from 'redux-actions'
+import React, { useEffect } from 'react'
 import { Layout } from 'antd'
 import { Switch, Route } from 'react-router'
+import { useDispatch } from 'react-redux'
+import UIfx from 'uifx'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import soundfile from '../assets/sounds/alert.mp3'
 
 import PrivateRoute from './routes/PrivateRoute'
 import ManageResponders from './responders/ManageResponders'
@@ -12,8 +19,79 @@ import AdminSettings from './AdminSettings.js'
 import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
 
+import { firestore as db } from '../firebase'
+
+import { GET_EMERGENCIES } from '../actions/emergency/emergency.constants'
+
+const alert = new UIfx(soundfile, {
+  volume: 1, // number between 0.0 ~ 1.0
+  throttleMs: 100
+})
+
 const AdminPage = props => {
   const { match } = props
+
+  const dispatch = useDispatch()
+
+  toast.configure()
+
+  useEffect(() => {
+    try {
+      // placed inside so it won't reset when state is changed
+      let firstRender = true
+      let count = 0
+      // listens for new documents and updates
+      const snapshot = db
+        .collection('emergencies')
+        .orderBy('date')
+        .startAfter(new Date().getTime())
+        .onSnapshot(async e => {
+          // TODO filter by department once routing is completed
+          const emergencies = await Promise.all(
+            e.docs.map(async emergency => {
+              const userRef = await emergency.data().userId.get()
+
+              const { firstName, lastName, phoneNumber } = userRef.data()
+
+              return {
+                ...emergency.data(),
+                id: emergency.id,
+                name: `${firstName} ${lastName}`,
+                phoneNumber
+              }
+            })
+          )
+
+          dispatch(createAction(GET_EMERGENCIES)(emergencies))
+
+          e.docChanges().forEach(change => {
+            if (change.type === 'added') {
+              if (!firstRender) {
+                count += 1
+
+                toast(`New emergency has been added! ${count}`, {
+                  type: 'error',
+                  position: 'bottom-right',
+                  onClose: () => {
+                    count = 0
+                  }
+                })
+                alert.play()
+              }
+            }
+          })
+
+          firstRender = false
+        })
+
+      return function cleanup() {
+        snapshot()
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }, [])
+
   return (
     <Layout style={styles.layout}>
       <Sidebar {...props} />
