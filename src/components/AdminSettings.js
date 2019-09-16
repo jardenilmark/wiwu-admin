@@ -129,14 +129,16 @@ const AdminSettings = () => {
                     loading={isSubmitting}>
                     Submit Details
                   </Button>
-                  <Button
-                    type='danger'
-                    shape='round'
-                    style={styles.button}
-                    disabled={isSubmitting}
-                    onClick={() => generateKey()}>
-                    Generate Key
-                  </Button>
+                  {user.role === 'admin' && (
+                    <Button
+                      type='danger'
+                      shape='round'
+                      style={styles.button}
+                      disabled={isSubmitting}
+                      onClick={() => generateKey()}>
+                      Generate Key
+                    </Button>
+                  )}
                 </Form.Item>
               </Form>
             )
