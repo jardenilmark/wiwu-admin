@@ -13,14 +13,14 @@ const adminMenuItems = [
   { key: 'manage-responders', icon: 'safety', title: 'Manage Responders' },
   { key: 'manage-users', icon: 'team', title: 'Manage Users' },
   { key: 'manage-contacts', icon: 'phone', title: 'Manage Contacts' },
-  { key: 'profile', icon: 'user', title: 'Profile' }
+  { key: 'settings', icon: 'user', title: 'User Settings' }
 ]
 
 const responderMenuItems = [
   { key: 'manage-contacts', icon: 'phone', title: 'Manage Contacts' },
   { key: 'verification', icon: 'check-circle', title: 'User Verification' },
   { key: 'emergency-list', icon: 'alert', title: 'Emergency List' },
-  { key: 'profile', icon: 'user', title: 'Profile' }
+  { key: 'settings', icon: 'user', title: 'Settings' }
 ]
 
 const Sidebar = ({ history, location, match }) => {

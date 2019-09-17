@@ -14,7 +14,7 @@ import ManageUsers from './users/ManageUsers'
 import ManageContacts from './contacts/ManageContacts'
 import UserVerification from './users/UserVerification'
 import EmergencyList from './responders/EmergencyList'
-import Profile from './Profile.js'
+import Settings from './Settings.js'
 import Sidebar from './Sidebar'
 import NoMatch from './NoMatch'
 
@@ -31,14 +31,14 @@ const adminRoutes = [
   { path: 'manage-responders', component: ManageResponders },
   { path: 'manage-users', component: ManageUsers },
   { path: 'manage-contacts', component: ManageContacts },
-  { path: 'profile', component: Profile }
+  { path: 'settings', component: Settings }
 ]
 
 const responderRoutes = [
   { path: 'manage-contacts', component: ManageContacts },
   { path: 'verification', component: UserVerification },
   { path: 'emergency-list', component: EmergencyList },
-  { path: 'profile', component: Profile }
+  { path: 'settings', component: Settings }
 ]
 
 const AdminPage = props => {

@@ -1,13 +1,14 @@
 import React from 'react'
 import { Layout, Form, Input, Button, Avatar } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Formik } from 'formik'
 
+import { generateKey } from '../helpers/secretKey/generateKey'
 import { editAdmin } from '../actions/admin/editAdmin.action'
 
 import { EditAdminSchema } from '../schema/admin.schema'
 
-const Profile = () => {
+const Settings = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.admin.current)
 
@@ -130,6 +131,16 @@ const Profile = () => {
                     loading={isSubmitting}>
                     Submit Details
                   </Button>
+                  {user.role === 'admin' && (
+                    <Button
+                      type='danger'
+                      shape='round'
+                      style={styles.button}
+                      disabled={isSubmitting}
+                      onClick={() => generateKey()}>
+                      Generate Key
+                    </Button>
+                  )}
                 </Form.Item>
               </Form>
             )
@@ -150,7 +161,8 @@ const styles = {
   },
   button: {
     width: '150px',
-    marginTop: '15px'
+    marginTop: '15px',
+    marginLeft: '10px'
   },
   form: {
     width: 550,
@@ -166,4 +178,4 @@ const styles = {
   }
 }
 
-export default Profile
+export default Settings
