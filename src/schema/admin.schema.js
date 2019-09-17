@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-const CreateAdminSchema = yup.object().shape({
+const SignUpAdminSchema = yup.object().shape({
   phoneNumber: yup
     .string()
     .trim()
@@ -29,7 +29,11 @@ const CreateAdminSchema = yup.object().shape({
   lastName: yup
     .string()
     .trim()
-    .required('Last name is required')
+    .required('Last name is required'),
+  adminKey: yup
+    .string()
+    .trim()
+    .required('Admin key is required')
 })
 
 const EditAdminSchema = yup.object().shape({
@@ -56,4 +60,4 @@ const SignInAdminSchema = yup.object().shape({
   password: yup.string().required('Password is required')
 })
 
-export { CreateAdminSchema, SignInAdminSchema, EditAdminSchema }
+export { SignUpAdminSchema, SignInAdminSchema, EditAdminSchema }

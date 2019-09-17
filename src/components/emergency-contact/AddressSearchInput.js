@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Input } from 'antd'
+import { Form, Input } from 'antd'
 import {
   GoogleMap,
   StandaloneSearchBox,
@@ -10,9 +10,17 @@ import {
 import Spinner from '../Spinner'
 
 const libraries = ['places']
+const { Item } = Form
 
-const AddressSearchInput = ({ values, setFieldValue, handleBlur }) => {
-  let searchBox = useRef(null)
+const AddressSearchInput = ({
+  values,
+  errors,
+  touched,
+  handleBlur,
+  setFieldValue,
+  isSubmitting
+}) => {
+  const searchBox = useRef(null)
   const [position, setPosition] = useState(null)
   const [center, setCenter] = useState({
     lat: 10.6952099,
@@ -47,50 +55,60 @@ const AddressSearchInput = ({ values, setFieldValue, handleBlur }) => {
   }
 
   return (
-    <GoogleMap
-      mapContainerStyle={{
-        height: '300px',
-        width: '100%'
-      }}
-      labels={true}
-      zoom={15}
-      options={{
-        mapTypeControl: false,
-        mapTypeId: 'hybrid'
-      }}
-      center={center}>
-      <Marker position={position} />
-      <StandaloneSearchBox
-        onLoad={ref => (searchBox.current = ref)}
-        onPlacesChanged={() => {
-          const places = searchBox.current.getPlaces()
-          const location = places[0].geometry.location
-          setFieldValue('address', places[0].formatted_address)
-          setPosition({
-            lat: location.lat(),
-            lng: location.lng()
-          })
-          setCenter({
-            lat: location.lat(),
-            lng: location.lng()
-          })
-        }}>
-        <Input
-          name='address'
-          placeholder='Search your address...'
-          value={values.address}
-          onBlur={handleBlur}
-          onChange={event => setFieldValue('address', event.target.value)}
-          style={{
-            border: '1px solid transparent',
-            boxShadow: `0 2px 6px black`,
-            borderRadius: 0,
-            width: '400px',
-            textOverflow: 'ellipses'
-          }}
-        />
-      </StandaloneSearchBox>
-    </GoogleMap>
+    <Item
+      label='Address'
+      help={errors.address && touched.address ? errors.address : ''}
+      validateStatus={errors.address && touched.address ? 'error' : ''}
+      required>
+      <GoogleMap
+        mapContainerStyle={{
+          height: '250px',
+          width: '100%'
+        }}
+        labels={true}
+        zoom={15}
+        options={{
+          mapTypeControl: false,
+          mapTypeId: 'hybrid'
+        }}
+        center={center}>
+        <Marker position={position} />
+        <StandaloneSearchBox
+          onLoad={ref => (searchBox.current = ref)}
+          onPlacesChanged={() => {
+            const places = searchBox.current.getPlaces()
+            const location = places[0].geometry.location
+            setFieldValue('address', places[0].formatted_address)
+            setPosition({
+              lat: location.lat(),
+              lng: location.lng()
+            })
+            setCenter({
+              lat: location.lat(),
+              lng: location.lng()
+            })
+          }}>
+          <Input
+            name='address'
+            placeholder='Search your address...'
+            disabled={isSubmitting}
+            value={values.address}
+            onBlur={handleBlur}
+            onChange={event => {
+              event.preventDefault()
+              setFieldValue('address', event.target.value)
+            }}
+            style={{
+              border: '1px solid transparent',
+              boxShadow: `0 2px 6px black`,
+              borderRadius: 0,
+              width: '400px',
+              textOverflow: 'ellipses'
+            }}
+          />
+        </StandaloneSearchBox>
+      </GoogleMap>
+    </Item>
   )
 }
 

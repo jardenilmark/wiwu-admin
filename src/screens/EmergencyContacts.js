@@ -1,11 +1,23 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Layout, Drawer } from 'antd'
 
 import ContactList from '../components/emergency-contact/ContactList'
-import CreateContact from '../components/emergency-contact/CreateContact'
+import ContactForm from '../components/emergency-contact/ContactForm'
 import ContactListHeader from '../components/emergency-contact/ContactListHeader'
 
+import { createContact } from '../actions/contact/createContact.action'
+
+const initialValues = {
+  name: '',
+  notes: '',
+  address: '',
+  department: 'medical',
+  numbers: ['']
+}
+
 const EmergencyContacts = () => {
+  const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
@@ -19,7 +31,15 @@ const EmergencyContacts = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateContact setDrawerVisibility={setDrawerVisibility} />
+        <ContactForm
+          onSubmitHandler={async (values, { setSubmitting, resetForm }) => {
+            await dispatch(createContact(values))
+            setSubmitting(false)
+            resetForm(initialValues)
+            setDrawerVisibility(false)
+          }}
+          initialValues={initialValues}
+        />
       </Drawer>
       <ContactListHeader setDrawerVisibility={setDrawerVisibility} />
       <ContactList />

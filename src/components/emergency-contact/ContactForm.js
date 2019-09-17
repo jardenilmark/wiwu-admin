@@ -1,35 +1,22 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
-import { useDispatch } from 'react-redux'
-import { Form, Input, Button, Select } from 'antd'
-
-import { ContactSchema } from '../../schema/contact.schema'
-import { createContact } from '../../actions/contact/createContact.action'
+import { Form, Input, Button } from 'antd'
 
 import AddressSearchInput from './AddressSearchInput'
+import GenericInput from '../GenericInput'
+import GenericSelect from '../GenericSelect'
+import GenericTextArea from '../GenericTextArea'
 
-const { Option } = Select
+import { ContactSchema } from '../../schema/contact.schema'
 
-const initialValues = {
-  name: '',
-  address: '',
-  department: 'medical',
-  numbers: ['']
-}
-
-const CreateContactForm = ({ setDrawerVisibility }) => {
-  const dispatch = useDispatch()
-
+const ContactForm = ({ onSubmitHandler, initialValues }) => {
   return (
     <div style={styles.formWrapper}>
       <Formik
         initialValues={initialValues}
         validationSchema={ContactSchema}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
-          await dispatch(createContact(values))
-          setSubmitting(false)
-          resetForm(initialValues)
-          setDrawerVisibility(false)
+        onSubmit={(values, formikBag) => {
+          onSubmitHandler(values, formikBag)
         }}>
         {({
           values,
@@ -49,61 +36,54 @@ const CreateContactForm = ({ setDrawerVisibility }) => {
               autoComplete='off'
               hideRequiredMark
               style={styles.form}>
-              <Form.Item
+              <GenericInput
+                required
                 label='Name'
-                help={errors.name && touched.name ? errors.name : ''}
-                validateStatus={errors.name && touched.name ? 'error' : ''}
+                name='name'
+                placeholder='e.g. - Iloilo Mission Hospital'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <AddressSearchInput
+                values={values}
+                errors={errors}
+                touched={touched}
+                handleBlur={handleBlur}
+                setFieldValue={setFieldValue}
+                isSubmitting={isSubmitting}
+              />
+              <GenericSelect
                 required
-                style={styles.input}>
-                <Input
-                  name='name'
-                  placeholder='e.g. Iloilo Mission Hospital'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
-                label='Address'
-                help={errors.address && touched.address ? errors.address : ''}
-                validateStatus={
-                  errors.address && touched.address ? 'error' : ''
-                }
-                required
-                style={styles.input}>
-                <AddressSearchInput
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  handleBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
                 label='Department'
-                help={
-                  errors.department && touched.department
-                    ? errors.department
-                    : ''
-                }
-                validateStatus={
-                  errors.department && touched.department ? 'error' : ''
-                }
+                name='department'
+                options={[
+                  { value: 'medical', text: 'Medical' },
+                  { value: 'police', text: 'Police' },
+                  { value: 'fire', text: 'Fire' }
+                ]}
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleBlur={handleBlur}
+                setFieldValue={setFieldValue}
+              />
+              <GenericTextArea
                 required
-                style={styles.input}
-                hasFeedback>
-                <Select
-                  name='department'
-                  allowClear
-                  disabled={isSubmitting}
-                  onBlur={handleBlur}
-                  onChange={value => setFieldValue('department', value)}
-                  value={values.department}>
-                  <Option value='medical'>Medical</Option>
-                  <Option value='police'>Police</Option>
-                  <Option value='fire'>Fire</Option>
-                </Select>
-              </Form.Item>
+                label='Notes'
+                name='notes'
+                rows={2}
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+              />
               <Form.Item label='Phone Number(s)' required style={styles.input}>
                 <FieldArray
                   name='numbers'
@@ -115,7 +95,7 @@ const CreateContactForm = ({ setDrawerVisibility }) => {
                           style={{
                             width: '100%',
                             display: 'flex',
-                            marginBottom: 10
+                            marginBottom: 2
                           }}>
                           <Form.Item
                             style={{
@@ -160,17 +140,6 @@ const CreateContactForm = ({ setDrawerVisibility }) => {
                   )}
                 />
               </Form.Item>
-              <Form.Item label='Notes' required style={styles.input}>
-                <Input.TextArea
-                  name='notes'
-                  rows={3}
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.notes}
-                  style={styles.input}
-                />
-              </Form.Item>
               <Form.Item style={styles.buttonWrapper}>
                 <Button
                   type='primary'
@@ -199,9 +168,6 @@ const styles = {
     textAlign: 'left',
     width: '500px'
   },
-  input: {
-    margin: 0
-  },
   buttonWrapper: {
     textAlign: 'center',
     margin: 0
@@ -212,4 +178,4 @@ const styles = {
   }
 }
 
-export default CreateContactForm
+export default ContactForm

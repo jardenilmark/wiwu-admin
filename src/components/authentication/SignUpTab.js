@@ -1,11 +1,13 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { Button, Form, Input, Card } from 'antd'
+import { Button, Form, Card } from 'antd'
+
+import GenericInput from '../GenericInput'
 
 import { roles } from '../../constants/User'
 
-import { SignInAdminSchema } from '../../schema/admin.schema'
+import { SignUpAdminSchema } from '../../schema/admin.schema'
 
 import { signUp } from '../../actions/admin/signUp.action'
 
@@ -25,7 +27,7 @@ const SignUpTab = () => {
     <Card bordered={false} style={styles.card}>
       <Formik
         initialValues={initialValues}
-        validationSchema={SignInAdminSchema}
+        validationSchema={SignUpAdminSchema}
         onSubmit={async (values, { setSubmitting }) => {
           await dispatch(signUp({ ...values, role: roles.ADMIN }))
           setSubmitting(false)
@@ -47,124 +49,73 @@ const SignUpTab = () => {
               autoComplete='off'
               hideRequiredMark
               style={styles.form}>
-              <Form.Item
+              <GenericInput
+                required
                 label='First Name'
-                help={
-                  errors.firstName && touched.firstName ? errors.firstName : ''
-                }
-                validateStatus={
-                  errors.firstName && touched.firstName ? 'error' : ''
-                }
+                name='firstName'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <GenericInput
                 required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='firstName'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.firstName}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
                 label='Last Name'
-                help={
-                  errors.lastName && touched.lastName ? errors.lastName : ''
-                }
-                validateStatus={
-                  errors.lastName && touched.lastName ? 'error' : ''
-                }
+                name='lastName'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <GenericInput
                 required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='lastName'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.lastName}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
                 label='Email Address'
-                help={
-                  errors.emailAddress && touched.emailAddress
-                    ? errors.emailAddress
-                    : ''
-                }
-                validateStatus={
-                  errors.emailAddress && touched.emailAddress ? 'error' : ''
-                }
+                name='emailAddress'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <GenericInput
                 required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='emailAddress'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.emailAddress}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
+                type='password'
                 label='Password'
-                help={
-                  errors.password && touched.password ? errors.password : ''
-                }
-                validateStatus={
-                  errors.password && touched.password ? 'error' : ''
-                }
+                name='password'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <GenericInput
                 required
-                style={{ margin: 0 }}
-                hasFeedback>
-                <Input.Password
-                  name='password'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
                 label='Phone Number'
-                help={
-                  errors.phoneNumber && touched.phoneNumber
-                    ? errors.phoneNumber
-                    : ''
-                }
-                validateStatus={
-                  errors.phoneNumber && touched.phoneNumber ? 'error' : ''
-                }
+                name='phoneNumber'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <GenericInput
                 required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='phoneNumber'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.phoneNumber}
-                  style={styles.input}
-                />
-              </Form.Item>
-              <Form.Item
                 label='Admin Key'
-                required
-                style={styles.input}
-                hasFeedback>
-                <Input
-                  name='adminKey'
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.adminKey}
-                  style={styles.input}
-                />
-              </Form.Item>
+                name='adminKey'
+                values={values}
+                errors={errors}
+                touched={touched}
+                isSubmitting={isSubmitting}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
               <Form.Item style={styles.buttonWrapper}>
                 <Button
                   type='primary'
@@ -191,9 +142,6 @@ const styles = {
   },
   form: {
     textAlign: 'left'
-  },
-  input: {
-    margin: 0
   },
   buttonWrapper: {
     textAlign: 'center',
