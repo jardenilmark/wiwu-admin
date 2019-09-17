@@ -15,19 +15,11 @@ const UserVerification = () => {
   const [record, setRecord] = useState({})
   const [fetching, setFetchingStatus] = useState(true)
   const [isIdModalVisible, toggleIdModal] = useState(false)
-  // const pendingUsers = useSelector(state =>
-  //   state.admin.users.filter(
-  //     user => user.isUserVerified === false && user.status === 'active'
-  //   )
-  // )
-  const pendingUsers = [
-    {
-      firstName: 'Jess',
-      lastName: 'Lanchinebre',
-      email: 'jevi.lanchinebre@gmail.com',
-      phoneNumber: '09773513562'
-    }
-  ]
+  const pendingUsers = useSelector(state =>
+    state.admin.users.filter(
+      user => user.isUserVerified === false && user.status === 'active'
+    )
+  )
   const filteredUsers = useSelector(state => state.admin.filteredUsers)
   const dispatch = useDispatch()
 
@@ -70,9 +62,9 @@ const UserVerification = () => {
   const renderTags = (text, record) => (
     <span>
       <Tag
-        color={record.awaitingVideo ? 'green' : 'red'}
-        key={record.awaitingVideo}>
-        {record.awaitingVideo ? 'Available Video' : 'Unavailable Video'}
+        color={record.joinedVideo ? 'green' : 'red'}
+        key={record.joinedVideo}>
+        {record.joinedVideo ? 'Available Video' : 'Unavailable Video'}
       </Tag>
       <Tag color={record.idImage ? 'green' : 'red'} key={record.idImage}>
         {record.idImage ? 'Available ID' : 'Unavailable ID'}
@@ -122,7 +114,6 @@ const UserVerification = () => {
               dataSource={filteredUsers || pendingUsers}
               columns={columns}
               rowKey='email'
-              bordered
             />
           </Col>
         </Row>
