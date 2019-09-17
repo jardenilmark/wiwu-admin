@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { Layout, Drawer } from 'antd'
 
-import CreateResponderForm from './CreateResponderForm'
-import ResponderList from './ResponderList'
-import ResponderListHeader from './ResponderListHeader'
+import CreateResponder from '../components/emergency-responder/CreateResponder'
+import ResponderList from '../components/emergency-responder/ResponderList'
+import ResponderListHeader from '../components/emergency-responder/ResponderListHeader'
 
-const ManageResponders = () => {
+const EmergencyResponders = () => {
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
     <Layout.Content style={styles.content}>
       <Drawer
-        title={<b>Create Responder Administrator</b>}
+        title={<b>Create Emergency Responder</b>}
         width={550}
         destroyOnClose={true}
         maskClosable={false}
@@ -19,7 +19,7 @@ const ManageResponders = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateResponderForm setDrawerVisibility={setDrawerVisibility} />
+        <CreateResponder setDrawerVisibility={setDrawerVisibility} />
       </Drawer>
       <ResponderListHeader setDrawerVisibility={setDrawerVisibility} />
       <ResponderList />
@@ -34,4 +34,4 @@ const styles = {
   }
 }
 
-export default ManageResponders
+export default EmergencyResponders

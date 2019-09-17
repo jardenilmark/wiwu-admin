@@ -160,6 +160,17 @@ const CreateContactForm = ({ setDrawerVisibility }) => {
                   )}
                 />
               </Form.Item>
+              <Form.Item label='Notes' required style={styles.input}>
+                <Input.TextArea
+                  name='notes'
+                  rows={3}
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.notes}
+                  style={styles.input}
+                />
+              </Form.Item>
               <Form.Item style={styles.buttonWrapper}>
                 <Button
                   type='primary'

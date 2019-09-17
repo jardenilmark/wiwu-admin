@@ -6,13 +6,14 @@ import { setCurrentUser } from './actions/admin/setCurrentUser.action'
 
 import { auth } from './firebase'
 
-import PrivateRoute from './components/routes/PrivateRoute'
-import AuthRoute from './components/routes/AuthRoute'
-import AuthPage from './components/auth/AuthPage'
-import AdminPage from './components/AdminPage'
-import NoMatch from './components/NoMatch'
+import PrivateRoute from './routes/PrivateRoute'
+import AuthRoute from './routes/AuthRoute'
+import AuthPage from './pages/AuthPage'
+import AdminPage from './pages/AdminPage'
+import NoMatch from './screens/NoMatch'
 import Spinner from './components/Spinner'
 
+import 'react-toastify/dist/ReactToastify.css'
 import 'antd/dist/antd.css'
 import './App.css'
 

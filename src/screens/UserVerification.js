@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Table, Button, Divider, Tag, Input } from 'antd'
-import { getToken } from '../../actions/twilio/getToken.action'
-import { getUsers } from '../../actions/user/getUsers.action'
-import { searchUsers } from '../../actions/user/searchUsers.action'
-import TwilioVideo from '../TwilioVideo'
-import IdModal from '../IdModal'
-import Spinner from '../Spinner'
+import { getToken } from '../actions/twilio/getToken.action'
+import { getUsers } from '../actions/user/getUsers.action'
+import { searchUsers } from '../actions/user/searchUsers.action'
+import TwilioVideo from '../components/verification/TwilioVideo'
+import IdModal from '../components/verification/IdModal'
+import Spinner from '../components/Spinner'
 
 const { Search } = Input
 

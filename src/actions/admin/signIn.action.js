@@ -19,12 +19,18 @@ export const signIn = ({ emailAddress, password }) => {
         .get()
       const userData = user.data()
 
+      if (userData.role !== 'admin' && userData.role !== 'responder') {
+        await auth.signOut()
+        throw new Error('Unauthorized Access')
+      }
+
       const payload = {
         uid,
         email,
         emailVerified,
         ...userData
       }
+
       dispatch(createAction(SIGNIN)(payload))
     } catch (error) {
       message.error(error.message, 5)

@@ -4,7 +4,7 @@ import { message } from 'antd'
 import Video from 'twilio-video'
 import PropTypes from 'prop-types'
 import VideoModal from './VideoModal'
-import { resetToken } from '../actions/twilio/resetToken.action'
+import { resetToken } from '../../actions/twilio/resetToken.action'
 
 const TwilioVideo = props => {
   const roomName = props.record.email

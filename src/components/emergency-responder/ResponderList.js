@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getContacts } from '../../actions/contact/getContacts.action'
 import { List } from 'antd'
 
+import EditResponderModal from './EditResponder'
+import ResponderListItem from './ResponderListItem'
 import Spinner from '../Spinner'
-import EditContactModal from './EditContactModal'
-import ContactListItem from './ContactListItem'
 
-const ContactsList = () => {
+import { getResponders } from '../../actions/responder/getResponders.action'
+
+const ResponderList = () => {
   const dispatch = useDispatch()
-  const contacts = useSelector(state => state.admin.contacts)
-  const filteredContacts = useSelector(state => state.admin.filteredContacts)
   const [fetching, setFetchingStatus] = useState(true)
+  const responders = useSelector(state => state.admin.responders)
+  const filteredResponders = useSelector(
+    state => state.admin.filteredResponders
+  )
 
   useEffect(() => {
     // TODO -R
     async function fetchData() {
-      await dispatch(getContacts())
+      await dispatch(getResponders())
       setFetchingStatus(false)
     }
 
@@ -24,19 +27,19 @@ const ContactsList = () => {
   }, [])
 
   if (fetching) {
-    return <Spinner tip='Fetching Contacts...' height={700} />
+    return <Spinner tip='Fetching Responders...' height={700} />
   }
 
   return (
     <div style={styles.listWrapper}>
-      <EditContactModal />
+      <EditResponderModal />
       <List
         style={styles.list}
         itemLayout='horizontal'
         pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-        dataSource={filteredContacts || contacts}
-        renderItem={contact => {
-          return <ContactListItem contact={contact} />
+        dataSource={filteredResponders || responders}
+        renderItem={responder => {
+          return <ResponderListItem responder={responder} />
         }}
       />
     </div>
@@ -54,4 +57,4 @@ const styles = {
   }
 }
 
-export default ContactsList
+export default ResponderList

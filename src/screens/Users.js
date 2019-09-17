@@ -1,10 +1,10 @@
 import React from 'react'
 import { Layout } from 'antd'
 
-import UserList from './UserList'
-import UserListHeader from './UserListHeader'
+import UserList from '../components/user/UserList'
+import UserListHeader from '../components/user/UserListHeader'
 
-const ManageUsers = () => {
+const Users = () => {
   return (
     <Layout.Content style={styles.content}>
       <UserListHeader />
@@ -20,4 +20,4 @@ const styles = {
   }
 }
 
-export default ManageUsers
+export default Users

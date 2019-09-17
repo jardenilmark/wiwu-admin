@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Row, Col, Tabs } from 'antd'
 
-import SignInTab from './SignInTab'
-import SignUpTab from './SignUpTab'
-import Logo from '../Logo'
+import SignInTab from '../components/authentication/SignInTab'
+import SignUpTab from '../components/authentication/SignUpTab'
+import Logo from '../components/Logo'
 
-import { getActiveKey } from '../../helpers/common/getActiveKey'
+import { getActiveKey } from '../helpers/common/getActiveKey'
 
 const { TabPane } = Tabs
 
