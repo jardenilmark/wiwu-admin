@@ -5,9 +5,29 @@ import { auth, firestore as db } from '../../firebase'
 import { SIGNUP } from './admin.constants'
 import { statuses, roles } from '../../constants/User'
 
-export const signUp = ({ emailAddress: email, password, ...rest }) => {
+export const signUp = ({
+  emailAddress: email,
+  password,
+  adminKey,
+  ...rest
+}) => {
   return async dispatch => {
     try {
+      const key = await db
+        .collection('adminKeys')
+        .doc(adminKey)
+        .get()
+
+      if (!key.exists) {
+        throw new Error('Admin key does not exist!')
+      } else {
+        const { user } = key.data()
+
+        if (user) {
+          throw new Error('Admin key already used')
+        }
+      }
+
       await auth.createUserWithEmailAndPassword(email, password)
       const user = auth.currentUser
 

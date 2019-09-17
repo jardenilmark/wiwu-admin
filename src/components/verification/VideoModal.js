@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Modal, Spin, Descriptions } from 'antd'
 import * as PropTypes from 'prop-types'
-import { verifyUser } from '../actions/user/verifyUser.action'
+import { verifyUser } from '../../actions/user/verifyUser.action'
 
 const VideoModal = ({
   record,

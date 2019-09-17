@@ -2,7 +2,11 @@ import React from 'react'
 import { Button, Form, Input, Card } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
+
+import GenericInput from '../GenericInput'
+
 import { signIn } from '../../actions/admin/signIn.action'
+
 import { SignInAdminSchema } from '../../schema/admin.schema'
 
 const initialValues = {
@@ -38,46 +42,29 @@ const SignInTab = () => {
             autoComplete='off'
             hideRequiredMark
             style={styles.form}>
-            <Form.Item
+            <GenericInput
+              required
               label='Email Address'
-              help={
-                errors.emailAddress && touched.emailAddress
-                  ? errors.emailAddress
-                  : ''
-              }
-              validateStatus={
-                errors.emailAddress && touched.emailAddress ? 'error' : ''
-              }
+              name='emailAddress'
+              values={values}
+              errors={errors}
+              touched={touched}
+              isSubmitting={isSubmitting}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            <GenericInput
               required
-              style={styles.input}
-              hasFeedback>
-              <Input
-                name='emailAddress'
-                disabled={isSubmitting}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.emailAddress}
-                style={styles.input}
-              />
-            </Form.Item>
-            <Form.Item
+              type='password'
               label='Password'
-              help={errors.password && touched.password ? errors.password : ''}
-              validateStatus={
-                errors.password && touched.password ? 'error' : ''
-              }
-              required
-              style={styles.input}
-              hasFeedback>
-              <Input.Password
-                name='password'
-                disabled={isSubmitting}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                style={styles.input}
-              />
-            </Form.Item>
+              name='password'
+              values={values}
+              errors={errors}
+              touched={touched}
+              isSubmitting={isSubmitting}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
             <Form.Item style={styles.buttonWrapper}>
               <Button
                 type='primary'
@@ -103,9 +90,6 @@ const styles = {
   },
   form: {
     textAlign: 'left'
-  },
-  input: {
-    margin: 0
   },
   buttonWrapper: {
     textAlign: 'center',

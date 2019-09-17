@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { Layout, Drawer } from 'antd'
 
-import ContactsList from './ContactList'
-import CreateContact from './CreateContact'
-import ContactListHeader from './ContactListHeader'
+import CreateResponder from '../components/emergency-responder/CreateResponder'
+import ResponderList from '../components/emergency-responder/ResponderList'
+import ResponderListHeader from '../components/emergency-responder/ResponderListHeader'
 
-const ManageContacts = () => {
+const EmergencyResponders = () => {
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
     <Layout.Content style={styles.content}>
       <Drawer
-        title={<b>Create Contact</b>}
+        title={<b>Create Emergency Responder</b>}
         width={550}
         destroyOnClose={true}
         maskClosable={false}
@@ -19,10 +19,10 @@ const ManageContacts = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateContact setDrawerVisibility={setDrawerVisibility} />
+        <CreateResponder setDrawerVisibility={setDrawerVisibility} />
       </Drawer>
-      <ContactListHeader setDrawerVisibility={setDrawerVisibility} />
-      <ContactsList />
+      <ResponderListHeader setDrawerVisibility={setDrawerVisibility} />
+      <ResponderList />
     </Layout.Content>
   )
 }
@@ -34,4 +34,4 @@ const styles = {
   }
 }
 
-export default ManageContacts
+export default EmergencyResponders

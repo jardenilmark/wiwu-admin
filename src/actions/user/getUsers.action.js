@@ -2,7 +2,6 @@ import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
-import { getAddress } from '../../helpers/common/getAddress'
 
 import { GET_USERS } from './user.constants'
 import { roles } from '../../constants/User'
@@ -18,8 +17,7 @@ export const getUsers = () => {
       const users = usersRef.docs.map(user => {
         return {
           ...user.data(),
-          id: user.id,
-          address: getAddress(user.data()).homeCoordinates
+          id: user.id
         }
       })
 

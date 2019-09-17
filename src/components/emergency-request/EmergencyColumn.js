@@ -15,6 +15,38 @@ const EmergencyColumn = props => {
     title === 'COMPLETED' ? state.emergency.completed : state.emergency.pending
   )
 
+  const sendNotification = function(data) {
+    // TODO: hide api keys
+    const headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      Authorization: 'Basic MDg0ODFmN2ItZDJiNS00MGMyLWE2MjMtYjAyZjY4N2NjNWY2'
+    }
+
+    const options = {
+      host: 'onesignal.com',
+      port: 443,
+      path: '/api/v1/notifications',
+      method: 'POST',
+      headers: headers
+    }
+
+    const https = require('https')
+    const req = https.request(options, function(res) {
+      res.on('data', function(data) {
+        console.log('Response:')
+        console.log(JSON.parse(data))
+      })
+    })
+
+    req.on('error', function(e) {
+      console.log('ERROR:')
+      console.log(e)
+    })
+
+    req.write(JSON.stringify(data))
+    req.end()
+  }
+
   return (
     <Col span={12} style={{ padding: 10, height: '90vh' }}>
       <div
@@ -61,6 +93,28 @@ const EmergencyColumn = props => {
                       />
                     ]
                   : [
+                      <Button
+                        icon='audio'
+                        key={`${item.id}broadcastpending`}
+                        shape='round'
+                        onClick={() =>
+                          sendNotification({
+                            app_id: '99a5a234-ed7d-48a6-9738-4cf5a7a4fbec',
+                            contents: {
+                              en: 'An emergency is near your area!'
+                            },
+                            android_group: ['All'],
+                            filters: [
+                              {
+                                field: 'location',
+                                radius: '1000', // within 1000 meters
+                                lat: item.location.latitude,
+                                long: item.location.longitude
+                              }
+                            ]
+                          })
+                        }
+                      />,
                       <Button
                         icon='global'
                         shape='round'

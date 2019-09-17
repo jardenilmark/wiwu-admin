@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Modal, Descriptions, Empty } from 'antd'
 import * as PropTypes from 'prop-types'
-import { verifyUser } from '../actions/user/verifyUser.action'
+import { verifyUser } from '../../actions/user/verifyUser.action'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const dispatch = useDispatch()

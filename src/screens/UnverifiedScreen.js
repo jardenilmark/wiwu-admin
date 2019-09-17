@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Row, Col, Button } from 'antd'
 import { useDispatch } from 'react-redux'
-import { signOut } from '../../actions/admin/signOut.action'
+import { signOut } from '../actions/admin/signOut.action'
 
 const { Meta } = Card
 
@@ -12,7 +12,7 @@ const UnverifiedScreen = () => {
       <Col xs={20} sm={16} md={14} lg={12} xl={10} xxl={7}>
         <div style={styles.imageWrapper}>
           <img
-            src={require('../../assets/images/paper-plane.png')}
+            src={require('../assets/images/paper-plane.png')}
             alt='paper-plane'
           />
         </div>
