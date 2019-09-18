@@ -2,10 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Route } from 'react-router'
 import { createAction } from 'redux-actions'
-import { firestore as db } from '../firebase'
 import { Layout } from 'antd'
 import { toast } from 'react-toastify'
 import UIfx from 'uifx'
+import _ from 'lodash'
+
+import { firestore as db } from '../firebase'
 
 import PrivateRoute from '../routes/PrivateRoute'
 
@@ -21,7 +23,7 @@ import NoMatch from '../screens/NoMatch'
 
 import { GET_EMERGENCIES } from '../actions/emergency/emergency.constants'
 import soundfile from '../assets/sounds/alert.mp3'
-import { roles } from '../constants/User'
+import { roles, departments } from '../constants/User'
 
 const alert = new UIfx(soundfile, {
   volume: 1, // number between 0.0 ~ 1.0
@@ -31,6 +33,7 @@ const alert = new UIfx(soundfile, {
 const adminRoutes = [
   { path: 'emergency-responders', component: EmergencyResponders },
   { path: 'emergency-contacts', component: EmergencyContacts },
+  { path: 'user-verification', component: UserVerification },
   { path: 'users', component: Users },
   { path: 'settings', component: Settings }
 ]
@@ -38,44 +41,58 @@ const adminRoutes = [
 const responderRoutes = [
   { path: 'emergency-contacts', component: EmergencyContacts },
   { path: 'emergency-requests', component: EmergencyRequests },
-  { path: 'user-verification', component: UserVerification },
   { path: 'settings', component: Settings }
 ]
 
 const AdminPage = props => {
   const dispatch = useDispatch()
   const { match } = props
-  const { role } = useSelector(state => state.admin.current)
+  const { role, department } = useSelector(state => state.admin.current)
   const routes = role === roles.ADMIN ? adminRoutes : responderRoutes
 
   toast.configure()
 
   useEffect(() => {
-    if (role === roles.RESPONDER) {
+    if (
+      role === roles.RESPONDER &&
+      (departments.FIREMEN === department ||
+        departments.MEDICAL === department ||
+        departments.POLICE === department)
+    ) {
       try {
         // placed inside so it won't reset when state is changed
         let firstRender = true
         let count = 0
+
+        const userDepartment =
+          departments.FIREMEN === department
+            ? 'fire'
+            : departments.POLICE === department
+            ? 'police'
+            : 'medical'
         // listens for new documents and updates
         const snapshot = db
           .collection('emergencies')
+          .where('department', '==', userDepartment)
           .orderBy('date')
           .startAfter(new Date().getTime())
           .onSnapshot(async e => {
             // TODO filter by department once routing is completed
-            const emergencies = await Promise.all(
-              e.docs.map(async emergency => {
-                const userRef = await emergency.data().userId.get()
+            const emergencies = _.reverse(
+              await Promise.all(
+                e.docs.map(async emergency => {
+                  const userRef = await emergency.data().userId.get()
 
-                const { firstName, lastName, phoneNumber } = userRef.data()
+                  const { firstName, lastName, phoneNumber } = userRef.data()
 
-                return {
-                  ...emergency.data(),
-                  id: emergency.id,
-                  name: `${firstName} ${lastName}`,
-                  phoneNumber
-                }
-              })
+                  return {
+                    ...emergency.data(),
+                    id: emergency.id,
+                    name: `${firstName} ${lastName}`,
+                    phoneNumber
+                  }
+                })
+              )
             )
 
             dispatch(createAction(GET_EMERGENCIES)(emergencies))

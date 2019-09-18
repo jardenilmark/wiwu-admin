@@ -1,11 +1,29 @@
 import React, { useState } from 'react'
 import { Layout, Drawer } from 'antd'
+import { useDispatch } from 'react-redux'
+import { departments } from '../constants/User'
 
-import CreateResponder from '../components/emergency-responder/CreateResponder'
+import { CreateResponderSchema } from '../schema/responder.schema'
+
+import { createResponder } from '../actions/responder/createResponder.action'
+
+import ResponderForm from '../components/emergency-responder/ResponderForm'
 import ResponderList from '../components/emergency-responder/ResponderList'
 import ResponderListHeader from '../components/emergency-responder/ResponderListHeader'
 
+const { POLICE } = departments
+
+const initialValues = {
+  emailAddress: '',
+  password: '',
+  firstName: '',
+  lastName: '',
+  phoneNumber: '',
+  department: POLICE
+}
+
 const EmergencyResponders = () => {
+  const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
 
   return (
@@ -19,7 +37,16 @@ const EmergencyResponders = () => {
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
         onClose={() => setDrawerVisibility(false)}
         visible={drawerVisibility}>
-        <CreateResponder setDrawerVisibility={setDrawerVisibility} />
+        <ResponderForm
+          onSubmitHandler={async (values, { setSubmitting, resetForm }) => {
+            await dispatch(createResponder(values))
+            setSubmitting(false)
+            resetForm(initialValues)
+            setDrawerVisibility(false)
+          }}
+          initialValues={initialValues}
+          schema={CreateResponderSchema}
+        />
       </Drawer>
       <ResponderListHeader setDrawerVisibility={setDrawerVisibility} />
       <ResponderList />
