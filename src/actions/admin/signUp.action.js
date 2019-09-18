@@ -35,7 +35,13 @@ export const signUp = ({
         ...rest,
         role: roles.ADMIN,
         status: statuses.ACTIVE,
-        emergencies: []
+        emergencies: [],
+        isUserVerified: true,
+        avatar: null, // TODO: add placeholder
+        homeCoordinates: {
+          latitude: '10.7202',
+          longitude: '122.5621'
+        }
       }
 
       await db
