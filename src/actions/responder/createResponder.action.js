@@ -15,7 +15,13 @@ export const createResponder = ({ emailAddress: email, password, ...rest }) => {
         ...rest,
         role: roles.RESPONDER,
         status: statuses.ACTIVE,
-        emergencies: []
+        emergencies: [],
+        isUserVerified: true,
+        avatar: null, // TODO: add placeholder
+        homeCoordinates: {
+          latitude: '10.7202',
+          longitude: '122.5621'
+        }
       }
 
       await db

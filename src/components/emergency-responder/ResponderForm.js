@@ -135,10 +135,6 @@ const ResponderForm = ({ onSubmitHandler, initialValues, schema }) => {
   )
 }
 
-ResponderForm.propTypes = {
-  setDrawerVisibility: PropTypes.func.isRequired
-}
-
 const styles = {
   button: {
     width: '150px',
@@ -159,6 +155,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'center'
   }
+}
+
+ResponderForm.propTypes = {
+  onSubmitHandler: PropTypes.func.isRequired,
+  initialValues: PropTypes.object,
+  schema: PropTypes.object.isRequired
 }
 
 export default ResponderForm

@@ -43,4 +43,16 @@ const styles = {
   }
 }
 
+GenericTextArea.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  rows: PropTypes.number.isRequired,
+  values: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
+}
+
 export default GenericTextArea
