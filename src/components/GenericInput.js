@@ -20,8 +20,7 @@ const GenericInput = ({
     <Item
       label={label}
       help={errors[name] && touched[name] ? errors[name] : ''}
-      validateStatus={errors[name] && touched[name] ? 'error' : ''}
-      style={styles.input}>
+      validateStatus={errors[name] && touched[name] ? 'error' : ''}>
       <Input
         {...rest}
         name={name}
@@ -30,16 +29,9 @@ const GenericInput = ({
         onChange={handleChange}
         onBlur={handleBlur}
         value={values[name]}
-        style={styles.input}
       />
     </Item>
   )
-}
-
-const styles = {
-  input: {
-    margin: 0
-  }
 }
 
 export default GenericInput

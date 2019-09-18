@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Input, Card } from 'antd'
+import { Button, Form } from 'antd'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
 
@@ -18,7 +18,7 @@ const SignInTab = () => {
   const dispatch = useDispatch()
 
   return (
-    <Card bordered={false} style={styles.card}>
+    <div style={{ marginTop: 16 }}>
       <Formik
         initialValues={initialValues}
         validationSchema={SignInAdminSchema}
@@ -67,36 +67,28 @@ const SignInTab = () => {
             />
             <Form.Item style={styles.buttonWrapper}>
               <Button
+                block
                 type='primary'
                 htmlType='submit'
-                shape='round'
-                style={styles.button}
                 disabled={!dirty}
                 loading={isSubmitting}>
-                Submit Details
+                SIGN IN
               </Button>
             </Form.Item>
           </Form>
         )}
       </Formik>
-    </Card>
+    </div>
   )
 }
 
 const styles = {
-  button: {
-    width: '150px',
-    marginTop: '15px'
-  },
   form: {
     textAlign: 'left'
   },
   buttonWrapper: {
     textAlign: 'center',
-    margin: 0
-  },
-  card: {
-    background: '#f5f5f5'
+    marginTop: '32px'
   }
 }
 
