@@ -44,7 +44,7 @@ const UserVerification = () => {
           setRecord(record)
           dispatch(getToken(identity, record.id))
         }}
-        disabled={!record.joinedVideo}>
+        disabled={!record.joinedRoom}>
         Join Room
       </Button>
       <Divider type='vertical' />
@@ -63,10 +63,8 @@ const UserVerification = () => {
 
   const renderTags = (text, record) => (
     <span>
-      <Tag
-        color={record.joinedVideo ? 'green' : 'red'}
-        key={record.joinedVideo}>
-        {record.joinedVideo ? 'Available Video' : 'Unavailable Video'}
+      <Tag color={record.joinedRoom ? 'green' : 'red'} key={record.joinedRoom}>
+        {record.joinedRoom ? 'Available Video' : 'Unavailable Video'}
       </Tag>
       <Tag color={record.idImage ? 'green' : 'red'} key={record.idImage}>
         {record.idImage ? 'Available ID' : 'Unavailable ID'}
