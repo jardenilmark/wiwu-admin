@@ -74,7 +74,6 @@ const VideoModal = ({
           <Descriptions.Item label='Phone Number'>
             {record.phoneNumber}
           </Descriptions.Item>
-          <Descriptions.Item label='Email'>{record.email}</Descriptions.Item>
         </Descriptions>
       </Modal>
     </span>

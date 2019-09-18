@@ -42,7 +42,7 @@ const UserVerification = () => {
         size='small'
         onClick={() => {
           setRecord(record)
-          dispatch(getToken(identity, record.email))
+          dispatch(getToken(identity, record.id))
         }}>
         Join Room
       </Button>
@@ -113,7 +113,7 @@ const UserVerification = () => {
             <Table
               dataSource={filteredUsers || pendingUsers}
               columns={columns}
-              rowKey='email'
+              rowKey='id'
             />
           </Col>
         </Row>
