@@ -159,7 +159,7 @@ const styles = {
 
 ResponderForm.propTypes = {
   onSubmitHandler: PropTypes.func.isRequired,
-  initialValues: PropTypes.object.isRequired,
+  initialValues: PropTypes.object,
   schema: PropTypes.object.isRequired
 }
 
