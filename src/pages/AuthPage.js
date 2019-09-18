@@ -15,7 +15,7 @@ const AuthScreen = ({ history, location, match }) => {
 
   return (
     <Row style={styles.row} type='flex' justify='center' align='middle'>
-      <Col xs={20} sm={12} md={10} lg={8} xl={6} xxl={5}>
+      <Col xs={20} sm={12} md={10} lg={8} xl={8} xxl={7}>
         <div style={styles.logoWrapper}>
           <Logo height={120} />
         </div>

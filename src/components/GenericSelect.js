@@ -21,8 +21,7 @@ const GenericSelect = ({
     <Item
       label={label}
       help={errors[name] && touched[name] ? errors[name] : ''}
-      validateStatus={errors[name] && touched[name] ? 'error' : ''}
-      style={styles.input}>
+      validateStatus={errors[name] && touched[name] ? 'error' : ''}>
       <Select
         {...rest}
         name={name}
@@ -38,12 +37,6 @@ const GenericSelect = ({
       </Select>
     </Item>
   )
-}
-
-const styles = {
-  input: {
-    margin: 0
-  }
 }
 
 GenericSelect.propTypes = {

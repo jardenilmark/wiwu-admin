@@ -21,8 +21,7 @@ const GenericTextArea = ({
     <Item
       label={label}
       help={errors[name] && touched[name] ? errors[name] : ''}
-      validateStatus={errors[name] && touched[name] ? 'error' : ''}
-      style={styles.input}>
+      validateStatus={errors[name] && touched[name] ? 'error' : ''}>
       <TextArea
         {...rest}
         name={name}
@@ -31,16 +30,9 @@ const GenericTextArea = ({
         onChange={handleChange}
         onBlur={handleBlur}
         value={values[name]}
-        style={styles.input}
       />
     </Item>
   )
-}
-
-const styles = {
-  input: {
-    margin: 0
-  }
 }
 
 GenericTextArea.propTypes = {
