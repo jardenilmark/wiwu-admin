@@ -43,8 +43,9 @@ const UserVerification = () => {
         size='small'
         onClick={() => {
           setRecord(record)
-          dispatch(getToken(identity, record.email))
-        }}>
+          dispatch(getToken(identity, record.id))
+        }}
+        disabled={!record.joinedRoom}>
         Join Room
       </Button>
       <Divider type='vertical' />
@@ -54,7 +55,8 @@ const UserVerification = () => {
         onClick={() => {
           setRecord(record)
           toggleIdModal(true)
-        }}>
+        }}
+        disabled={!record.idImage}>
         View ID
       </Button>
     </span>
@@ -62,10 +64,8 @@ const UserVerification = () => {
 
   const renderTags = (text, record) => (
     <span>
-      <Tag
-        color={record.joinedVideo ? 'green' : 'red'}
-        key={record.joinedVideo}>
-        {record.joinedVideo ? 'Available Video' : 'Unavailable Video'}
+      <Tag color={record.joinedRoom ? 'green' : 'red'} key={record.joinedRoom}>
+        {record.joinedRoom ? 'Available Video' : 'Unavailable Video'}
       </Tag>
       <Tag color={record.idImage ? 'green' : 'red'} key={record.idImage}>
         {record.idImage ? 'Available ID' : 'Unavailable ID'}
@@ -118,7 +118,7 @@ const UserVerification = () => {
             <Table
               dataSource={filteredUsers || pendingUsers}
               columns={columns}
-              rowKey='email'
+              rowKey='id'
             />
           </Col>
         </Row>

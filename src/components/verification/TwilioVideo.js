@@ -7,7 +7,7 @@ import VideoModal from './VideoModal'
 import { resetToken } from '../../actions/twilio/resetToken.action'
 
 const TwilioVideo = props => {
-  const roomName = props.record.email
+  const roomName = props.record.id
   const token = useSelector(state => state.twilio.token)
   const [isModalVisible, toggleModal] = useState(false)
   const [localMediaAvailable, setLocalMediaAvailable] = useState(false)

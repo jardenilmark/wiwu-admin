@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Modal, Descriptions, Empty } from 'antd'
 import * as PropTypes from 'prop-types'
 import { verifyUser } from '../../actions/user/verifyUser.action'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const dispatch = useDispatch()
   return (
     <span>
@@ -21,10 +22,11 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             key='submit'
             type='primary'
             onClick={async e => {
+              setIsSubmitting(true)
               await dispatch(verifyUser(record.id))
               toggleIdModal(false)
             }}
-            disabled={!record.idImage}>
+            disabled={!record.idImage || isSubmitting}>
             Confirm Verification
           </Button>,
           <Button
@@ -60,7 +62,6 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
           <Descriptions.Item label='Phone Number'>
             {record.phoneNumber}
           </Descriptions.Item>
-          <Descriptions.Item label='Email'>{record.email}</Descriptions.Item>
         </Descriptions>
       </Modal>
     </span>
