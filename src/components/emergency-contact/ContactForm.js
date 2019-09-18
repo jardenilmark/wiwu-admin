@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik, FieldArray } from 'formik'
 import { Form, Input, Button } from 'antd'
+import * as PropTypes from 'prop-types'
 
 import AddressSearchInput from './AddressSearchInput'
 import GenericInput from '../GenericInput'
@@ -176,6 +177,11 @@ const styles = {
     display: 'flex',
     justifyContent: 'center'
   }
+}
+
+ContactForm.propTypes = {
+  onSubmitHandler: PropTypes.func.isRequired,
+  initialValues: PropTypes.object.isRequired
 }
 
 export default ContactForm

@@ -46,4 +46,16 @@ const styles = {
   }
 }
 
+GenericSelect.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  values: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired
+}
+
 export default GenericSelect

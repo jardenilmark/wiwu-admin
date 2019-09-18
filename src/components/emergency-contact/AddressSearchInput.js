@@ -6,6 +6,7 @@ import {
   Marker,
   useLoadScript
 } from '@react-google-maps/api'
+import * as PropTypes from 'prop-types'
 
 import Spinner from '../Spinner'
 
@@ -59,6 +60,7 @@ const AddressSearchInput = ({
       label='Address'
       help={errors.address && touched.address ? errors.address : ''}
       validateStatus={errors.address && touched.address ? 'error' : ''}
+      style={{ margin: 0 }}
       required>
       <GoogleMap
         mapContainerStyle={{
@@ -110,6 +112,15 @@ const AddressSearchInput = ({
       </GoogleMap>
     </Item>
   )
+}
+
+AddressSearchInput.propTypes = {
+  values: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired
 }
 
 export default AddressSearchInput
