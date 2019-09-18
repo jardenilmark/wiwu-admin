@@ -43,7 +43,8 @@ const UserVerification = () => {
         onClick={() => {
           setRecord(record)
           dispatch(getToken(identity, record.id))
-        }}>
+        }}
+        disabled={!record.joinedVideo}>
         Join Room
       </Button>
       <Divider type='vertical' />
@@ -53,7 +54,8 @@ const UserVerification = () => {
         onClick={() => {
           setRecord(record)
           toggleIdModal(true)
-        }}>
+        }}
+        disabled={!record.idImage}>
         View ID
       </Button>
     </span>
