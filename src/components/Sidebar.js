@@ -16,6 +16,11 @@ const adminMenuItems = [
     title: 'Emergency Responders'
   },
   { key: 'emergency-contacts', icon: 'phone', title: 'Emergency Contacts' },
+  {
+    key: 'user-verification',
+    icon: 'check-circle',
+    title: 'User Verification'
+  },
   { key: 'users', icon: 'team', title: 'Users' },
   { key: 'settings', icon: 'user', title: 'Settings' }
 ]
@@ -23,11 +28,6 @@ const adminMenuItems = [
 const responderMenuItems = [
   { key: 'emergency-contacts', icon: 'phone', title: 'Emergency Contacts' },
   { key: 'emergency-requests', icon: 'alert', title: 'Emergency Requests' },
-  {
-    key: 'user-verification',
-    icon: 'check-circle',
-    title: 'User Verification'
-  },
   { key: 'settings', icon: 'user', title: 'Settings' }
 ]
 

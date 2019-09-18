@@ -33,6 +33,7 @@ const alert = new UIfx(soundfile, {
 const adminRoutes = [
   { path: 'emergency-responders', component: EmergencyResponders },
   { path: 'emergency-contacts', component: EmergencyContacts },
+  { path: 'user-verification', component: UserVerification },
   { path: 'users', component: Users },
   { path: 'settings', component: Settings }
 ]
@@ -40,7 +41,6 @@ const adminRoutes = [
 const responderRoutes = [
   { path: 'emergency-contacts', component: EmergencyContacts },
   { path: 'emergency-requests', component: EmergencyRequests },
-  { path: 'user-verification', component: UserVerification },
   { path: 'settings', component: Settings }
 ]
 
