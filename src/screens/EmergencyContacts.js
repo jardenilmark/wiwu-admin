@@ -7,6 +7,7 @@ import ContactForm from '../components/emergency-contact/ContactForm'
 import ContactListHeader from '../components/emergency-contact/ContactListHeader'
 
 import { createContact } from '../actions/contact/createContact.action'
+import { Helmet } from 'react-helmet'
 
 const initialValues = {
   name: '',
@@ -22,6 +23,10 @@ const EmergencyContacts = () => {
 
   return (
     <Layout.Content style={styles.content}>
+      <Helmet>
+        <title>Emergency Contacts - wiwu admin</title>
+      </Helmet>
+
       <Drawer
         title={<b>Create Emergency Contact</b>}
         width={550}

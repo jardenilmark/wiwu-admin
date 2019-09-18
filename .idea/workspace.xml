@@ -3,10 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/authentication/SignInTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/authentication/SignInTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/authentication/SignUpTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/authentication/SignUpTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyContacts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyContacts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyResponders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyResponders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UnverifiedScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UnverifiedScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserVerification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserVerification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Users.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +62,7 @@
       <updated>1568390571221</updated>
       <workItem from="1568390575733" duration="137000" />
       <workItem from="1568823288188" duration="975000" />
-      <workItem from="1568824281373" duration="5970000" />
+      <workItem from="1568824281373" duration="6739000" />
     </task>
     <servers />
   </component>

@@ -7,6 +7,7 @@ import { searchUsers } from '../actions/user/searchUsers.action'
 import TwilioVideo from '../components/verification/TwilioVideo'
 import IdModal from '../components/verification/IdModal'
 import Spinner from '../components/Spinner'
+import { Helmet } from 'react-helmet'
 
 const { Search } = Input
 
@@ -98,6 +99,10 @@ const UserVerification = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>User Verification - wiwu admin</title>
+      </Helmet>
+
       <div style={{ width: '90%', margin: '0 auto' }}>
         <Row>
           <div style={{ float: 'left', marginLeft: '16px', marginTop: '16px' }}>
