@@ -124,6 +124,7 @@ const SignUpTab = () => {
               <Form.Item style={styles.buttonWrapper}>
                 <Button
                   block
+                  size={'large'}
                   type='primary'
                   htmlType='submit'
                   disabled={!dirty}

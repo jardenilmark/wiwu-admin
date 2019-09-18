@@ -49,6 +49,7 @@ const SignInTab = () => {
             style={styles.form}>
             <GenericInput
               required
+              size={'large'}
               label='Email Address'
               name='emailAddress'
               values={values}
@@ -60,6 +61,7 @@ const SignInTab = () => {
             />
             <GenericInput
               required
+              size={'large'}
               type='password'
               label='Password'
               name='password'
@@ -73,6 +75,7 @@ const SignInTab = () => {
             <Form.Item style={styles.buttonWrapper}>
               <Button
                 block
+                size={'large'}
                 type='primary'
                 htmlType='submit'
                 disabled={!dirty}
