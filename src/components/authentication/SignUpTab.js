@@ -10,6 +10,7 @@ import { roles } from '../../constants/User'
 import { SignUpAdminSchema } from '../../schema/admin.schema'
 
 import { signUp } from '../../actions/admin/signUp.action'
+import { Helmet } from 'react-helmet'
 
 const initialValues = {
   emailAddress: '',
@@ -25,6 +26,10 @@ const SignUpTab = () => {
 
   return (
     <div style={{ marginTop: 16 }}>
+      <Helmet>
+        <title>Sign up - wiwu admin</title>
+      </Helmet>
+
       <Formik
         initialValues={initialValues}
         validationSchema={SignUpAdminSchema}

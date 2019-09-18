@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form } from 'antd'
 import { Formik } from 'formik'
+import { Helmet } from 'react-helmet'
 import { useDispatch } from 'react-redux'
 
 import GenericInput from '../GenericInput'
@@ -19,6 +20,10 @@ const SignInTab = () => {
 
   return (
     <div style={{ marginTop: 16 }}>
+      <Helmet>
+        <title>Sign in - wiwu admin</title>
+      </Helmet>
+
       <Formik
         initialValues={initialValues}
         validationSchema={SignInAdminSchema}
