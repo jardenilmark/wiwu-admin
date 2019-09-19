@@ -16,6 +16,8 @@ import { completeEmergency } from '../../actions/emergency/updateEmergency.actio
 
 import Map from '../Map'
 
+import placeholder from '../../assets/images/placeholder.png'
+
 const EmergencyColumn = props => {
   const { title } = props
 
@@ -23,7 +25,7 @@ const EmergencyColumn = props => {
   const emergencies = useSelector(state =>
     title === 'COMPLETED' ? state.emergency.completed : state.emergency.pending
   )
-
+  console.log(emergencies)
   const sendNotification = function(data) {
     // TODO: hide api keys
     const headers = {
@@ -82,7 +84,7 @@ const EmergencyColumn = props => {
                   width={210}
                   height={250}
                   alt='logo'
-                  src='https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png' // PLACEHOLDER
+                  src={item.media || placeholder}
                 />
               }
               extra={
