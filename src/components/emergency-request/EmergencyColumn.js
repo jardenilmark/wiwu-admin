@@ -1,11 +1,22 @@
 import React from 'react'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, Col, Descriptions, List, PageHeader, Modal } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Descriptions,
+  List,
+  PageHeader,
+  Modal,
+  message
+} from 'antd'
 
 import { completeEmergency } from '../../actions/emergency/updateEmergency.action'
 
 import Map from '../Map'
+
+import placeholder from '../../assets/images/placeholder.png'
 
 const EmergencyColumn = props => {
   const { title } = props
@@ -14,7 +25,7 @@ const EmergencyColumn = props => {
   const emergencies = useSelector(state =>
     title === 'COMPLETED' ? state.emergency.completed : state.emergency.pending
   )
-
+  console.log(emergencies)
   const sendNotification = function(data) {
     // TODO: hide api keys
     const headers = {
@@ -73,7 +84,7 @@ const EmergencyColumn = props => {
                   width={210}
                   height={250}
                   alt='logo'
-                  src='https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png' // PLACEHOLDER
+                  src={item.media || placeholder}
                 />
               }
               extra={
@@ -98,20 +109,31 @@ const EmergencyColumn = props => {
                         key={`${item.id}broadcastpending`}
                         shape='round'
                         onClick={() =>
-                          sendNotification({
-                            app_id: '99a5a234-ed7d-48a6-9738-4cf5a7a4fbec',
-                            contents: {
-                              en: 'An emergency is near your area!'
-                            },
-                            android_group: ['All'],
-                            filters: [
-                              {
-                                field: 'location',
-                                radius: '1000', // within 1000 meters
-                                lat: item.location.latitude,
-                                long: item.location.longitude
-                              }
-                            ]
+                          Modal.confirm({
+                            width: 300,
+                            centered: true,
+                            title: 'CONFIRMATION',
+                            content: 'Are you sure you want to broadcast?',
+                            okText: 'Confirm',
+                            cancelText: 'Cancel',
+                            onOk: () => {
+                              sendNotification({
+                                app_id: '99a5a234-ed7d-48a6-9738-4cf5a7a4fbec',
+                                contents: {
+                                  en: 'An emergency is near your area!'
+                                },
+                                android_group: ['All'],
+                                filters: [
+                                  {
+                                    field: 'location',
+                                    radius: '1000', // within 1000 meters
+                                    lat: item.location.latitude,
+                                    long: item.location.longitude
+                                  }
+                                ]
+                              })
+                              message.success('Emergency was broadcast', 2)
+                            }
                           })
                         }
                       />,
@@ -131,7 +153,23 @@ const EmergencyColumn = props => {
                         icon='arrow-right'
                         shape='round'
                         key={`${item.id}arrowpending`}
-                        onClick={() => dispatch(completeEmergency(item.id))}
+                        onClick={() =>
+                          Modal.confirm({
+                            width: 300,
+                            centered: true,
+                            title: 'CONFIRMATION',
+                            content: 'Are you sure you want to broadcast?',
+                            okText: 'Confirm',
+                            cancelText: 'Cancel',
+                            onOk: () => {
+                              dispatch(completeEmergency(item.id))
+                              message.success(
+                                'Emergency has been marked completed!',
+                                2
+                              )
+                            }
+                          })
+                        }
                       />
                     ]
               }

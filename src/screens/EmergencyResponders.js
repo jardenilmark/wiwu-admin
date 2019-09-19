@@ -10,6 +10,7 @@ import { createResponder } from '../actions/responder/createResponder.action'
 import ResponderForm from '../components/emergency-responder/ResponderForm'
 import ResponderList from '../components/emergency-responder/ResponderList'
 import ResponderListHeader from '../components/emergency-responder/ResponderListHeader'
+import { Helmet } from 'react-helmet'
 
 const { POLICE } = departments
 
@@ -28,6 +29,10 @@ const EmergencyResponders = () => {
 
   return (
     <Layout.Content style={styles.content}>
+      <Helmet>
+        <title>Emergency Responders - wiwu admin</title>
+      </Helmet>
+
       <Drawer
         title={<b>Create Emergency Responder</b>}
         width={550}

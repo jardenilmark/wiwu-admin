@@ -60,7 +60,6 @@ const AddressSearchInput = ({
       label='Address'
       help={errors.address && touched.address ? errors.address : ''}
       validateStatus={errors.address && touched.address ? 'error' : ''}
-      style={{ margin: 0 }}
       required>
       <GoogleMap
         mapContainerStyle={{

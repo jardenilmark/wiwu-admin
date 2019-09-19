@@ -10,6 +10,7 @@ import { roles } from '../../constants/User'
 import { SignUpAdminSchema } from '../../schema/admin.schema'
 
 import { signUp } from '../../actions/admin/signUp.action'
+import { Helmet } from 'react-helmet'
 
 const initialValues = {
   emailAddress: '',
@@ -24,7 +25,11 @@ const SignUpTab = () => {
   const dispatch = useDispatch()
 
   return (
-    <Card bordered={false} style={styles.card}>
+    <div style={{ marginTop: 16 }}>
+      <Helmet>
+        <title>Sign up - wiwu admin</title>
+      </Helmet>
+
       <Formik
         initialValues={initialValues}
         validationSchema={SignUpAdminSchema}
@@ -118,37 +123,30 @@ const SignUpTab = () => {
               />
               <Form.Item style={styles.buttonWrapper}>
                 <Button
+                  block
+                  size={'large'}
                   type='primary'
                   htmlType='submit'
-                  shape='round'
-                  style={styles.button}
                   disabled={!dirty}
                   loading={isSubmitting}>
-                  Submit Details
+                  SIGN UP
                 </Button>
               </Form.Item>
             </Form>
           )
         }}
       </Formik>
-    </Card>
+    </div>
   )
 }
 
 const styles = {
-  button: {
-    width: '150px',
-    marginTop: '15px'
-  },
   form: {
     textAlign: 'left'
   },
   buttonWrapper: {
     textAlign: 'center',
-    margin: 0
-  },
-  card: {
-    background: '#f5f5f5'
+    marginTop: '32px'
   }
 }
 

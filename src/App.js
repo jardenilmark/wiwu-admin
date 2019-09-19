@@ -14,7 +14,6 @@ import NoMatch from './screens/NoMatch'
 import Spinner from './components/Spinner'
 
 import 'react-toastify/dist/ReactToastify.css'
-import 'antd/dist/antd.css'
 import './App.css'
 
 const App = () => {

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Form, Input, Card } from 'antd'
+import { Button, Form } from 'antd'
 import { Formik } from 'formik'
+import { Helmet } from 'react-helmet'
 import { useDispatch } from 'react-redux'
 
 import GenericInput from '../GenericInput'
@@ -18,7 +19,11 @@ const SignInTab = () => {
   const dispatch = useDispatch()
 
   return (
-    <Card bordered={false} style={styles.card}>
+    <div style={{ marginTop: 16 }}>
+      <Helmet>
+        <title>Sign in - wiwu admin</title>
+      </Helmet>
+
       <Formik
         initialValues={initialValues}
         validationSchema={SignInAdminSchema}
@@ -44,6 +49,7 @@ const SignInTab = () => {
             style={styles.form}>
             <GenericInput
               required
+              size={'large'}
               label='Email Address'
               name='emailAddress'
               values={values}
@@ -55,6 +61,7 @@ const SignInTab = () => {
             />
             <GenericInput
               required
+              size={'large'}
               type='password'
               label='Password'
               name='password'
@@ -67,36 +74,29 @@ const SignInTab = () => {
             />
             <Form.Item style={styles.buttonWrapper}>
               <Button
+                block
+                size={'large'}
                 type='primary'
                 htmlType='submit'
-                shape='round'
-                style={styles.button}
                 disabled={!dirty}
                 loading={isSubmitting}>
-                Submit Details
+                SIGN IN
               </Button>
             </Form.Item>
           </Form>
         )}
       </Formik>
-    </Card>
+    </div>
   )
 }
 
 const styles = {
-  button: {
-    width: '150px',
-    marginTop: '15px'
-  },
   form: {
     textAlign: 'left'
   },
   buttonWrapper: {
     textAlign: 'center',
-    margin: 0
-  },
-  card: {
-    background: '#f5f5f5'
+    marginTop: '32px'
   }
 }
 

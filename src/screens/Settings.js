@@ -7,6 +7,7 @@ import { generateKey } from '../helpers/secretKey/generateKey'
 import { editAdmin } from '../actions/admin/editAdmin.action'
 
 import { EditAdminSchema } from '../schema/admin.schema'
+import { Helmet } from 'react-helmet'
 
 import GenericInput from '../components/GenericInput'
 
@@ -18,6 +19,10 @@ const Settings = () => {
 
   return (
     <Layout.Content style={styles.content}>
+      <Helmet>
+        <title>Settings - wiwu admin</title>
+      </Helmet>
+
       <div>
         <Avatar src={require('../assets/images/user-avatar.png')} size={120} />
         <br />
