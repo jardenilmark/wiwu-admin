@@ -49,6 +49,11 @@ export const signUp = ({
         .doc(user.uid)
         .set(firestorePayload)
 
+      await db
+        .collection('adminKeys')
+        .doc(adminKey)
+        .update({ user: db.doc(`users/${user.uid}`) })
+
       const actionCodeSettings = {
         url: 'http://localhost:3000/'
       }
