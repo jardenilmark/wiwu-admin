@@ -4,6 +4,7 @@ import { createAction } from 'redux-actions'
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP } from './admin.constants'
 import { statuses, roles } from '../../constants/User'
+import { sendEmailVerification } from '../../helpers/common/sendEmailVerification'
 
 export const signUp = ({
   emailAddress: email,
@@ -49,18 +50,14 @@ export const signUp = ({
         .doc(user.uid)
         .set(firestorePayload)
 
-      const actionCodeSettings = {
-        url: 'http://localhost:3000/'
-      }
-
-      await user.sendEmailVerification(actionCodeSettings)
-
       const userPayload = {
         ...firestorePayload,
         email,
         uid: user.uid,
         emailVerified: false
       }
+
+      sendEmailVerification()
 
       dispatch(createAction(SIGNUP)(userPayload))
     } catch (error) {
