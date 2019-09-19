@@ -24,6 +24,10 @@ const ContactSchema = yup.object().shape({
         .string()
         .trim()
         .required('Empty phone number is not allowed.')
+        .matches(
+          /^(09)[0-9]{9}$|^[0-9]{3}-[0-9]{4}$/,
+          'Phone number is not valid'
+        )
     )
 })
 

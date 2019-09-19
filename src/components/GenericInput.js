@@ -19,7 +19,8 @@ const GenericInput = ({
     <Item
       label={label}
       help={errors[name] && touched[name] ? errors[name] : ''}
-      validateStatus={errors[name] && touched[name] ? 'error' : ''}>
+      validateStatus={errors[name] && touched[name] ? 'error' : ''}
+      hasFeedback>
       <Input
         {...rest}
         name={name}
