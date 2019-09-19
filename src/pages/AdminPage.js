@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Switch, Route } from 'react-router'
+import { Switch, Route, Redirect } from 'react-router'
 import { createAction } from 'redux-actions'
 import { Layout } from 'antd'
 import { toast } from 'react-toastify'
@@ -131,6 +131,11 @@ const AdminPage = props => {
       <Sidebar {...props} />
       <Layout>
         <Switch>
+          <Redirect
+            exact
+            from={match.url}
+            to={`${match.url}/${routes[0].path}`}
+          />
           {routes.map(({ path, component: Component }, index) => (
             <PrivateRoute
               key={index}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router'
 
 import { setCurrentUser } from './actions/admin/setCurrentUser.action'
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <div className='App'>
       <Switch>
-        <Redirect exact from='/' to='/admin-page/manage-responders' />
+        <Redirect exact from='/' to='/admin-page' />
         <PrivateRoute path='/admin-page' component={AdminPage} />
         <AuthRoute path='/auth-page' component={AuthPage} />
         <Route component={NoMatch} />

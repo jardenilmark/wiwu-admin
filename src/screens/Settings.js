@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Form, Input, Button, Avatar } from 'antd'
+import { Layout, Form, Typography, Button, Avatar, Tag } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { Formik } from 'formik'
 
@@ -7,6 +7,10 @@ import { generateKey } from '../helpers/secretKey/generateKey'
 import { editAdmin } from '../actions/admin/editAdmin.action'
 
 import { EditAdminSchema } from '../schema/admin.schema'
+
+import GenericInput from '../components/GenericInput'
+
+const { Text } = Typography
 
 const Settings = () => {
   const dispatch = useDispatch()
@@ -16,11 +20,17 @@ const Settings = () => {
     <Layout.Content style={styles.content}>
       <div>
         <Avatar src={require('../assets/images/user-avatar.png')} size={120} />
+        <br />
+        <br />
+        <Text strong>{user.email}</Text>
+        <br />
+        <Tag color='green'>
+          <b>{user.role.toUpperCase()}</b>
+        </Tag>
         <Formik
           initialValues={{
             firstName: user.firstName,
             lastName: user.lastName,
-            emailAddress: user.email,
             phoneNumber: user.phoneNumber
           }}
           validationSchema={EditAdminSchema}
@@ -45,82 +55,42 @@ const Settings = () => {
                 autoComplete='off'
                 hideRequiredMark
                 style={styles.form}>
-                <Form.Item
-                  label='Email Address'
+                <GenericInput
                   required
-                  style={styles.input}
-                  hasFeedback>
-                  <Input
-                    name='emailAddress'
-                    disabled
-                    value={values.emailAddress}
-                    style={styles.input}
-                  />
-                </Form.Item>
-                <Form.Item
                   label='First Name'
-                  help={
-                    errors.firstName && touched.firstName
-                      ? errors.firstName
-                      : ''
-                  }
-                  validateStatus={
-                    errors.firstName && touched.firstName ? 'error' : ''
-                  }
+                  name='firstName'
+                  placeholder='e.g. - Juan'
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  isSubmitting={isSubmitting}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                />
+                <GenericInput
                   required
-                  style={styles.input}
-                  hasFeedback>
-                  <Input
-                    name='firstName'
-                    disabled={isSubmitting}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.firstName}
-                    style={styles.input}
-                  />
-                </Form.Item>
-                <Form.Item
                   label='Last Name'
-                  help={
-                    errors.lastName && touched.lastName ? errors.lastName : ''
-                  }
-                  validateStatus={
-                    errors.lastName && touched.lastName ? 'error' : ''
-                  }
+                  name='lastName'
+                  placeholder='e.g. - Dela Cruz'
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  isSubmitting={isSubmitting}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                />
+                <GenericInput
                   required
-                  style={styles.input}
-                  hasFeedback>
-                  <Input
-                    name='lastName'
-                    disabled={isSubmitting}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.lastName}
-                    style={styles.input}
-                  />
-                </Form.Item>
-                <Form.Item
                   label='Phone Number'
-                  help={
-                    errors.phoneNumber && touched.phoneNumber
-                      ? errors.phoneNumber
-                      : ''
-                  }
-                  validateStatus={
-                    errors.phoneNumber && touched.phoneNumber ? 'error' : ''
-                  }
-                  required
-                  style={styles.input}
-                  hasFeedback>
-                  <Input
-                    name='phoneNumber'
-                    disabled={isSubmitting}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.phoneNumber}
-                    style={styles.input}
-                  />
-                </Form.Item>
+                  name='phoneNumber'
+                  placeholder='e.g. - 09123456789'
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  isSubmitting={isSubmitting}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                />
                 <Form.Item style={styles.buttonWrapper}>
                   <Button
                     type='primary'

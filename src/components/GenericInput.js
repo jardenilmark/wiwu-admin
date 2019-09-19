@@ -10,7 +10,6 @@ const GenericInput = ({
   values,
   errors,
   touched,
-  placeholder,
   isSubmitting,
   handleChange,
   handleBlur,
@@ -25,7 +24,6 @@ const GenericInput = ({
       <Input
         {...rest}
         name={name}
-        placeholder={placeholder}
         disabled={isSubmitting}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -40,6 +38,17 @@ const styles = {
   input: {
     margin: 0
   }
+}
+
+GenericInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  values: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
 }
 
 export default GenericInput
