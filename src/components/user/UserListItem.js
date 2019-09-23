@@ -5,6 +5,7 @@ import { List, Avatar, Tag } from 'antd'
 
 import { getUserListItemActions } from '../../helpers/user/getUserListItemActions'
 import { getTagColor } from '../../helpers/common/getTagColor'
+import avatarPlaceholder from '../../assets/images/user-avatar.png'
 
 const UserListItem = ({ user }) => {
   const dispatch = useDispatch()
@@ -13,12 +14,7 @@ const UserListItem = ({ user }) => {
   return (
     <List.Item actions={actions}>
       <List.Item.Meta
-        avatar={
-          <Avatar
-            src={require('../../assets/images/user-avatar.png')}
-            size={45}
-          />
-        }
+        avatar={<Avatar src={user.avatar || avatarPlaceholder} size={45} />}
         title={
           <b>
             {user.firstName} {user.lastName} |{' '}
