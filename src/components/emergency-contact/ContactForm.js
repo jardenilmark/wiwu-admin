@@ -74,7 +74,6 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                 setFieldValue={setFieldValue}
               />
               <GenericTextArea
-                required
                 label='Notes (Optional)'
                 name='notes'
                 rows={2}
@@ -135,7 +134,8 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                               errors.numbers[index]
                                 ? 'error'
                                 : ''
-                            }>
+                            }
+                            hasFeedback>
                             <Input
                               name={`numbers.${index}`}
                               style={styles.input}

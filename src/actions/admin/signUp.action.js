@@ -55,14 +55,14 @@ export const signUp = ({
         .doc(adminKey)
         .update({ user: db.doc(`users/${user.uid}`) })
 
+      sendEmailVerification()
+
       const userPayload = {
         ...firestorePayload,
         email,
         uid: user.uid,
         emailVerified: false
       }
-
-      sendEmailVerification()
 
       dispatch(createAction(SIGNUP)(userPayload))
     } catch (error) {
