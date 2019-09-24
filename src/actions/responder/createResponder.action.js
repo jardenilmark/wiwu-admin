@@ -19,8 +19,8 @@ export const createResponder = ({ emailAddress: email, password, ...rest }) => {
         isUserVerified: true,
         avatar: null, // TODO: add placeholder
         homeCoordinates: {
-          latitude: '10.7202',
-          longitude: '122.5621'
+          latitude: 10.7202,
+          longitude: 122.5621
         }
       }
 
