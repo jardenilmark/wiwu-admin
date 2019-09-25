@@ -24,7 +24,6 @@ const GenericTextArea = ({
       validateStatus={errors[name] && touched[name] ? 'error' : ''}>
       <TextArea
         {...rest}
-        autofocus={false}
         name={name}
         rows={rows}
         disabled={isSubmitting}
