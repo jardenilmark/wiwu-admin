@@ -1,39 +1,16 @@
 import React from 'react'
-import { Icon, Tooltip, Popconfirm, Modal, Typography } from 'antd'
-
-import Map from '../../components/Map'
+import { Icon, Tooltip, Popconfirm } from 'antd'
 
 import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
 import { statuses } from '../../constants/User'
 
-const { Text } = Typography
-
-export const getUserListItemActions = (user, dispatch) => {
+export const getUserListItemActions = (user, dispatch, setDrawerVisbility) => {
   const activeUserActions = [
-    <Tooltip placement='left' title='Show Location'>
-      <Icon
-        type='environment'
-        style={{ fontSize: 18 }}
-        onClick={() => {
-          Modal.info({
-            title: (
-              <div>
-                <Text strong>
-                  {user.firstName} {user.lastName}{' '}
-                </Text>
-              </div>
-            ),
-            width: 660,
-            icon: null,
-            keyboard: false,
-            maskClosable: false,
-            okText: 'Close',
-            okType: 'danger',
-            content: <Map location={user.homeCoordinates} />
-          })
-        }}
-      />
-    </Tooltip>,
+    <Icon
+      type='info-circle'
+      style={{ fontSize: 18 }}
+      onClick={() => setDrawerVisbility(true)}
+    />,
     <Tooltip placement='left' title='Archive User'>
       <Popconfirm
         placement='top'
