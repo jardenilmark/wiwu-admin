@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useDispatch } from 'react-redux'
-import { Button, Form, Card } from 'antd'
+import { Button, Form } from 'antd'
 
 import GenericInput from '../GenericInput'
 
@@ -56,6 +56,7 @@ const SignUpTab = () => {
               style={styles.form}>
               <GenericInput
                 required
+                size='large'
                 label='First Name'
                 name='firstName'
                 values={values}
@@ -67,6 +68,7 @@ const SignUpTab = () => {
               />
               <GenericInput
                 required
+                size='large'
                 label='Last Name'
                 name='lastName'
                 values={values}
@@ -78,6 +80,7 @@ const SignUpTab = () => {
               />
               <GenericInput
                 required
+                size='large'
                 label='Email Address'
                 name='emailAddress'
                 values={values}
@@ -89,6 +92,7 @@ const SignUpTab = () => {
               />
               <GenericInput
                 required
+                size='large'
                 type='password'
                 label='Password'
                 name='password'
@@ -101,6 +105,7 @@ const SignUpTab = () => {
               />
               <GenericInput
                 required
+                size='large'
                 label='Phone Number'
                 name='phoneNumber'
                 values={values}
@@ -112,6 +117,7 @@ const SignUpTab = () => {
               />
               <GenericInput
                 required
+                size='large'
                 label='Admin Key'
                 name='adminKey'
                 values={values}

@@ -74,8 +74,7 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                 setFieldValue={setFieldValue}
               />
               <GenericTextArea
-                required
-                label='Notes'
+                label='Notes (Optional)'
                 name='notes'
                 rows={2}
                 values={values}
@@ -85,7 +84,24 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                 handleBlur={handleBlur}
                 handleChange={handleChange}
               />
-              <Form.Item label='Phone Number(s)' required style={styles.input}>
+              <Form.Item
+                label='Phone Number(s)'
+                required
+                help={
+                  errors.numbers &&
+                  touched.numbers &&
+                  typeof errors.numbers === 'string'
+                    ? errors.numbers
+                    : ''
+                }
+                validateStatus={
+                  errors.numbers &&
+                  touched.numbers &&
+                  typeof errors.numbers === 'string'
+                    ? 'error'
+                    : ''
+                }
+                style={styles.input}>
                 <FieldArray
                   name='numbers'
                   render={arrayHelpers => (
@@ -104,17 +120,26 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                               margin: 0
                             }}
                             help={
-                              errors.numbers && touched.numbers
-                                ? errors.numbers
+                              errors.numbers &&
+                              touched.numbers &&
+                              touched.numbers[index] &&
+                              errors.numbers[index]
+                                ? errors.numbers[index]
                                 : ''
                             }
                             validateStatus={
-                              errors.numbers && touched.numbers ? 'error' : ''
-                            }>
+                              errors.numbers &&
+                              touched.numbers &&
+                              touched.numbers[index] &&
+                              errors.numbers[index]
+                                ? 'error'
+                                : ''
+                            }
+                            hasFeedback>
                             <Input
                               name={`numbers.${index}`}
                               style={styles.input}
-                              placeholder='e.g. 333-8484'
+                              placeholder='e.g. - 333-8484 or 09123456789'
                               disabled={isSubmitting}
                               onChange={handleChange}
                               onBlur={handleBlur}

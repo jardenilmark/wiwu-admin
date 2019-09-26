@@ -100,11 +100,10 @@ const AddressSearchInput = ({
               setFieldValue('address', event.target.value)
             }}
             style={{
-              border: '1px solid transparent',
               boxShadow: `0 2px 6px black`,
               borderRadius: 0,
               width: '400px',
-              textOverflow: 'ellipses'
+              textOverflow: 'ellipsis'
             }}
           />
         </StandaloneSearchBox>

@@ -141,7 +141,8 @@ const styles = {
   },
   form: {
     width: 550,
-    marginTop: 20
+    marginTop: 20,
+    textAlign: 'left'
   },
   input: {
     textAlign: 'left',

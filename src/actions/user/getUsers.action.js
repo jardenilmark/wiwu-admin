@@ -14,12 +14,23 @@ export const getUsers = () => {
         .where('role', '==', roles.USER)
         .get()
 
-      const users = usersRef.docs.map(user => {
-        return {
-          ...user.data(),
-          id: user.id
-        }
-      })
+      const users = await Promise.all(
+        usersRef.docs.map(async user => {
+          const emergencies = await Promise.all(
+            user.data().emergencies.map(async emergencyRef => {
+              const emergency = await emergencyRef.get()
+
+              return emergency.data()
+            })
+          )
+
+          return {
+            ...user.data(),
+            emergencies: emergencies,
+            id: user.id
+          }
+        })
+      )
 
       dispatch(createAction(GET_USERS)(users))
     } catch (error) {
