@@ -16,17 +16,18 @@ export const getUsers = () => {
 
       const users = await Promise.all(
         usersRef.docs.map(async user => {
-          const emergencies = user
-            .data()
-            .emergencies.map(async emergencyRef => {
+          const emergencies = await Promise.all(
+            user.data().emergencies.map(async emergencyRef => {
               const emergency = await emergencyRef.get()
 
               return emergency.data()
             })
+          )
 
           return {
             ...user.data(),
-            emergencies: emergencies
+            emergencies: emergencies,
+            id: user.id
           }
         })
       )
