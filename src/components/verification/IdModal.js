@@ -43,8 +43,8 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
               src={record.idImage}
               alt='ID'
               style={{
-                width: 300,
-                height: 300,
+                width: '300px',
+                height: '300px',
                 left: '40%'
               }}
             />

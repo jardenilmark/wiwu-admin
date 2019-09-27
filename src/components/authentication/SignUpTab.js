@@ -25,7 +25,7 @@ const SignUpTab = () => {
   const dispatch = useDispatch()
 
   return (
-    <div style={{ marginTop: 16 }}>
+    <div style={{ marginTop: '16px' }}>
       <Helmet>
         <title>Sign up - wiwu admin</title>
       </Helmet>
