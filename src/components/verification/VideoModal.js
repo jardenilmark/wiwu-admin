@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { Button, Modal, Spin, Descriptions } from 'antd'
 import * as PropTypes from 'prop-types'
 import { verifyUser } from '../../actions/user/verifyUser.action'
+import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
+import { statuses } from '../../constants/User'
 
 const VideoModal = ({
   record,
@@ -47,6 +49,15 @@ const VideoModal = ({
             }}
             disabled={record.joinedVideo}>
             Confirm Verification
+          </Button>,
+          <Button
+            key='submit'
+            onClick={async e => {
+              leaveRoom()
+              await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
+            }}
+            disabled={record.joinedVideo}>
+            Block User
           </Button>,
           <Button
             key='back'

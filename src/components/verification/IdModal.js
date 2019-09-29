@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { Button, Modal, Descriptions, Empty } from 'antd'
 import * as PropTypes from 'prop-types'
 import { verifyUser } from '../../actions/user/verifyUser.action'
+import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
+import { statuses } from '../../constants/User'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -28,6 +30,16 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             }}
             disabled={!record.idImage || isSubmitting}>
             Confirm Verification
+          </Button>,
+          <Button
+            key='submit'
+            onClick={async e => {
+              setIsSubmitting(true)
+              await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
+              toggleIdModal(false)
+            }}
+            disabled={isSubmitting}>
+            Block User
           </Button>,
           <Button
             key='back'
