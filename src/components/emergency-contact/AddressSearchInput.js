@@ -101,7 +101,7 @@ const AddressSearchInput = ({
             }}
             style={{
               boxShadow: `0 2px 6px black`,
-              borderRadius: 0,
+              borderRadius: '0px',
               width: '400px',
               textOverflow: 'ellipsis'
             }}

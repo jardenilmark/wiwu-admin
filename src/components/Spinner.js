@@ -25,11 +25,11 @@ const styles = {
     justifyContent: 'center'
   },
   indicator: {
-    fontSize: 40,
-    marginBottom: 15
+    fontSize: '40px',
+    marginBottom: '15px'
   },
   tip: {
-    fontSize: 16
+    fontSize: '16px'
   }
 }
 

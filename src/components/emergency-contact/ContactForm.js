@@ -112,12 +112,12 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                           style={{
                             width: '100%',
                             display: 'flex',
-                            marginBottom: 2
+                            marginBottom: '2px'
                           }}>
                           <Form.Item
                             style={{
                               width: '100%',
-                              margin: 0
+                              margin: '0px'
                             }}
                             help={
                               errors.numbers &&
@@ -151,7 +151,7 @@ const ContactForm = ({ onSubmitHandler, initialValues }) => {
                             type='dashed'
                             icon='close'
                             disabled={isSubmitting}
-                            style={{ float: 'right', marginLeft: 10 }}
+                            style={{ float: 'right', marginLeft: '10px' }}
                             onClick={() => arrayHelpers.remove(index)}
                           />
                         </div>
@@ -196,7 +196,7 @@ const styles = {
   },
   buttonWrapper: {
     textAlign: 'center',
-    margin: 0
+    margin: '0px'
   },
   formWrapper: {
     display: 'flex',
