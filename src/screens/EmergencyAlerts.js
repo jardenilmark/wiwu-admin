@@ -26,6 +26,7 @@ import { getTagColor } from '../helpers/common/getTagColor'
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
+  const [selectedAlert, setSelectedAlert] = useState(null)
   const { alerts } = useSelector(({ admin }) => admin)
 
   useEffect(() => {
@@ -39,20 +40,32 @@ const EmergencyAlerts = () => {
       </Helmet>
 
       <Drawer
-        title={<b>Create Emergency Alert</b>}
+        title={
+          <b>
+            {selectedAlert ? 'Edit Emergency Alert' : 'Create Emergency Alert'}
+          </b>
+        }
         width={550}
         destroyOnClose={true}
         maskClosable={true}
         keyboard={false}
         bodyStyle={{ background: '#f5f5f5', height: '94%' }}
-        onClose={() => setDrawerVisibility(false)}
+        onClose={() => {
+          setSelectedAlert(null)
+          setDrawerVisibility(false)
+        }}
         visible={drawerVisibility}>
         <div style={styles.formWrapper}>
           <Formik
-            initialValues={{ message: '' }}
+            initialValues={selectedAlert}
             validationSchema={CreateAlertSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              await dispatch(createAlert(values))
+              if (selectedAlert) {
+                await dispatch(updateEmergencyAlert(selectedAlert.id, values))
+              } else {
+                await dispatch(createAlert(values))
+              }
+
               setSubmitting(false)
               setDrawerVisibility(false)
             }}>
@@ -90,7 +103,7 @@ const EmergencyAlerts = () => {
                       htmlType='submit'
                       disabled={!dirty}
                       loading={isSubmitting}>
-                      Create Alert
+                      {selectedAlert ? 'Update Alert' : 'Create Alert'}
                     </Button>
                   </Form.Item>
                 </Form>
@@ -130,7 +143,14 @@ const EmergencyAlerts = () => {
                     key={'edit-alert'}
                     placement='left'
                     title='Edit Alert'>
-                    <Icon type='edit' style={{ fontSize: 18 }} />
+                    <Icon
+                      type='edit'
+                      style={{ fontSize: 18 }}
+                      onClick={() => {
+                        setSelectedAlert(alert)
+                        setDrawerVisibility(true)
+                      }}
+                    />
                   </Tooltip>,
                   <Tooltip
                     key={'delete-alert'}
