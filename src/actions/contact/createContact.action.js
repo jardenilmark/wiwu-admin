@@ -10,14 +10,13 @@ export const createContact = ({ address, ...rest }) => {
     try {
       const location = await getCoordinates(address)
 
-      const contact = await db.collection('contacts').add({
+      await db.collection('contacts').add({
         ...rest,
         address,
         location
       })
 
       const payload = {
-        id: contact.id,
         ...rest,
         address,
         location

@@ -144,12 +144,9 @@ const styles = {
     textAlign: 'left',
     width: '500px'
   },
-  input: {
-    margin: 0
-  },
   buttonWrapper: {
     textAlign: 'center',
-    margin: 0
+    margin: '0px'
   },
   formWrapper: {
     display: 'flex',
