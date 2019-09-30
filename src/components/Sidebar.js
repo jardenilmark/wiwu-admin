@@ -15,6 +15,7 @@ const adminMenuItems = [
     title: 'Emergency Responders'
   },
   { key: 'emergency-contacts', icon: 'phone', title: 'Emergency Contacts' },
+  { key: 'emergency-alerts', icon: 'alert', title: 'Emergency Alerts' },
   {
     key: 'user-verification',
     icon: 'check-circle',

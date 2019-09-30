@@ -25,6 +25,7 @@ import { GET_EMERGENCIES } from '../actions/emergency-request/emergency.constant
 import soundfile from '../assets/sounds/alert.mp3'
 import { roles, departments } from '../constants/User'
 import { getActiveKey } from '../helpers/common/getActiveKey'
+import EmergencyAlerts from '../screens/EmergencyAlerts'
 
 const alert = new UIfx(soundfile, {
   volume: 1, // number between 0.0 ~ 1.0
@@ -34,6 +35,7 @@ const alert = new UIfx(soundfile, {
 const adminRoutes = [
   { path: 'emergency-responders', component: EmergencyResponders },
   { path: 'emergency-contacts', component: EmergencyContacts },
+  { path: 'emergency-alerts', component: EmergencyAlerts },
   { path: 'user-verification', component: UserVerification },
   { path: 'users', component: Users },
   { path: 'settings', component: Settings }
