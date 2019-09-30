@@ -10,7 +10,8 @@ import {
   Icon,
   Popconfirm,
   Avatar,
-  Tag
+  Tag,
+  Radio
 } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -22,16 +23,21 @@ import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlert
 import moment from 'moment'
 import { updateEmergencyAlert } from '../actions/emergency-alert/updateEmergencyAlert.action'
 import { getTagColor } from '../helpers/common/getTagColor'
+import { filterResponders } from '../actions/responder/filterResponders.action'
 
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
   const [selectedAlert, setSelectedAlert] = useState(null)
+  const [filter, setFilter] = useState('all')
   const { alerts } = useSelector(({ admin }) => admin)
 
   useEffect(() => {
     dispatch(getEmergencyAlerts())
   }, [])
+
+  const filteredAlerts =
+    filter === 'all' ? alerts : alerts.filter(alert => alert.status === filter)
 
   return (
     <Layout.Content style={styles.content}>
@@ -119,6 +125,23 @@ const EmergencyAlerts = () => {
           placeholder='Search emergency alerts...'
           style={{ width: 240 }}
         />
+        <Radio.Group
+          value={filter}
+          buttonStyle='solid'
+          onChange={e => {
+            const value = e.target.value
+            setFilter(value)
+          }}>
+          <Radio.Button value='all'>
+            <strong>All</strong>
+          </Radio.Button>
+          <Radio.Button value='active'>
+            <strong>Active</strong>
+          </Radio.Button>
+          <Radio.Button value='archived'>
+            <strong>Archived</strong>
+          </Radio.Button>
+        </Radio.Group>
         <Button
           icon='alert'
           type='dashed'
@@ -133,7 +156,7 @@ const EmergencyAlerts = () => {
           style={styles.list}
           itemLayout='horizontal'
           pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-          dataSource={alerts}
+          dataSource={filteredAlerts}
           renderItem={alert => {
             const color = getTagColor(alert.status)
             return (
