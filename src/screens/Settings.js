@@ -3,7 +3,7 @@ import { Layout, Form, Typography, Button, Avatar, Tag } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { Formik } from 'formik'
 
-import { generateKey } from '../helpers/secretKey/generateKey'
+import { generateKey } from '../helpers/secret-key/generateKey'
 import { editAdmin } from '../actions/admin/editAdmin.action'
 
 import { EditAdminSchema } from '../schema/admin.schema'

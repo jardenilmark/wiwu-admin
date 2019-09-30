@@ -12,11 +12,12 @@ import {
   message
 } from 'antd'
 
-import { completeEmergency } from '../../actions/emergency/updateEmergency.action'
-
-import Map from '../Map'
+import { completeEmergency } from '../../actions/emergency-request/updateEmergency.action'
+import { sendNotification } from '../../helpers/emergency-request/sendNotification'
 
 import placeholder from '../../assets/images/placeholder.png'
+
+import Map from '../Map'
 
 const EmergencyColumn = props => {
   const { title } = props
@@ -25,38 +26,6 @@ const EmergencyColumn = props => {
   const emergencies = useSelector(state =>
     title === 'COMPLETED' ? state.emergency.completed : state.emergency.pending
   )
-  console.log(emergencies)
-  const sendNotification = function(data) {
-    // TODO: hide api keys
-    const headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-      Authorization: 'Basic MDg0ODFmN2ItZDJiNS00MGMyLWE2MjMtYjAyZjY4N2NjNWY2'
-    }
-
-    const options = {
-      host: 'onesignal.com',
-      port: 443,
-      path: '/api/v1/notifications',
-      method: 'POST',
-      headers: headers
-    }
-
-    const https = require('https')
-    const req = https.request(options, function(res) {
-      res.on('data', function(data) {
-        console.log('Response:')
-        console.log(JSON.parse(data))
-      })
-    })
-
-    req.on('error', function(e) {
-      console.log('ERROR:')
-      console.log(e)
-    })
-
-    req.write(JSON.stringify(data))
-    req.end()
-  }
 
   return (
     <Col span={12} style={{ padding: 10, height: '90vh' }}>
