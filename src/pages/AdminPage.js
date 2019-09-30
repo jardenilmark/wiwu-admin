@@ -21,9 +21,10 @@ import Users from '../screens/Users'
 import Settings from '../screens/Settings.js'
 import NoMatch from '../screens/NoMatch'
 
-import { GET_EMERGENCIES } from '../actions/emergency/emergency.constants'
+import { GET_EMERGENCIES } from '../actions/emergency-request/emergency.constants'
 import soundfile from '../assets/sounds/alert.mp3'
 import { roles, departments } from '../constants/User'
+import { getActiveKey } from '../helpers/common/getActiveKey'
 
 const alert = new UIfx(soundfile, {
   volume: 1, // number between 0.0 ~ 1.0
@@ -48,6 +49,7 @@ const AdminPage = props => {
   const dispatch = useDispatch()
   const { match } = props
   const { role, department } = useSelector(state => state.admin.current)
+  const activeKey = getActiveKey(props.location)
   const routes = role === roles.ADMIN ? adminRoutes : responderRoutes
 
   toast.configure()
@@ -128,7 +130,7 @@ const AdminPage = props => {
 
   return (
     <Layout style={styles.layout}>
-      <Sidebar {...props} />
+      {activeKey && <Sidebar {...props} activeKey={activeKey} />}
       <Layout>
         <Switch>
           <Redirect

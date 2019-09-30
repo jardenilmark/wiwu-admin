@@ -4,7 +4,6 @@ import { Layout, Menu, Icon } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { signOut } from '../actions/admin/signOut.action'
-import { getActiveKey } from '../helpers/common/getActiveKey'
 import { roles } from '../constants/User'
 
 import Logo from './Logo'
@@ -31,12 +30,12 @@ const responderMenuItems = [
   { key: 'settings', icon: 'user', title: 'Settings' }
 ]
 
-const Sidebar = ({ history, location, match }) => {
+const Sidebar = ({ history, match, activeKey }) => {
   const dispatch = useDispatch()
   const { role } = useSelector(state => state.admin.current)
   const menuItems = role === roles.ADMIN ? adminMenuItems : responderMenuItems
   const [collapsed, toggleCollapse] = useState(false)
-  const [selectedKeys, setSelectedKeys] = useState([getActiveKey(location)])
+  const [selectedKeys, setSelectedKeys] = useState(activeKey)
 
   return (
     <Layout.Sider
