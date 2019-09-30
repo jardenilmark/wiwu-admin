@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/actions/emergency-alert/alert.constants.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/actions/emergency-alert/getEmergencyAlerts.action.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/schema/alert.schema.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/emergency-alert/updateEmergencyAlert.action.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/alert.constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/alert.constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/getEmergencyAlerts.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/getEmergencyAlerts.action.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/reducers/admin.reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/admin.reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +62,7 @@
       <workItem from="1568390575733" duration="137000" />
       <workItem from="1568823288188" duration="975000" />
       <workItem from="1568824281373" duration="8439000" />
-      <workItem from="1569851473676" duration="11906000" />
+      <workItem from="1569851473676" duration="13799000" />
     </task>
     <servers />
   </component>

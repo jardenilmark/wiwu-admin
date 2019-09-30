@@ -1,6 +1,5 @@
 import { message } from 'antd'
 import { createAction } from 'redux-actions'
-
 import { firestore as db } from '../../firebase'
 import { GET_ALERTS } from './alert.constants'
 

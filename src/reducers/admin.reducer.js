@@ -32,6 +32,7 @@ import {
 } from '../actions/contact/contact.constants'
 import {
   CREATE_ALERT,
+  EDIT_ALERT,
   GET_ALERTS
 } from '../actions/emergency-alert/alert.constants'
 
@@ -173,6 +174,11 @@ export default function reducer(state = initialState, action) {
         alerts: [action.payload, ...state.alerts]
       }
     case GET_ALERTS:
+      return {
+        ...state,
+        alerts: action.payload
+      }
+    case EDIT_ALERT:
       return {
         ...state,
         alerts: action.payload

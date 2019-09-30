@@ -9,7 +9,8 @@ import {
   Tooltip,
   Icon,
   Popconfirm,
-  Avatar
+  Avatar,
+  Tag
 } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -19,6 +20,8 @@ import GenericTextArea from '../components/GenericTextArea'
 import { createAlert } from '../actions/emergency-alert/createEmergencyAlert.action'
 import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlerts.action'
 import moment from 'moment'
+import { updateEmergencyAlert } from '../actions/emergency-alert/updateEmergencyAlert.action'
+import { getTagColor } from '../helpers/common/getTagColor'
 
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()
@@ -28,8 +31,6 @@ const EmergencyAlerts = () => {
   useEffect(() => {
     dispatch(getEmergencyAlerts())
   }, [])
-
-  console.log('alerts -', alerts)
 
   return (
     <Layout.Content style={styles.content}>
@@ -121,6 +122,7 @@ const EmergencyAlerts = () => {
           pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
           dataSource={alerts}
           renderItem={alert => {
+            const color = getTagColor(alert.status)
             return (
               <List.Item
                 actions={[
@@ -133,13 +135,18 @@ const EmergencyAlerts = () => {
                   <Tooltip
                     key={'delete-alert'}
                     placement='left'
-                    title='Delete Alert'>
+                    title='Archive Alert'>
                     <Popconfirm
                       placement='top'
-                      title='Are you sure you want to delete this alert?'
+                      title='Are you sure you want to archive this alert?'
                       okText='Yes'
+                      onConfirm={() =>
+                        dispatch(
+                          updateEmergencyAlert(alert.id, { status: 'archived' })
+                        )
+                      }
                       cancelText='No'>
-                      <Icon type='delete' style={{ fontSize: 18 }} />
+                      <Icon type='container' style={{ fontSize: 18 }} />
                     </Popconfirm>
                   </Tooltip>
                 ]}>
@@ -152,11 +159,14 @@ const EmergencyAlerts = () => {
                   }
                   title={<b>{alert.message}</b>}
                   description={
-                    <span>
-                      {moment(alert.date.toDate()).format(
-                        'MMM DD, YYYY - hh:mmA'
-                      )}
-                    </span>
+                    <>
+                      <Tag color={color}>{alert.status.toUpperCase()}</Tag>
+                      <span>
+                        {moment(alert.date.toDate()).format(
+                          'MMM DD, YYYY - hh:mmA'
+                        )}
+                      </span>
+                    </>
                   }
                 />
               </List.Item>
