@@ -33,7 +33,7 @@ const Map = ({ location, label, style }) => {
   return isLoaded ? (
     renderMap()
   ) : (
-    <Spinner tip='Loading Map...' height={style.height || 500} />
+    <Spinner tip='Loading Map...' height={(style && style.height) || 500} />
   )
 }
 
