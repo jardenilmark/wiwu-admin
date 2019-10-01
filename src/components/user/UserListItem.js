@@ -2,8 +2,10 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { List, Avatar, Badge, Tag } from 'antd'
+import ProgressiveImage from 'react-progressive-image'
 
 import UserProfile from './UserProfile'
+import Spinner from '../Spinner'
 
 import { getUserListItemActions } from '../../helpers/user/getUserListItemActions'
 import { getTagColor } from '../../helpers/common/getTagColor'
@@ -36,11 +38,17 @@ const UserListItem = ({ user }) => {
                   0
                 )
               }>
-              <Avatar
-                src={user.avatar || avatarPlaceholder}
-                size={45}
-                shape='square'
-              />
+              <ProgressiveImage
+                src={user.avatar ? user.avatar : avatarPlaceholder}
+                placeholder='avatar'>
+                {(src, loading) =>
+                  loading ? (
+                    <Spinner height={45} tip={''} />
+                  ) : (
+                    <Avatar src={src} size={45} shape='square' />
+                  )
+                }
+              </ProgressiveImage>
             </Badge>
           }
           title={
