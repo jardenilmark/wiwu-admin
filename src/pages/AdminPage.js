@@ -84,14 +84,21 @@ const AdminPage = props => {
             const emergencies = _.reverse(
               await Promise.all(
                 e.docs.map(async emergency => {
-                  const userRef = await emergency.data().userId.get()
-
+                  const emergencyData = emergency.data()
+                  const userRef = await emergencyData.userId.get()
                   const { firstName, lastName, phoneNumber } = userRef.data()
 
+                  let { responderId } = emergencyData
+                  if (responderId) {
+                    const responderRef = await responderId.get()
+                    responderId = responderRef.data()
+                  }
+
                   return {
-                    ...emergency.data(),
+                    ...emergencyData,
                     id: emergency.id,
                     name: `${firstName} ${lastName}`,
+                    responderId,
                     phoneNumber
                   }
                 })
@@ -112,6 +119,7 @@ const AdminPage = props => {
                       count = 0
                     }
                   })
+
                   alert.play()
                 }
               }
