@@ -9,7 +9,8 @@ import {
   Icon,
   Spin,
   Button,
-  Tooltip
+  Tooltip,
+  Popconfirm
 } from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
@@ -116,22 +117,27 @@ const EmergencyRequestsV2 = () => {
                               ? 'Request already assigned'
                               : 'Assign to me'
                           }>
-                          <Button
-                            disabled={request.responderId}
-                            size={'small'}
-                            type={'link'}
-                            style={{
-                              color: request.responderId ? 'grey' : 'green'
-                            }}
-                            onClick={() =>
+                          <Popconfirm
+                            title='Are you sure assign this request to yourself?'
+                            okText='Yes'
+                            cancelText='No'
+                            onConfirm={() =>
                               dispatch(
                                 updateRequest(request.id, {
                                   responderId: firestore.doc(`users/${uid}`)
                                 })
                               )
                             }>
-                            <Icon type='user-add' />
-                          </Button>
+                            <Button
+                              disabled={request.responderId}
+                              size={'small'}
+                              type={'link'}
+                              style={{
+                                color: request.responderId ? 'grey' : 'green'
+                              }}>
+                              <Icon type='user-add' />
+                            </Button>
+                          </Popconfirm>
                         </Tooltip>,
                         <Tooltip key={'broadcast'} title='Broadcast emergency'>
                           <Button size={'small'} type={'link'}>
@@ -176,34 +182,36 @@ const EmergencyRequestsV2 = () => {
                       </div>
                       <Spacer height={8} />
                       <table>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Requester</td>
-                          <td>{request.name}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Phone</td>
-                          <td>{request.phoneNumber}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Address</td>
-                          <td>
-                            {request.address || (
-                              <Tooltip
-                                placement='right'
-                                title='You may need to confirm request address by calling back the requester'>
-                                N / A
-                              </Tooltip>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Responder</td>
-                          <td>
-                            {request.responderId
-                              ? `${request.responderId.firstName} ${request.responderId.lastName}`
-                              : 'Unassigned'}
-                          </td>
-                        </tr>
+                        <tbody>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Requester</td>
+                            <td>{request.name}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Phone</td>
+                            <td>{request.phoneNumber}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Address</td>
+                            <td>
+                              {request.address || (
+                                <Tooltip
+                                  placement='right'
+                                  title='You may need to confirm request address by calling back the requester'>
+                                  N / A
+                                </Tooltip>
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Responder</td>
+                            <td>
+                              {request.responderId
+                                ? `${request.responderId.firstName} ${request.responderId.lastName}`
+                                : 'Unassigned'}
+                            </td>
+                          </tr>
+                        </tbody>
                       </table>
                       {request.description && (
                         <>

@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/emergency-request/emergency.constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-request/emergency.constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/emergency-request/getEmergencies.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-request/getEmergencies.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/emergency-request/updateEmergency.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-request/updateEmergency.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequestsV2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyRequestsV2.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,7 +59,7 @@
       <workItem from="1568823288188" duration="975000" />
       <workItem from="1568824281373" duration="8439000" />
       <workItem from="1569851473676" duration="32296000" />
-      <workItem from="1569995587850" duration="4717000" />
+      <workItem from="1569995587850" duration="5347000" />
     </task>
     <servers />
   </component>
