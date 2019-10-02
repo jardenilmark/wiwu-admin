@@ -6,12 +6,8 @@ import { firestore as db } from '../../firebase'
 import { GET_EMERGENCIES } from './emergency.constants'
 
 export const getEmergencies = () => {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     try {
-      const {
-        admin: { current }
-      } = getState()
-
       const emergenciesRef = await db
         .collection('emergencies')
         .orderBy('date')
@@ -21,13 +17,14 @@ export const getEmergencies = () => {
         emergenciesRef.docs.map(async emergency => {
           const userRef = await emergency.data().userId.get()
 
-          const { firstName, lastName, phoneNumber } = userRef.data()
+          const { firstName, lastName, phoneNumber, avatar } = userRef.data()
 
           return {
             ...emergency.data(),
             id: emergency.id,
             name: `${firstName} ${lastName}`,
-            phoneNumber
+            phoneNumber,
+            avatar
           }
         })
       )

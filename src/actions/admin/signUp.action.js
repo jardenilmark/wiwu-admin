@@ -15,7 +15,7 @@ export const signUp = ({
   return async dispatch => {
     try {
       const key = await db
-        .collection('adminKeys')
+        .collection('admin-keys')
         .doc(adminKey)
         .get()
 

@@ -5,14 +5,14 @@ import EmergencyColumn from '../components/emergency-request/EmergencyColumn'
 import { Helmet } from 'react-helmet'
 
 const EmergencyRequests = () => (
-  <Layout.Content>
+  <Layout.Content style={{ height: '100%', overflow: 'hidden' }}>
     <Helmet>
-      <title>Emergency Contacts - wiwu admin</title>
+      <title>Emergency Requests - wiwu admin</title>
     </Helmet>
 
     <Row>
-      <EmergencyColumn title={'PENDING'} />
-      <EmergencyColumn title={'COMPLETED'} />
+      <EmergencyColumn title={'Pending'} />
+      <EmergencyColumn title={'Completed'} />
     </Row>
   </Layout.Content>
 )

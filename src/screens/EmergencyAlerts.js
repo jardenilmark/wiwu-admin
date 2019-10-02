@@ -23,7 +23,6 @@ import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlert
 import moment from 'moment'
 import { updateEmergencyAlert } from '../actions/emergency-alert/updateEmergencyAlert.action'
 import { getTagColor } from '../helpers/common/getTagColor'
-import { filterResponders } from '../actions/responder/filterResponders.action'
 
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()

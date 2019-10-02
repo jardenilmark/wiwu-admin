@@ -87,13 +87,21 @@ const AdminPage = props => {
                 e.docs.map(async emergency => {
                   const userRef = await emergency.data().userId.get()
 
-                  const { firstName, lastName, phoneNumber } = userRef.data()
+                  const {
+                    firstName,
+                    lastName,
+                    phoneNumber,
+                    avatar
+                  } = userRef.data()
 
                   return {
                     ...emergency.data(),
                     id: emergency.id,
-                    name: `${firstName} ${lastName}`,
-                    phoneNumber
+                    user: {
+                      name: `${firstName} ${lastName}`,
+                      phoneNumber,
+                      avatar
+                    }
                   }
                 })
               )

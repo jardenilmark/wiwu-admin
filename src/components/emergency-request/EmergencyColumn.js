@@ -1,14 +1,14 @@
-import React from 'react'
-import moment from 'moment'
+import React, { Fragment } from 'react'
+import format from 'date-fns/format'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  Button,
-  Card,
   Col,
-  Descriptions,
+  Button,
   List,
-  PageHeader,
+  Divider,
   Modal,
+  Avatar,
+  Typography,
   message
 } from 'antd'
 
@@ -19,64 +19,75 @@ import placeholder from '../../assets/images/placeholder.png'
 
 import Map from '../Map'
 
+const { Text, Title } = Typography
+
 const EmergencyColumn = props => {
   const { title } = props
 
   const dispatch = useDispatch()
   const emergencies = useSelector(state =>
-    title === 'COMPLETED' ? state.emergency.completed : state.emergency.pending
+    title === 'Completed' ? state.emergency.completed : state.emergency.pending
   )
 
   return (
-    <Col span={12} style={{ padding: 10, height: '90vh' }}>
-      <div
+    <Col span={12} style={{ padding: 40, textAlign: 'center', paddingTop: 20 }}>
+      <Title level={2}>{title} Requests</Title>
+      <Divider />
+      <List
+        itemLayout='vertical'
         style={{
-          overflow: 'auto',
-          height: '100%',
-          width: '100%'
-        }}>
-        <PageHeader title={title} />
-        <List
-          itemLayout='vertical'
-          size='large'
-          pagination={{
-            simple: 'true',
-            pageSize: 2
-          }}
-          dataSource={emergencies}
-          renderItem={item => (
-            <Card
-              title={item.id}
-              key={item.id}
-              cover={
-                <img
-                  width={210}
-                  height={250}
-                  alt='logo'
-                  src={item.media || placeholder}
+          textAlign: 'left',
+          height: '800px',
+          overflow: 'auto'
+          // backgroundColor: 'red'
+        }}
+        pagination={{
+          pageSize: 3
+        }}
+        split
+        dataSource={emergencies}
+        renderItem={emergency => (
+          <List.Item
+            extra={
+              <Fragment>
+                <Map
+                  location={emergency.location}
+                  style={{ width: '400px', height: '250px' }}
                 />
-              }
-              extra={
-                title === 'COMPLETED'
-                  ? [
-                      <Button
-                        icon='global'
-                        key={`${item.id}globalcompleted`}
-                        shape='round'
-                        onClick={() =>
-                          Modal.info({
-                            width: 720,
-                            title: 'USER LOCATION',
-                            content: <Map location={item.location} />
-                          })
+                <div
+                  style={{
+                    marginTop: '10px',
+                    textAlign: 'right',
+                    marginRight: '10px'
+                  }}>
+                  <Button
+                    type='dashed'
+                    style={{ fontSize: '20px' }}
+                    icon='info'
+                    onClick={() =>
+                      Modal.confirm({
+                        width: 300,
+                        centered: true,
+                        title: 'CONFIRMATION',
+                        content: 'Are you sure you want to broadcast?',
+                        okText: 'Confirm',
+                        cancelText: 'Cancel',
+                        onOk: () => {
+                          dispatch(completeEmergency(emergency.id))
+                          message.success(
+                            'Emergency has been marked completed!',
+                            2
+                          )
                         }
-                      />
-                    ]
-                  : [
+                      })
+                    }
+                  />
+                  {title === 'Pending' && (
+                    <Fragment>
                       <Button
-                        icon='audio'
-                        key={`${item.id}broadcastpending`}
-                        shape='round'
+                        type='dashed'
+                        style={{ fontSize: '20px' }}
+                        icon='sound'
                         onClick={() =>
                           Modal.confirm({
                             width: 300,
@@ -96,8 +107,8 @@ const EmergencyColumn = props => {
                                   {
                                     field: 'location',
                                     radius: '1000', // within 1000 meters
-                                    lat: item.location.latitude,
-                                    long: item.location.longitude
+                                    lat: emergency.location.latitude,
+                                    long: emergency.location.longitude
                                   }
                                 ]
                               })
@@ -105,23 +116,11 @@ const EmergencyColumn = props => {
                             }
                           })
                         }
-                      />,
+                      />
                       <Button
-                        icon='global'
-                        shape='round'
-                        key={`${item.id}globalpending`}
-                        onClick={() =>
-                          Modal.info({
-                            width: 720,
-                            title: 'USER LOCATION',
-                            content: <Map location={item.location} />
-                          })
-                        }
-                      />,
-                      <Button
+                        type='dashed'
+                        style={{ fontSize: '20px' }}
                         icon='arrow-right'
-                        shape='round'
-                        key={`${item.id}arrowpending`}
                         onClick={() =>
                           Modal.confirm({
                             width: 300,
@@ -131,7 +130,7 @@ const EmergencyColumn = props => {
                             okText: 'Confirm',
                             cancelText: 'Cancel',
                             onOk: () => {
-                              dispatch(completeEmergency(item.id))
+                              dispatch(completeEmergency(emergency.id))
                               message.success(
                                 'Emergency has been marked completed!',
                                 2
@@ -140,38 +139,56 @@ const EmergencyColumn = props => {
                           })
                         }
                       />
-                    ]
+                    </Fragment>
+                  )}
+                </div>
+              </Fragment>
+            }>
+            <List.Item.Meta
+              // avatar={<Avatar src={require(`../../assets/images/${item.department}.png`)} size={90}/>}
+              title={
+                <Fragment>
+                  <Title level={4} style={{ margin: 0 }}>
+                    Request for {emergency.department} assistance
+                  </Title>
+                  <Text type='secondary'>{emergency.description}</Text>
+                </Fragment>
               }
-              style={{ marginBottom: 10 }}>
-              <List.Item key={item.title}>
-                <Descriptions bordered size={'middle'} layout={'vertical'}>
-                  <Descriptions.Item label='Name' span={2}>
-                    {item.name}
-                  </Descriptions.Item>
-                  <Descriptions.Item label='Role'>
-                    {item.role}
-                  </Descriptions.Item>
-                  <Descriptions.Item label='Phone Number'>
-                    {item.phoneNumber}
-                  </Descriptions.Item>
-                  <Descriptions.Item label='time'>
-                    {moment(new Date(item.date.toDate())).format('LT')}
-                  </Descriptions.Item>
-                  <Descriptions.Item label='Date' span={2}>
-                    {moment(new Date(item.date.toDate())).format('MM/DD/YYYY')}
-                  </Descriptions.Item>
-                  <Descriptions.Item label='Address' span={3}>
-                    {item.address || 'Not Specified'}
-                  </Descriptions.Item>
-                  <Descriptions.Item label='Comments' span={3}>
-                    {item.comments || 'Not Specified'}
-                  </Descriptions.Item>
-                </Descriptions>
-              </List.Item>
-            </Card>
-          )}
-        />
-      </div>
+              description={
+                <Fragment>
+                  <Text strong>Sent by:</Text>
+                  <br />
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar
+                        src={emergency.user.avatar}
+                        size={50}
+                        style={{ marginTop: '10px' }}
+                      />
+                    }
+                    title={
+                      <Fragment>
+                        <Text strong>{emergency.user.name}</Text>
+                        <br />
+                        <Text type='secondary'>
+                          {emergency.user.phoneNumber}
+                        </Text>
+                        <br />
+                        <Text>
+                          {format(
+                            emergency.date.toDate(),
+                            'MMMMMM d, yyyy - hh:mm a'
+                          )}
+                        </Text>
+                      </Fragment>
+                    }
+                  />
+                </Fragment>
+              }
+            />
+          </List.Item>
+        )}
+      />
     </Col>
   )
 }
