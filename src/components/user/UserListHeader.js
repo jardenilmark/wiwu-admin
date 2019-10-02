@@ -9,7 +9,7 @@ const { Search } = Input
 
 const UserListHeader = () => {
   const dispatch = useDispatch()
-  const users = useSelector(state => state.admin.users)
+  const users = useSelector(({ admin }) => admin.users)
   const [radioValue, setRadioValue] = useState('all')
 
   return (

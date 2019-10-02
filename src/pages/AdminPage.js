@@ -50,7 +50,7 @@ const responderRoutes = [
 const AdminPage = props => {
   const dispatch = useDispatch()
   const { match } = props
-  const { role, department } = useSelector(state => state.admin.current)
+  const { role, department } = useSelector(({ admin }) => admin.current)
   const activeKey = getActiveKey(props.location)
   const routes = role === roles.ADMIN ? adminRoutes : responderRoutes
 

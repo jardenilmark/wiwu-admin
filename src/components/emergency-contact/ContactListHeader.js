@@ -10,7 +10,7 @@ const { Search } = Input
 
 const ContactListHeader = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
-  const contacts = useSelector(state => state.admin.contacts)
+  const contacts = useSelector(({ admin }) => admin.contacts)
   const [radioValue, setRadioValue] = useState('all')
 
   return (

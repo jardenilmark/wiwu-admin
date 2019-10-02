@@ -25,8 +25,8 @@ const EmergencyColumn = props => {
   const { title } = props
 
   const dispatch = useDispatch()
-  const emergencies = useSelector(state =>
-    title === 'Completed' ? state.emergency.completed : state.emergency.pending
+  const emergencies = useSelector(({ emergency }) =>
+    title === 'Completed' ? emergency.completed : emergency.pending
   )
 
   return (

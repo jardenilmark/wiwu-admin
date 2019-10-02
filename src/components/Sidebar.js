@@ -33,7 +33,7 @@ const responderMenuItems = [
 
 const Sidebar = ({ history, match, activeKey }) => {
   const dispatch = useDispatch()
-  const { role } = useSelector(state => state.admin.current)
+  const { role } = useSelector(({ admin }) => admin.current)
   const menuItems = role === roles.ADMIN ? adminMenuItems : responderMenuItems
   const [collapsed, toggleCollapse] = useState(false)
   const [selectedKeys, setSelectedKeys] = useState(activeKey)

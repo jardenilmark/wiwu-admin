@@ -9,8 +9,8 @@ import { toggleEditModal } from '../../actions/contact/toggleEditModal.action'
 
 const EditContact = () => {
   const dispatch = useDispatch()
-  const contact = useSelector(state => state.contact.selectedContact)
-  const visible = useSelector(state => state.contact.editModalVisibility)
+  const contact = useSelector(({ contact }) => contact.selectedContact)
+  const visible = useSelector(({ contact }) => contact.editModalVisibility)
 
   return (
     <Modal
