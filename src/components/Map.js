@@ -20,6 +20,9 @@ const Map = ({ location, label, style }) => {
         mapTypeId='hybrid'
         labels={true}
         zoom={18}
+        options={{
+          scrollwheel: false
+        }}
         mapContainerStyle={style || { height: '500px', width: '600px' }}>
         <Marker position={position} title={label} />
       </GoogleMap>
