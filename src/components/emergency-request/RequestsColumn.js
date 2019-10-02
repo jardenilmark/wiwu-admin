@@ -97,7 +97,11 @@ const RequestsColumn = props => {
                     }>
                     <Tooltip
                       key={'move-to-completed'}
-                      title='Move card to completed'>
+                      title={
+                        request.responderId
+                          ? 'Move card to completed'
+                          : 'Assign responder to move request to completed'
+                      }>
                       <Button
                         icon={'arrow-right'}
                         disabled={!request.responderId}
@@ -211,11 +215,16 @@ const RequestsColumn = props => {
                   </Popconfirm>
                 </Tooltip>
               ]}>
+              {/* role */}
               <b>{request.role}</b>
+
+              {/* date of request */}
               <div style={{ color: 'grey' }}>
                 {moment(request.date.toDate()).format('MMM DD, YYYY - hh:mmA')}
               </div>
               <Spacer height={8} />
+
+              {/* more info */}
               <table>
                 <tbody>
                   <tr>
@@ -248,6 +257,8 @@ const RequestsColumn = props => {
                   </tr>
                 </tbody>
               </table>
+
+              {/* conditional description */}
               {request.description && (
                 <>
                   <Spacer height={8} />
