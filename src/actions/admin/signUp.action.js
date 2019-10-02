@@ -15,7 +15,7 @@ export const signUp = ({
   return async dispatch => {
     try {
       const key = await db
-        .collection('adminKeys')
+        .collection('admin-keys')
         .doc(adminKey)
         .get()
 
@@ -51,7 +51,7 @@ export const signUp = ({
         .set(firestorePayload)
 
       await db
-        .collection('adminKeys')
+        .collection('admin-keys')
         .doc(adminKey)
         .update({ user: db.doc(`users/${user.uid}`) })
 
