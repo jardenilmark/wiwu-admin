@@ -19,7 +19,7 @@ const EditContact = () => {
       footer={null}
       destroyOnClose={true}
       maskClosable={false}
-      bodyStyle={{ padding: 20, backgroundColor: '#f5f5f5' }}
+      bodyStyle={{ padding: '20px', backgroundColor: '#f5f5f5' }}
       title={<strong>Update Contact Details</strong>}
       onCancel={() => dispatch(toggleEditModal())}>
       <ContactForm

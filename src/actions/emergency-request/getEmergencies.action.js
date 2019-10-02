@@ -1,10 +1,9 @@
 import _ from 'lodash'
 import { createAction } from 'redux-actions'
-
 import { firestore as db } from '../../firebase'
-
 import { GET_EMERGENCIES } from './emergency.constants'
 
+// not in use, see AdminPage.js
 export const getEmergencies = () => {
   return async (dispatch, getState) => {
     try {

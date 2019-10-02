@@ -40,8 +40,8 @@ export const signUp = ({
         isUserVerified: true,
         avatar: null, // TODO: add placeholder
         homeCoordinates: {
-          latitude: '10.7202',
-          longitude: '122.5621'
+          latitude: 10.7202,
+          longitude: 122.5621
         }
       }
 

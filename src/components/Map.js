@@ -30,7 +30,11 @@ const Map = ({ location, label, style }) => {
     return <div>Map cannot be loaded right now, sorry.</div>
   }
 
-  return isLoaded ? renderMap() : <Spinner tip='Loading Map...' height={500} />
+  return isLoaded ? (
+    renderMap()
+  ) : (
+    <Spinner tip='Loading Map...' height={style.height || 500} />
+  )
 }
 
 Map.propTypes = {

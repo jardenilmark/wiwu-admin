@@ -1,4 +1,4 @@
-import { GET_EMERGENCIES } from '../actions/emergency/emergency.constants'
+import { GET_EMERGENCIES } from '../actions/emergency-request/emergency.constants'
 import { SIGNOUT } from '../actions/admin/admin.constants'
 
 const initialState = {

@@ -30,6 +30,11 @@ import {
   SEARCH_CONTACTS,
   FILTER_CONTACTS
 } from '../actions/contact/contact.constants'
+import {
+  CREATE_ALERT,
+  EDIT_ALERT,
+  GET_ALERTS
+} from '../actions/emergency-alert/alert.constants'
 
 const initialState = {
   current: null,
@@ -38,7 +43,8 @@ const initialState = {
   users: [],
   filteredUsers: null,
   contacts: [],
-  filteredContacts: null
+  filteredContacts: null,
+  alerts: []
 }
 
 export default function reducer(state = initialState, action) {
@@ -161,6 +167,21 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         filteredContacts: action.payload
+      }
+    case CREATE_ALERT:
+      return {
+        ...state,
+        alerts: [action.payload, ...state.alerts]
+      }
+    case GET_ALERTS:
+      return {
+        ...state,
+        alerts: action.payload
+      }
+    case EDIT_ALERT:
+      return {
+        ...state,
+        alerts: action.payload
       }
     default:
       return {

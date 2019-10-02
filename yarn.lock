@@ -4001,6 +4001,11 @@ date-and-time@^0.9.0:
   resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-0.9.0.tgz#1524579e56dc07675c640b41735a7665c0659240"
   integrity sha512-4JybB6PbR+EebpFx/KyR5Ybl+TcdXMLIJkyYsCx3P4M4CWGMuDyFF19yh6TyasMAIF5lrsgIxiSHBXh2FFc7Fg==
 
+date-fns@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.3.0.tgz#017eae725d0c46173b572da025fb5e4e534270fd"
+  integrity sha512-A8o+iXBVqQayl9Z39BHgb7m/zLOfhF7LK82t+n9Fq1adds1vaUn8ByVoADqWLe4OTc6BZYc/FdbdTwufNYqkJw==
+
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
@@ -10890,6 +10895,11 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-progressive-image@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-progressive-image/-/react-progressive-image-0.6.0.tgz#56b1c7153a6e1ebbe2a3bbf8f98c37410fbc67c2"
+  integrity sha512-/yc8N3lHskPQkubm+QH5RIQHA89Sigv7p9UkvbHzKVE2OBb6njhmquk7GW/f2Y//mzk5DesFHN/hV5RWhd6IXA==
 
 react-redux@^7.1.0:
   version "7.1.1"
