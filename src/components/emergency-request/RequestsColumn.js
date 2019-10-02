@@ -81,48 +81,47 @@ const RequestsColumn = props => {
                 )
               }
               extra={
-                title !== 'Spam' && [
-                  <Tooltip key={'move-to-pending'} title='Move card to pending'>
-                    <Button
-                      style={{ marginRight: 4 }}
-                      disabled={request.status === 'PENDING'}
-                      icon={'arrow-left'}
-                      onClick={() =>
-                        dispatch(
-                          updateRequest(request.id, {
-                            status: 'PENDING'
-                          })
-                        )
-                      }
-                    />
-                  </Tooltip>,
-                  <Tooltip
-                    key={'move-to-completed'}
-                    title='Move card to completed'>
-                    <Button
-                      icon={'arrow-right'}
-                      disabled={request.status === 'COMPLETED'}
-                      onClick={() =>
-                        dispatch(
-                          updateRequest(request.id, {
-                            status: 'COMPLETED'
-                          })
-                        )
-                      }
-                    />
-                  </Tooltip>
-                ]
+                _.upperCase(title) === 'PENDING' && (
+                  // MARK COMPLETED
+                  <Popconfirm
+                    disabled={!request.responderId}
+                    title='Are you sure to mark this completed?'
+                    okText='Yes'
+                    cancelText='No'
+                    onConfirm={() =>
+                      dispatch(
+                        updateRequest(request.id, {
+                          status: 'COMPLETED'
+                        })
+                      )
+                    }>
+                    <Tooltip
+                      key={'move-to-completed'}
+                      title='Move card to completed'>
+                      <Button
+                        icon={'arrow-right'}
+                        disabled={!request.responderId}
+                      />
+                    </Tooltip>
+                  </Popconfirm>
+                )
               }
               actions={[
+                // ASSIGN TO ME
                 <Tooltip
                   key={'assign-to-me'}
-                  title={
-                    request.responderId
-                      ? 'Request already assigned'
-                      : 'Assign to me'
-                  }>
+                  title={() => {
+                    if (request.responderId) {
+                      return 'Request already assigned'
+                    } else if (request.isMarkedSpam) {
+                      return 'Cannot assign, already marked as spam!'
+                    } else {
+                      return 'Assign to me'
+                    }
+                  }}>
                   <Popconfirm
-                    title='Are you sure assign this request to yourself?'
+                    disabled={request.responderId || request.isMarkedSpam}
+                    title='Assign this request to yourself?'
                     okText='Yes'
                     cancelText='No'
                     onConfirm={() =>
@@ -133,49 +132,83 @@ const RequestsColumn = props => {
                       )
                     }>
                     <Button
-                      disabled={request.responderId}
+                      disabled={request.responderId || request.isMarkedSpam}
                       size={'small'}
                       type={'link'}
                       style={{
-                        color: request.responderId ? 'grey' : 'green'
+                        color:
+                          request.responderId || request.isMarkedSpam
+                            ? 'grey'
+                            : 'green'
                       }}>
                       <Icon type='user-add' />
                     </Button>
                   </Popconfirm>
                 </Tooltip>,
+
+                // BROADCAST EMERGENCY
                 <Tooltip key={'broadcast'} title='Broadcast emergency'>
-                  <Button size={'small'} type={'link'}>
+                  <Button
+                    size={'small'}
+                    type={'link'}
+                    disabled={
+                      request.status === 'COMPLETED' || request.isMarkedSpam
+                    }>
                     <Icon type='global' />
                   </Button>
                 </Tooltip>,
+
+                // SHOW EMERGENCY LOCATION
                 <Tooltip key={'show-location'} title='Show in map'>
                   <Button size={'small'} type={'link'}>
                     <Icon type='environment' />
                   </Button>
                 </Tooltip>,
+
+                // MARK AS SPAM
                 <Tooltip
                   key={'mark-spam'}
                   title={
-                    request.isMarkedSpam
-                      ? 'Already marked as spam'
-                      : 'Mark as spam'
+                    request.isMarkedSpam ? 'Remove from spam' : 'Mark as spam'
                   }>
-                  <Button
-                    size={'small'}
-                    type={'link'}
-                    disabled={request.isMarkedSpam}
-                    style={{
-                      color: request.isMarkedSpam ? 'grey' : 'red'
-                    }}
-                    onClick={() =>
+                  <Popconfirm
+                    disabled={
+                      _.upperCase(title) === 'COMPLETED' &&
+                      request.status === 'COMPLETED'
+                    }
+                    title={`Are you sure to ${
+                      request.isMarkedSpam
+                        ? 'remove this from spam'
+                        : 'mark this as spam'
+                    }?`}
+                    okText={'Yes'}
+                    cancelText='No'
+                    onConfirm={() =>
                       dispatch(
                         updateRequest(request.id, {
-                          isMarkedSpam: true
+                          isMarkedSpam: !request.isMarkedSpam
                         })
                       )
                     }>
-                    <Icon type='stop' />
-                  </Button>
+                    <Button
+                      size={'small'}
+                      type={'link'}
+                      disabled={
+                        _.upperCase(title) === 'COMPLETED' &&
+                        request.status === 'COMPLETED'
+                      }
+                      style={{
+                        color:
+                          _.upperCase(title) === 'COMPLETED' &&
+                          request.status === 'COMPLETED'
+                            ? 'grey'
+                            : 'red'
+                      }}>
+                      <Icon
+                        type={request.isMarkedSpam ? 'minus-circle' : 'warning'}
+                      />
+                    </Button>
+                  </Popconfirm>
                 </Tooltip>
               ]}>
               <b>{request.role}</b>
