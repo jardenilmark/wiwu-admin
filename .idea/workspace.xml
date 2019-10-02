@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/screens/EmergencyRequestsV2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/AdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPage.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +33,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -57,7 +60,7 @@
       <workItem from="1568390575733" duration="137000" />
       <workItem from="1568823288188" duration="975000" />
       <workItem from="1568824281373" duration="8439000" />
-      <workItem from="1569851473676" duration="15328000" />
+      <workItem from="1569851473676" duration="28691000" />
     </task>
     <servers />
   </component>
