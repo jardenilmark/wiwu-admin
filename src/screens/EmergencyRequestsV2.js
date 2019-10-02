@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Layout,
   Input,
@@ -10,7 +10,8 @@ import {
   Spin,
   Button,
   Tooltip,
-  Popconfirm
+  Popconfirm,
+  Modal
 } from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
@@ -20,9 +21,18 @@ import moment from 'moment'
 import _ from 'lodash'
 import { updateRequest } from '../actions/emergency-request/updateEmergency.action'
 import { firestore } from '../firebase'
+import styled from 'styled-components'
+
+const StyledImage = styled.img`
+  &:hover {
+    cursor: pointer;
+  }
+`
 
 const EmergencyRequestsV2 = () => {
   const dispatch = useDispatch()
+  const [isMediaModalOpen, setMediaModalOpen] = useState(false)
+  const [mediaUrl, setMediaUrl] = useState(null)
   const { emergency, admin } = useSelector(state => state)
   const { list: requests } = emergency
   const {
@@ -88,17 +98,18 @@ const EmergencyRequestsV2 = () => {
                                   spinning={true}
                                 />
                               ) : (
-                                <img
-                                  onClick={() =>
-                                    alert(
-                                      'Imagine a modal with the enlarged image'
-                                    )
-                                  }
-                                  height={100}
-                                  src={src}
-                                  alt={'media'}
-                                  style={{ objectFit: 'cover' }}
-                                />
+                                <Tooltip title={'Enlarge media'}>
+                                  <StyledImage
+                                    onClick={() => {
+                                      setMediaModalOpen(true)
+                                      setMediaUrl(src)
+                                    }}
+                                    height={100}
+                                    src={src}
+                                    alt={'media'}
+                                    style={{ objectFit: 'cover' }}
+                                  />
+                                </Tooltip>
                               )
                             }
                           </ProgressiveImage>
@@ -242,6 +253,22 @@ const EmergencyRequestsV2 = () => {
           </Row>
         </div>
       </div>
+
+      {/* modal for enlarged image */}
+      <Modal
+        title={'Enlarged Media'}
+        width={640}
+        visible={isMediaModalOpen}
+        onOk={() => {
+          setMediaModalOpen(false)
+          setMediaUrl(null)
+        }}
+        onCancel={() => {
+          setMediaModalOpen(false)
+          setMediaUrl(null)
+        }}>
+        <img width={'100%'} src={mediaUrl} alt={'media-url'} />
+      </Modal>
     </Layout.Content>
   )
 }

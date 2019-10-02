@@ -34,6 +34,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-thunk": "^2.3.0",
+    "styled-components": "^4.4.0",
     "twilio": "^3.33.3",
     "twilio-video": "^2.0.0-beta12",
     "uifx": "^2.0.3",
