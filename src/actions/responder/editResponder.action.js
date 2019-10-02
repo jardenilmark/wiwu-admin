@@ -5,7 +5,13 @@ import { createAction } from 'redux-actions'
 import { firestore as db } from '../../firebase'
 import { EDIT_RESPONDER } from './responder.constants'
 
-export const editResponder = (values, id) => {
+export const editResponder = ({ firstName, lastName, ...rest }, id) => {
+  const values = {
+    firstName: _.capitalize(firstName),
+    lastName: _.capitalize(lastName),
+    ...rest
+  }
+
   return async (dispatch, getState) => {
     try {
       await db

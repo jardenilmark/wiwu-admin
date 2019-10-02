@@ -1,11 +1,18 @@
 import { message } from 'antd'
 import { createAction } from 'redux-actions'
+import _ from 'lodash'
 
 import { firestore as db, secondaryAuth } from '../../firebase'
 import { statuses, roles } from '../../constants/User'
 import { CREATE_RESPONDER } from './responder.constants'
 
-export const createResponder = ({ emailAddress: email, password, ...rest }) => {
+export const createResponder = ({
+  emailAddress: email,
+  password,
+  firstName,
+  lastName,
+  ...rest
+}) => {
   return async dispatch => {
     try {
       await secondaryAuth.createUserWithEmailAndPassword(email, password)
@@ -13,6 +20,8 @@ export const createResponder = ({ emailAddress: email, password, ...rest }) => {
 
       const payload = {
         ...rest,
+        firstName: _.capitalize(firstName),
+        lastName: _.capitalize(lastName),
         role: roles.RESPONDER,
         status: statuses.ACTIVE,
         emergencies: [],
