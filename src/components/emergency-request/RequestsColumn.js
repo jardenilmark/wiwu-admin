@@ -6,6 +6,7 @@ import {
   Col,
   Icon,
   Input,
+  message,
   Popconfirm,
   Spin,
   Tag,
@@ -19,6 +20,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import _ from 'lodash'
+import { sendNotification } from '../../helpers/emergency-request/sendNotification'
 
 const StyledImage = styled.img`
   &:hover {
@@ -191,12 +193,37 @@ const RequestsColumn = props => {
 
                 // BROADCAST EMERGENCY
                 <Tooltip key={'broadcast'} title='Broadcast emergency'>
-                  <Button
-                    size={'small'}
-                    type={'link'}
-                    disabled={isBroadcastEmergencyDisabled}>
-                    <Icon type='global' />
-                  </Button>
+                  <Popconfirm
+                    disabled={isBroadcastEmergencyDisabled}
+                    title={'Are you sure to broadcast this emergency?'}
+                    okText={'Yes'}
+                    cancelText='No'
+                    onConfirm={() => {
+                      sendNotification({
+                        app_id: '99a5a234-ed7d-48a6-9738-4cf5a7a4fbec',
+                        contents: {
+                          en: 'An emergency is near your area!'
+                        },
+                        android_group: ['All'],
+                        filters: [
+                          {
+                            field: 'location',
+                            radius: '1000', // within 1000 meters
+                            lat: request.location.latitude,
+                            long: request.location.longitude
+                          }
+                        ]
+                      })
+
+                      message.success('Emergency was broadcast!', 2)
+                    }}>
+                    <Button
+                      size={'small'}
+                      type={'link'}
+                      disabled={isBroadcastEmergencyDisabled}>
+                      <Icon type='global' />
+                    </Button>
+                  </Popconfirm>
                 </Tooltip>,
 
                 // SHOW EMERGENCY LOCATION
