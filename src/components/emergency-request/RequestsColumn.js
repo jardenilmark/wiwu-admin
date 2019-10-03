@@ -45,6 +45,60 @@ const RequestsColumn = props => {
             tagColor = 'blue'
           }
 
+          /**
+           * MARK COMPLETED
+           * conditions
+           * - cannot move card to completed if no assigned responder
+           * - cannot move card to completed if card is not assigned to you
+           * - can only move card if card is assigned and if card is assigned to u
+           */
+          const isMarkCompletedDisabled =
+            !request.responderId ||
+            (request.responderId && request.responderId.id !== user.uid)
+          const getMarkCompletedDisabledTooltip = () => {
+            if (request.responderId && request.responderId.id !== user.uid) {
+              return 'Unable to move. This card is not assigned to you!'
+            } else if (!request.responderId) {
+              return 'Unable to move unassigned cards'
+            } else {
+              return 'Move card to completed'
+            }
+          }
+
+          /**
+           * ASSIGN TO ME
+           * conditions:
+           * - cannot assign to me if card is already assigned
+           * - cannot assign to me if card is marked as spam
+           */
+          const isAssignToMeDisabled =
+            request.responderId || request.isMarkedSpam
+          const getAssignToMeDisabledTooltip = () => {
+            if (request.responderId) {
+              return 'Request already assigned'
+            } else if (request.isMarkedSpam) {
+              return 'Cannot assign, already marked as spam!'
+            } else {
+              return 'Assign to me'
+            }
+          }
+
+          /**
+           * BROADCAST EMERGENCY
+           * conditions:
+           * - cannot broadcast emergency if completed
+           * - cannot broadcast emergency if marked as spam
+           */
+          const isBroadcastEmergencyDisabled =
+            request.status === 'COMPLETED' || request.isMarkedSpam
+
+          /**
+           * MARK AS SPAM
+           * - cannot mark as spam if card is completed
+           */
+          const isMarkAsSpamDisabled =
+            _.upperCase(title) === 'COMPLETED' && request.status === 'COMPLETED'
+
           return (
             <Card
               key={request.id}
@@ -84,7 +138,7 @@ const RequestsColumn = props => {
                 _.upperCase(title) === 'PENDING' && (
                   // MARK COMPLETED
                   <Popconfirm
-                    disabled={!request.responderId}
+                    disabled={isMarkCompletedDisabled}
                     title='Are you sure to mark this completed?'
                     okText='Yes'
                     cancelText='No'
@@ -97,25 +151,10 @@ const RequestsColumn = props => {
                     }>
                     <Tooltip
                       key={'move-to-completed'}
-                      title={() => {
-                        if (
-                          request.responderId &&
-                          request.responderId.id !== user.uid
-                        ) {
-                          return 'Unable to move. This card is not assigned to you!'
-                        } else if (!request.responderId) {
-                          return 'Unable to move unassigned cards'
-                        } else {
-                          return 'Move card to completed'
-                        }
-                      }}>
+                      title={getMarkCompletedDisabledTooltip}>
                       <Button
                         icon={'arrow-right'}
-                        disabled={
-                          !request.responderId ||
-                          (request.responderId &&
-                            request.responderId.id !== user.uid)
-                        }
+                        disabled={isMarkCompletedDisabled}
                       />
                     </Tooltip>
                   </Popconfirm>
@@ -125,17 +164,9 @@ const RequestsColumn = props => {
                 // ASSIGN TO ME
                 <Tooltip
                   key={'assign-to-me'}
-                  title={() => {
-                    if (request.responderId) {
-                      return 'Request already assigned'
-                    } else if (request.isMarkedSpam) {
-                      return 'Cannot assign, already marked as spam!'
-                    } else {
-                      return 'Assign to me'
-                    }
-                  }}>
+                  title={getAssignToMeDisabledTooltip}>
                   <Popconfirm
-                    disabled={request.responderId || request.isMarkedSpam}
+                    disabled={isAssignToMeDisabled}
                     title='Assign this request to yourself?'
                     okText='Yes'
                     cancelText='No'
@@ -147,14 +178,11 @@ const RequestsColumn = props => {
                       )
                     }>
                     <Button
-                      disabled={request.responderId || request.isMarkedSpam}
+                      disabled={isAssignToMeDisabled}
                       size={'small'}
                       type={'link'}
                       style={{
-                        color:
-                          request.responderId || request.isMarkedSpam
-                            ? 'grey'
-                            : 'green'
+                        color: isAssignToMeDisabled ? 'grey' : 'green'
                       }}>
                       <Icon type='user-add' />
                     </Button>
@@ -166,9 +194,7 @@ const RequestsColumn = props => {
                   <Button
                     size={'small'}
                     type={'link'}
-                    disabled={
-                      request.status === 'COMPLETED' || request.isMarkedSpam
-                    }>
+                    disabled={isBroadcastEmergencyDisabled}>
                     <Icon type='global' />
                   </Button>
                 </Tooltip>,
@@ -187,10 +213,7 @@ const RequestsColumn = props => {
                     request.isMarkedSpam ? 'Remove from spam' : 'Mark as spam'
                   }>
                   <Popconfirm
-                    disabled={
-                      _.upperCase(title) === 'COMPLETED' &&
-                      request.status === 'COMPLETED'
-                    }
+                    disabled={isMarkAsSpamDisabled}
                     title={`Are you sure to ${
                       request.isMarkedSpam
                         ? 'remove this from spam'
@@ -208,16 +231,9 @@ const RequestsColumn = props => {
                     <Button
                       size={'small'}
                       type={'link'}
-                      disabled={
-                        _.upperCase(title) === 'COMPLETED' &&
-                        request.status === 'COMPLETED'
-                      }
+                      disabled={isMarkAsSpamDisabled}
                       style={{
-                        color:
-                          _.upperCase(title) === 'COMPLETED' &&
-                          request.status === 'COMPLETED'
-                            ? 'grey'
-                            : 'red'
+                        color: isMarkAsSpamDisabled ? 'grey' : 'red'
                       }}>
                       <Icon
                         type={request.isMarkedSpam ? 'minus-circle' : 'warning'}
