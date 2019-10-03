@@ -1,43 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import {
-  Layout,
-  Drawer,
-  Button,
-  Input,
-  Form,
-  List,
-  Tooltip,
-  Icon,
-  Popconfirm,
-  Avatar,
-  Tag,
-  Radio
-} from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { Layout, Drawer } from 'antd'
 import { Helmet } from 'react-helmet'
-import { Formik } from 'formik'
-import { CreateAlertSchema } from '../schema/alert.schema'
-import GenericTextArea from '../components/GenericTextArea'
-import { createAlert } from '../actions/emergency-alert/createEmergencyAlert.action'
-import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlerts.action'
-import moment from 'moment'
-import { updateEmergencyAlert } from '../actions/emergency-alert/updateEmergencyAlert.action'
-import { getTagColor } from '../helpers/common/getTagColor'
-import { deleteEmergencyAlert } from '../actions/emergency-alert/deleteEmergencyAlert'
+
+import EmergencyAlertForm from '../components/emergency-alert/EmergencyAlertForm'
+import EmergencyAlertListHeader from '../components/emergency-alert/EmergencyAlertListHeader'
+import EmergencyAlertList from '../components/emergency-alert/EmergencyAlertList'
 
 const EmergencyAlerts = () => {
-  const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
   const [selectedAlert, setSelectedAlert] = useState(null)
   const [filter, setFilter] = useState('all')
-  const { alerts } = useSelector(({ admin }) => admin)
-
-  useEffect(() => {
-    dispatch(getEmergencyAlerts())
-  }, [])
-
-  const filteredAlerts =
-    filter === 'all' ? alerts : alerts.filter(alert => alert.status === filter)
 
   return (
     <Layout.Content style={styles.content}>
@@ -61,201 +33,21 @@ const EmergencyAlerts = () => {
           setDrawerVisibility(false)
         }}
         visible={drawerVisibility}>
-        <div style={styles.formWrapper}>
-          <Formik
-            initialValues={selectedAlert}
-            validationSchema={CreateAlertSchema}
-            onSubmit={async (values, { setSubmitting }) => {
-              if (selectedAlert) {
-                await dispatch(updateEmergencyAlert(selectedAlert.id, values))
-              } else {
-                await dispatch(createAlert(values))
-              }
-
-              setSubmitting(false)
-              setDrawerVisibility(false)
-            }}>
-            {({
-              values,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              errors,
-              touched,
-              dirty
-            }) => {
-              return (
-                <Form
-                  onSubmit={handleSubmit}
-                  layout='vertical'
-                  autoComplete='off'
-                  hideRequiredMark
-                  style={styles.form}>
-                  <GenericTextArea
-                    label='Alert Message'
-                    name='message'
-                    rows={4}
-                    values={values}
-                    errors={errors}
-                    touched={touched}
-                    isSubmitting={isSubmitting}
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                  />
-                  <Form.Item>
-                    <Button
-                      type='primary'
-                      htmlType='submit'
-                      disabled={!dirty}
-                      loading={isSubmitting}>
-                      {selectedAlert ? 'Update Alert' : 'Create Alert'}
-                    </Button>
-                  </Form.Item>
-                </Form>
-              )
-            }}
-          </Formik>
-        </div>
+        <EmergencyAlertForm
+          selectedAlert={selectedAlert}
+          setDrawerVisibility={setDrawerVisibility}
+        />
       </Drawer>
-
-      {/* header */}
-      <div style={styles.headerWrapper}>
-        <Input.Search
-          placeholder='Search emergency alerts...'
-          style={{ width: 240 }}
-        />
-        <Radio.Group
-          value={filter}
-          buttonStyle='solid'
-          onChange={e => {
-            const value = e.target.value
-            setFilter(value)
-          }}>
-          <Radio.Button value='all'>
-            <strong>All</strong>
-          </Radio.Button>
-          <Radio.Button value='active'>
-            <strong>Active</strong>
-          </Radio.Button>
-          <Radio.Button value='archived'>
-            <strong>Archived</strong>
-          </Radio.Button>
-        </Radio.Group>
-        <Button
-          icon='alert'
-          type='dashed'
-          onClick={() => setDrawerVisibility(true)}>
-          Add Emergency Alert
-        </Button>
-      </div>
-
-      {/* list of alerts */}
-      <div style={styles.listWrapper}>
-        <List
-          style={styles.list}
-          itemLayout='horizontal'
-          pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-          dataSource={filteredAlerts}
-          renderItem={alert => {
-            const color = getTagColor(alert.status)
-            return (
-              <List.Item
-                actions={[
-                  // EDIT ALERT
-                  <Tooltip
-                    key={'edit-alert'}
-                    placement='left'
-                    title='Edit Alert'>
-                    <Icon
-                      type='edit'
-                      style={{ fontSize: 18 }}
-                      onClick={() => {
-                        setSelectedAlert(alert)
-                        setDrawerVisibility(true)
-                      }}
-                    />
-                  </Tooltip>,
-
-                  // ARCHIVE ALERT
-                  <Tooltip
-                    key={'delete-alert'}
-                    placement='left'
-                    title={`${
-                      alert.status === 'archived' ? 'Una' : 'A'
-                    }rchive Alert`}>
-                    <Popconfirm
-                      placement='top'
-                      title={`Are you sure you want to ${
-                        alert.status === 'archived' ? 'un' : ''
-                      }archive this alert?`}
-                      okText='Yes'
-                      onConfirm={() =>
-                        dispatch(
-                          updateEmergencyAlert(alert.id, {
-                            status:
-                              alert.status === 'archived'
-                                ? 'active'
-                                : 'archived'
-                          })
-                        )
-                      }
-                      cancelText='No'>
-                      <Icon
-                        type={alert.status === 'archived' ? 'undo' : 'history'}
-                        style={{
-                          fontSize: 18,
-                          color:
-                            alert.status === 'archived' ? 'green' : 'orange'
-                        }}
-                      />
-                    </Popconfirm>
-                  </Tooltip>,
-
-                  // PERMANENTLY DELETE
-                  <Tooltip
-                    key={'permanently-delete-alert'}
-                    placement='left'
-                    title={`Permanently delete`}>
-                    <Popconfirm
-                      placement='top'
-                      title={`Are you sure you want to permanently delete this alert?`}
-                      okText='Yes'
-                      cancelText='No'
-                      onConfirm={() =>
-                        dispatch(deleteEmergencyAlert(alert.id))
-                      }>
-                      <Icon
-                        type={'delete'}
-                        style={{ fontSize: 18, color: 'red' }}
-                      />
-                    </Popconfirm>
-                  </Tooltip>
-                ]}>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar
-                      src={require(`../assets/images/wiwu-logo.png`)}
-                      size={45}
-                    />
-                  }
-                  title={<b>{alert.message}</b>}
-                  description={
-                    <>
-                      <Tag color={color}>{alert.status.toUpperCase()}</Tag>
-                      <span>
-                        {moment(alert.date.toDate()).format(
-                          'MMM DD, YYYY - hh:mmA'
-                        )}
-                      </span>
-                    </>
-                  }
-                />
-              </List.Item>
-            )
-          }}
-        />
-      </div>
+      <EmergencyAlertListHeader
+        filter={filter}
+        setFilter={setFilter}
+        setDrawerVisibility={setDrawerVisibility}
+      />
+      <EmergencyAlertList
+        filter={filter}
+        setSelectedAlert={setSelectedAlert}
+        setDrawerVisibility={setDrawerVisibility}
+      />
     </Layout.Content>
   )
 }
@@ -264,30 +56,6 @@ const styles = {
   content: {
     height: '100%',
     overflowY: 'auto'
-  },
-  headerWrapper: {
-    width: '70%',
-    marginLeft: '15%',
-    marginTop: 40,
-    marginBottom: 30,
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  formWrapper: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  form: {
-    textAlign: 'left',
-    width: '500px'
-  },
-  listWrapper: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  list: {
-    width: '70%',
-    textAlign: 'left'
   }
 }
 
