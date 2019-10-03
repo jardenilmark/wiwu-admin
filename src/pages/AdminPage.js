@@ -91,7 +91,10 @@ const AdminPage = props => {
                   let { responderId } = emergencyData
                   if (responderId) {
                     const responderRef = await responderId.get()
-                    responderId = responderRef.data()
+                    responderId = {
+                      ...responderRef.data(),
+                      id: responderRef.id
+                    }
                   }
 
                   return {
