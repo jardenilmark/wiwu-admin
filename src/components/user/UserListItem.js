@@ -1,20 +1,22 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { List, Avatar, Badge, Tag } from 'antd'
+import { List, Avatar, Badge, Tag, Icon, Popconfirm, Tooltip } from 'antd'
 import ProgressiveImage from 'react-progressive-image'
 
 import UserProfile from './UserProfile'
 import Spinner from '../Spinner'
 
-import { getUserListItemActions } from '../../helpers/user/getUserListItemActions'
 import { getTagColor } from '../../helpers/common/getTagColor'
 import avatarPlaceholder from '../../assets/images/user-avatar.png'
+
+import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
+import { statuses } from '../../constants/User'
 
 const UserListItem = ({ user }) => {
   const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
-  const actions = getUserListItemActions(user, dispatch, setDrawerVisibility)
+  const { status } = user
   const color = getTagColor(user.status)
   return (
     <Fragment>
@@ -23,7 +25,61 @@ const UserListItem = ({ user }) => {
         drawerVisibility={drawerVisibility}
         setDrawerVisibility={setDrawerVisibility}
       />
-      <List.Item actions={actions}>
+      <List.Item
+        actions={
+          status === statuses.ACTIVE
+            ? [
+                <Icon
+                  type='info-circle'
+                  style={{ fontSize: 18, color: 'green' }}
+                  onClick={() => setDrawerVisibility(true)}
+                />,
+                <Tooltip placement='left' title='Archive User'>
+                  <Popconfirm
+                    placement='top'
+                    title='Are you sure you want to archive this user?'
+                    onConfirm={() =>
+                      dispatch(changeUserStatus(user.id, statuses.ARCHIVED))
+                    }
+                    okText='Yes'
+                    cancelText='No'>
+                    <Icon
+                      type='history'
+                      style={{ fontSize: 18, color: 'orange' }}
+                    />
+                  </Popconfirm>
+                </Tooltip>,
+                <Tooltip placement='left' title='Block User'>
+                  <Popconfirm
+                    placement='top'
+                    title='Are you sure you want to block this user?'
+                    onConfirm={() =>
+                      dispatch(changeUserStatus(user.id, statuses.BLOCKED))
+                    }
+                    okText='Yes'
+                    cancelText='No'>
+                    <Icon type='stop' style={{ fontSize: 18, color: 'red' }} />
+                  </Popconfirm>
+                </Tooltip>
+              ]
+            : [
+                <Tooltip placement='left' title='Activate User'>
+                  <Popconfirm
+                    placement='top'
+                    title='Are you sure you want to activate this user?'
+                    onConfirm={() =>
+                      dispatch(changeUserStatus(user.id, statuses.ACTIVE))
+                    }
+                    okText='Yes'
+                    cancelText='No'>
+                    <Icon
+                      type='undo'
+                      style={{ fontSize: 18, color: 'green' }}
+                    />
+                  </Popconfirm>
+                </Tooltip>
+              ]
+        }>
         <List.Item.Meta
           avatar={
             <Badge

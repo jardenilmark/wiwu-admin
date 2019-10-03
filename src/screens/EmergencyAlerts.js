@@ -202,9 +202,7 @@ const EmergencyAlerts = () => {
                       }
                       cancelText='No'>
                       <Icon
-                        type={
-                          alert.status === 'archived' ? 'undo' : 'container'
-                        }
+                        type={alert.status === 'archived' ? 'undo' : 'history'}
                         style={{
                           fontSize: 18,
                           color:

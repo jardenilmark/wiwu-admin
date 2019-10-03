@@ -109,11 +109,7 @@ const RequestsColumn = props => {
               title={
                 <div>
                   <Tag color={tagColor}>{_.upperCase(request.department)}</Tag>
-                  {request.responderId && (
-                    <Tag Verificationg color={'orange'}>
-                      ASSIGNED
-                    </Tag>
-                  )}
+                  {request.responderId && <Tag color={'orange'}>ASSIGNED</Tag>}
                 </div>
               }
               cover={
