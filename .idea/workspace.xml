@@ -4,6 +4,7 @@
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/emergency-request/RequestsColumn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-request/RequestsColumn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequestsV2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyRequestsV2.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +63,10 @@
       <workItem from="1568824281373" duration="8439000" />
       <workItem from="1569851473676" duration="32296000" />
       <workItem from="1569995587850" duration="13835000" />
-      <workItem from="1570022797079" duration="1879000" />
+      <workItem from="1570022797079" duration="2263000" />
+      <workItem from="1570029611943" duration="517000" />
+      <workItem from="1570081101310" duration="525000" />
+      <workItem from="1570084043081" duration="1305000" />
     </task>
     <servers />
   </component>

@@ -97,14 +97,25 @@ const RequestsColumn = props => {
                     }>
                     <Tooltip
                       key={'move-to-completed'}
-                      title={
-                        request.responderId
-                          ? 'Move card to completed'
-                          : 'Assign responder to move request to completed'
-                      }>
+                      title={() => {
+                        if (
+                          request.responderId &&
+                          request.responderId.id !== user.uid
+                        ) {
+                          return 'Unable to move. This card is not assigned to you!'
+                        } else if (!request.responderId) {
+                          return 'Unable to move unassigned cards'
+                        } else {
+                          return 'Move card to completed'
+                        }
+                      }}>
                       <Button
                         icon={'arrow-right'}
-                        disabled={!request.responderId}
+                        disabled={
+                          !request.responderId ||
+                          (request.responderId &&
+                            request.responderId.id !== user.uid)
+                        }
                       />
                     </Tooltip>
                   </Popconfirm>
