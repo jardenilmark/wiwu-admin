@@ -186,8 +186,9 @@ const EmergencyAlerts = () => {
                     }rchive Alert`}>
                     <Popconfirm
                       placement='top'
-                      title={`Are you sure you want to ${alert.status ===
-                        'archived' && 'un'}archive this alert?`}
+                      title={`Are you sure you want to ${
+                        alert.status === 'archived' ? 'un' : ''
+                      }archive this alert?`}
                       okText='Yes'
                       onConfirm={() =>
                         dispatch(
