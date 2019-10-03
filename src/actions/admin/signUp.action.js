@@ -56,7 +56,7 @@ export const signUp = ({
         .set(firestorePayload)
 
       await db
-        .collection('adminKeys')
+        .collection('admin-keys')
         .doc(adminKey)
         .update({ user: db.doc(`users/${user.uid}`) })
 

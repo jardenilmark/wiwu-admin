@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Layout,
   Input,
-  Radio,
   Row,
   Col,
   Card,
@@ -10,18 +9,25 @@ import {
   Icon,
   Spin,
   Button,
-  Tooltip
+  Tooltip,
+  Popconfirm
 } from 'antd'
 import { Helmet } from 'react-helmet'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import ProgressiveImage from 'react-progressive-image'
 import Spacer from '../components/Spacer'
 import moment from 'moment'
 import _ from 'lodash'
+import { updateRequest } from '../actions/emergency-request/updateEmergency.action'
+import { firestore } from '../firebase'
 
 const EmergencyRequestsV2 = () => {
-  const [filter, setFilter] = useState('all')
-  const { list: requests } = useSelector(({ emergency }) => emergency)
+  const dispatch = useDispatch()
+  const { emergency, admin } = useSelector(state => state)
+  const { list: requests } = emergency
+  const {
+    current: { uid }
+  } = admin
 
   return (
     <Layout.Content style={styles.content}>
@@ -35,26 +41,6 @@ const EmergencyRequestsV2 = () => {
           placeholder='Search emergency requests...'
           style={{ width: 240 }}
         />
-        <Radio.Group
-          value={filter}
-          buttonStyle='solid'
-          onChange={e => {
-            const value = e.target.value
-            setFilter(value)
-          }}>
-          <Radio.Button value='all'>
-            <strong>All</strong>
-          </Radio.Button>
-          <Radio.Button value='police'>
-            <strong>Police</strong>
-          </Radio.Button>
-          <Radio.Button value='fire'>
-            <strong>Fire</strong>
-          </Radio.Button>
-          <Radio.Button value='medical'>
-            <strong>Medical</strong>
-          </Radio.Button>
-        </Radio.Group>
       </div>
 
       {/* list of alerts */}
@@ -85,7 +71,9 @@ const EmergencyRequestsV2 = () => {
                           <Tag color={tagColor}>
                             {_.upperCase(request.department)}
                           </Tag>
-                          <Tag color={'orange'}>ASSIGNED</Tag>
+                          {request.responderId && (
+                            <Tag color={'orange'}>ASSIGNED</Tag>
+                          )}
                         </div>
                       }
                       cover={
@@ -117,19 +105,73 @@ const EmergencyRequestsV2 = () => {
                         )
                       }
                       extra={
-                        <Tooltip title='Move card forward'>
+                        <Tooltip title='Move card to completed'>
                           <Button icon={'arrow-right'} />
                         </Tooltip>
                       }
                       actions={[
+                        <Tooltip
+                          key={'assign-to-me'}
+                          title={
+                            request.responderId
+                              ? 'Request already assigned'
+                              : 'Assign to me'
+                          }>
+                          <Popconfirm
+                            title='Are you sure assign this request to yourself?'
+                            okText='Yes'
+                            cancelText='No'
+                            onConfirm={() =>
+                              dispatch(
+                                updateRequest(request.id, {
+                                  responderId: firestore.doc(`users/${uid}`)
+                                })
+                              )
+                            }>
+                            <Button
+                              disabled={request.responderId}
+                              size={'small'}
+                              type={'link'}
+                              style={{
+                                color: request.responderId ? 'grey' : 'green'
+                              }}>
+                              <Icon type='user-add' />
+                            </Button>
+                          </Popconfirm>
+                        </Tooltip>,
                         <Tooltip key={'broadcast'} title='Broadcast emergency'>
-                          <Icon type='global' />
+                          <Button size={'small'} type={'link'}>
+                            <Icon type='global' />
+                          </Button>
                         </Tooltip>,
                         <Tooltip key={'show-location'} title='Show in map'>
-                          <Icon type='environment' />
+                          <Button size={'small'} type={'link'}>
+                            <Icon type='environment' />
+                          </Button>
                         </Tooltip>,
-                        <Tooltip key={'mark-spam'} title='Mark as spam'>
-                          <Icon type='stop' style={{ color: 'red' }} />
+                        <Tooltip
+                          key={'mark-spam'}
+                          title={
+                            request.isMarkedSpam
+                              ? 'Already marked as spam'
+                              : 'Mark as spam'
+                          }>
+                          <Button
+                            size={'small'}
+                            type={'link'}
+                            disabled={request.isMarkedSpam}
+                            style={{
+                              color: request.isMarkedSpam ? 'grey' : 'red'
+                            }}
+                            onClick={() =>
+                              dispatch(
+                                updateRequest(request.id, {
+                                  isMarkedSpam: true
+                                })
+                              )
+                            }>
+                            <Icon type='stop' />
+                          </Button>
                         </Tooltip>
                       ]}>
                       <b>{request.role}</b>
@@ -140,39 +182,48 @@ const EmergencyRequestsV2 = () => {
                       </div>
                       <Spacer height={8} />
                       <table>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Responder</td>
-                          <td>
-                            Ronna Mae Firmo (<a>change</a>)
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Requester</td>
-                          <td>{request.name}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Phone</td>
-                          <td>{request.phoneNumber}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ paddingRight: 8 }}>Address</td>
-                          <td>
-                            {request.address || (
-                              <Tooltip
-                                placement='right'
-                                title='You may need to confirm request address by calling back the requester'>
-                                N / A
-                              </Tooltip>
-                            )}
-                          </td>
-                        </tr>
+                        <tbody>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Requester</td>
+                            <td>{request.name}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Phone</td>
+                            <td>{request.phoneNumber}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Address</td>
+                            <td>
+                              {request.address || (
+                                <Tooltip
+                                  placement='right'
+                                  title='You may need to confirm request address by calling back the requester'>
+                                  N / A
+                                </Tooltip>
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ paddingRight: 8 }}>Responder</td>
+                            <td>
+                              {request.responderId
+                                ? `${request.responderId.firstName} ${request.responderId.lastName}`
+                                : 'Unassigned'}
+                            </td>
+                          </tr>
+                        </tbody>
                       </table>
-                      <Spacer height={8} />
-                      <Input.TextArea
-                        value={'I am requesting blah blah'}
-                        autosize={true}
-                        disabled={true}
-                      />
+                      {request.description && (
+                        <>
+                          <Spacer height={8} />
+                          <Input.TextArea
+                            style={{ color: 'black' }}
+                            value={request.description}
+                            autosize={true}
+                            disabled={true}
+                          />
+                        </>
+                      )}
                     </Card>
                   )
                 })}
