@@ -23,7 +23,7 @@ import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlert
 import moment from 'moment'
 import { updateEmergencyAlert } from '../actions/emergency-alert/updateEmergencyAlert.action'
 import { getTagColor } from '../helpers/common/getTagColor'
-import { filterResponders } from '../actions/responder/filterResponders.action'
+import { deleteEmergencyAlert } from '../actions/emergency-alert/deleteEmergencyAlert'
 
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()
@@ -162,6 +162,7 @@ const EmergencyAlerts = () => {
             return (
               <List.Item
                 actions={[
+                  // EDIT ALERT
                   <Tooltip
                     key={'edit-alert'}
                     placement='left'
@@ -175,21 +176,60 @@ const EmergencyAlerts = () => {
                       }}
                     />
                   </Tooltip>,
+
+                  // ARCHIVE ALERT
                   <Tooltip
                     key={'delete-alert'}
                     placement='left'
-                    title='Archive Alert'>
+                    title={`${
+                      alert.status === 'archived' ? 'Una' : 'A'
+                    }rchive Alert`}>
                     <Popconfirm
                       placement='top'
-                      title='Are you sure you want to archive this alert?'
+                      title={`Are you sure you want to ${alert.status ===
+                        'archived' && 'un'}archive this alert?`}
                       okText='Yes'
                       onConfirm={() =>
                         dispatch(
-                          updateEmergencyAlert(alert.id, { status: 'archived' })
+                          updateEmergencyAlert(alert.id, {
+                            status:
+                              alert.status === 'archived'
+                                ? 'active'
+                                : 'archived'
+                          })
                         )
                       }
                       cancelText='No'>
-                      <Icon type='container' style={{ fontSize: 18 }} />
+                      <Icon
+                        type={
+                          alert.status === 'archived' ? 'undo' : 'container'
+                        }
+                        style={{
+                          fontSize: 18,
+                          color:
+                            alert.status === 'archived' ? 'green' : 'orange'
+                        }}
+                      />
+                    </Popconfirm>
+                  </Tooltip>,
+
+                  // PERMANENTLY DELETE
+                  <Tooltip
+                    key={'permanently-delete-alert'}
+                    placement='left'
+                    title={`Permanently delete`}>
+                    <Popconfirm
+                      placement='top'
+                      title={`Are you sure you want to permanently delete this alert?`}
+                      okText='Yes'
+                      cancelText='No'
+                      onConfirm={() =>
+                        dispatch(deleteEmergencyAlert(alert.id))
+                      }>
+                      <Icon
+                        type={'delete'}
+                        style={{ fontSize: 18, color: 'red' }}
+                      />
                     </Popconfirm>
                   </Tooltip>
                 ]}>
