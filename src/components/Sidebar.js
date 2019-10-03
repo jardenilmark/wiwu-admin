@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { signOut } from '../actions/admin/signOut.action'
@@ -57,6 +57,7 @@ const Sidebar = ({ history, match, activeKey }) => {
             key={key}
             onClick={() => {
               history.push(`${match.url}/${key}`)
+              message.destroy()
               setSelectedKeys([key])
             }}>
             <Icon type={icon} />
