@@ -13,31 +13,45 @@ import {
   Tag,
   Radio
 } from 'antd'
+import { CreateAlertSchema } from '../schema/alert.schema'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Formik } from 'formik'
-import { CreateAlertSchema } from '../schema/alert.schema'
-import GenericTextArea from '../components/GenericTextArea'
 import { createAlert } from '../actions/emergency-alert/createEmergencyAlert.action'
 import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlerts.action'
-import moment from 'moment'
 import { updateEmergencyAlert } from '../actions/emergency-alert/updateEmergencyAlert.action'
 import { getTagColor } from '../helpers/common/getTagColor'
-import { deleteEmergencyAlert } from '../actions/emergency-alert/deleteEmergencyAlert'
+import { deleteEmergencyAlertAction } from '../actions/emergency-alert/deleteEmergencyAlert.action'
+import GenericTextArea from '../components/GenericTextArea'
+import FuzzySearch from 'fuzzy-search'
+import moment from 'moment'
+import _ from 'lodash'
 
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()
   const [drawerVisibility, setDrawerVisibility] = useState(false)
   const [selectedAlert, setSelectedAlert] = useState(null)
   const [filter, setFilter] = useState('all')
+  const [searchedAlerts, setSearchedAlerts] = useState([])
   const { alerts } = useSelector(({ admin }) => admin)
 
   useEffect(() => {
     dispatch(getEmergencyAlerts())
   }, [])
 
+  useEffect(() => {
+    setSearchedAlerts([])
+  }, [filter])
+
   const filteredAlerts =
     filter === 'all' ? alerts : alerts.filter(alert => alert.status === filter)
+
+  const searchAlerts = input => {
+    const searcher = new FuzzySearch(filteredAlerts, ['message'], {
+      sort: true
+    })
+    setSearchedAlerts(searcher.search(input))
+  }
 
   return (
     <Layout.Content style={styles.content}>
@@ -124,6 +138,7 @@ const EmergencyAlerts = () => {
         <Input.Search
           placeholder='Search emergency alerts...'
           style={{ width: 240 }}
+          onSearch={value => searchAlerts(value)}
         />
         <Radio.Group
           value={filter}
@@ -156,7 +171,9 @@ const EmergencyAlerts = () => {
           style={styles.list}
           itemLayout='horizontal'
           pagination={{ pageSize: 7, hideOnSinglePage: true, size: 'small' }}
-          dataSource={filteredAlerts}
+          dataSource={
+            !_.isEmpty(searchedAlerts) ? searchedAlerts : filteredAlerts
+          }
           renderItem={alert => {
             const color = getTagColor(alert.status)
             return (
@@ -224,7 +241,7 @@ const EmergencyAlerts = () => {
                       okText='Yes'
                       cancelText='No'
                       onConfirm={() =>
-                        dispatch(deleteEmergencyAlert(alert.id))
+                        dispatch(deleteEmergencyAlertAction(alert.id))
                       }>
                       <Icon
                         type={'delete'}

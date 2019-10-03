@@ -3,7 +3,7 @@ import { firestore as db } from '../../firebase'
 import { createAction } from 'redux-actions'
 import { EDIT_ALERT } from './alert.constants'
 
-export const deleteEmergencyAlert = id => {
+export const deleteEmergencyAlertAction = id => {
   return async (dispatch, getState) => {
     try {
       await db
