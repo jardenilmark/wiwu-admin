@@ -4,7 +4,7 @@ import { firestore } from '../../firebase'
 
 export const generateKey = async () => {
   try {
-    const user = await firestore.collection('adminKeys').add({
+    const user = await firestore.collection('admin-keys').add({
       user: null
     })
 

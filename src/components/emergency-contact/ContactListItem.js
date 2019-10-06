@@ -27,7 +27,7 @@ const ContactListItem = ({ contact }) => {
         <Tooltip placement='left' title='Edit Contact'>
           <Icon
             type='edit'
-            style={{ fontSize: 18 }}
+            style={{ fontSize: 18, color: 'green' }}
             onClick={() => {
               dispatch(setSelectedContact(contact))
               dispatch(toggleEditModal())
@@ -41,13 +41,13 @@ const ContactListItem = ({ contact }) => {
             onConfirm={() => dispatch(deleteContact(contact.id))}
             okText='Yes'
             cancelText='No'>
-            <Icon type='delete' style={{ fontSize: 18 }} />
+            <Icon type='delete' style={{ fontSize: 18, color: 'red' }} />
           </Popconfirm>
         </Tooltip>,
         <Tooltip placement='left' title='Show Location'>
           <Icon
             type='environment'
-            style={{ fontSize: 18 }}
+            style={{ fontSize: 18, color: 'orange' }}
             onClick={() => {
               Modal.info({
                 title: (

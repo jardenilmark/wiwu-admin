@@ -11,8 +11,8 @@ import ResponderForm from './ResponderForm'
 
 const EditResponder = () => {
   const dispatch = useDispatch()
-  const responder = useSelector(state => state.responder.selectedResponder)
-  const visible = useSelector(state => state.responder.editModalVisibility)
+  const responder = useSelector(({ responder }) => responder.selectedResponder)
+  const visible = useSelector(({ responder }) => responder.editModalVisibility)
 
   return (
     <Modal
