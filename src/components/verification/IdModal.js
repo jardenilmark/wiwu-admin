@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Modal, Descriptions, Empty } from 'antd'
+import { Button, Modal, Descriptions, Empty, Divider } from 'antd'
 import * as PropTypes from 'prop-types'
+import ProgressiveImage from 'react-progressive-image'
+
 import { verifyUser } from '../../actions/user/verifyUser.action'
 import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
+
 import { statuses } from '../../constants/User'
+
+import Spinner from '../Spinner'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -23,16 +28,19 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
           <Button
             key='submit'
             type='primary'
+            icon='check-circle'
             onClick={async e => {
               setIsSubmitting(true)
               await dispatch(verifyUser(record.id))
               toggleIdModal(false)
             }}
             disabled={!record.idImage || isSubmitting}>
-            Confirm Verification
+            Verify User
           </Button>,
           <Button
             key='submit'
+            type='danger'
+            icon='close-circle'
             onClick={async e => {
               setIsSubmitting(true)
               await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
@@ -40,31 +48,25 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             }}
             disabled={isSubmitting}>
             Block User
-          </Button>,
-          <Button
-            key='back'
-            onClick={e => {
-              toggleIdModal(false)
-            }}>
-            Cancel
           </Button>
         ]}>
         {record.idImage ? (
-          <div style={{ margin: '16px' }}>
-            <img
-              src={record.idImage}
-              alt='ID'
-              style={{
-                width: '300px',
-                height: '300px',
-                left: '40%'
-              }}
-            />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <ProgressiveImage src={record.idImage} placeholder='avatar'>
+              {(src, loading) =>
+                loading ? (
+                  <Spinner height={300} tip={'Loading ID image...'} />
+                ) : (
+                  <img src={src} width={300} height={300} />
+                )
+              }
+            </ProgressiveImage>
           </div>
         ) : (
           <Empty />
         )}
-        <Descriptions title='User Info' bordered size='small' layout='vertical'>
+        <Divider />
+        <Descriptions bordered size='small' layout='vertical'>
           <Descriptions.Item label='First Name'>
             {record.firstName}
           </Descriptions.Item>

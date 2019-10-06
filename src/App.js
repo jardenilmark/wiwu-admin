@@ -28,7 +28,7 @@ const App = () => {
   }, [])
 
   if (loading) {
-    return <Spinner tip='Please wait for a while...' height={800} />
+    return <Spinner tip='Please wait for a while...' height={900} />
   }
 
   return (
