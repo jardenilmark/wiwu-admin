@@ -21,7 +21,7 @@ const ContactsList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   if (fetching) {
     return <Spinner tip='Fetching Contacts...' height={700} />

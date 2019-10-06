@@ -87,6 +87,7 @@ const UserListItem = ({ user }) => {
                 user.isUserVerified ? (
                   <img
                     src='https://img.icons8.com/color/96/000000/verified-account.png'
+                    alt='verified-badge'
                     height={25}
                     width={25}
                   />

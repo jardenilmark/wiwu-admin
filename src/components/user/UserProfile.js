@@ -54,6 +54,7 @@ const EmergencyRequestDetails = ({
       {emergency.media ? (
         <img
           src={emergency.media}
+          alt='attached-media'
           width='100%'
           height='250px'
           style={{ marginTop: 10 }}

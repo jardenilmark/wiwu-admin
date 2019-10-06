@@ -57,7 +57,7 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
                 loading ? (
                   <Spinner height={300} tip={'Loading ID image...'} />
                 ) : (
-                  <img src={src} width={300} height={300} />
+                  <img src={src} alt='id' width={300} height={300} />
                 )
               }
             </ProgressiveImage>

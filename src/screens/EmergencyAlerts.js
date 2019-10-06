@@ -26,7 +26,7 @@ const EmergencyAlerts = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     setSearchedAlerts([])

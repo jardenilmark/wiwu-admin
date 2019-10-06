@@ -19,7 +19,7 @@ const UserList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   if (fetching) {
     return <Spinner tip='Fetching Users...' height={700} />

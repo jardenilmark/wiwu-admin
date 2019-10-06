@@ -28,7 +28,7 @@ const TwilioVideo = props => {
       joinRoom()
       setHasJoinedRoom(true)
     }
-  })
+  }, [hasLeftRoom, token, hasJoinedRoom, dispatch])
 
   const roomJoined = room => {
     try {

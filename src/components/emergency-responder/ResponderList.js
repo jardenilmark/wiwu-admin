@@ -24,7 +24,7 @@ const ResponderList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   if (fetching) {
     return <Spinner tip='Fetching Responders...' height={700} />
