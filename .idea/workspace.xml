@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/deleteEmergencyAlert.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/deleteEmergencyAlert.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +67,9 @@
       <workItem from="1570081101310" duration="525000" />
       <workItem from="1570084043081" duration="4261000" />
       <workItem from="1570101673791" duration="2330000" />
-      <workItem from="1570117194734" duration="2021000" />
+      <workItem from="1570117194734" duration="2490000" />
+      <workItem from="1570354455775" duration="121000" />
+      <workItem from="1570354594820" duration="110000" />
     </task>
     <servers />
   </component>
