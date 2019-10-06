@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Input, Radio, Button } from 'antd'
 
-const EmergencyAlertListHeader = ({
+const AlertListHeader = ({
   filter,
   setDrawerVisibility,
   setFilter,
@@ -53,11 +53,11 @@ const styles = {
   }
 }
 
-EmergencyAlertListHeader.propTypes = {
+AlertListHeader.propTypes = {
   filter: PropTypes.string.isRequired,
   setDrawerVisibility: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   searchAlerts: PropTypes.func.isRequired
 }
 
-export default EmergencyAlertListHeader
+export default AlertListHeader

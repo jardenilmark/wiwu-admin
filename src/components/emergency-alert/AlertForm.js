@@ -10,7 +10,7 @@ import GenericTextArea from '../GenericTextArea'
 import { createAlert } from '../../actions/emergency-alert/createEmergencyAlert.action'
 import { updateEmergencyAlert } from '../../actions/emergency-alert/updateEmergencyAlert.action'
 
-const EmergencyAlertForm = ({ selectedAlert, setDrawerVisibility }) => {
+const AlertForm = ({ selectedAlert, setDrawerVisibility }) => {
   const dispatch = useDispatch()
 
   return (
@@ -84,4 +84,4 @@ const styles = {
   }
 }
 
-export default EmergencyAlertForm
+export default AlertForm

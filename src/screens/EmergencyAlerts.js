@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Layout, Drawer } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-
-import EmergencyAlertForm from '../components/emergency-alert/EmergencyAlertForm'
-import EmergencyAlertListHeader from '../components/emergency-alert/EmergencyAlertListHeader'
-import EmergencyAlertList from '../components/emergency-alert/EmergencyAlertList'
-import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlerts.action'
 import FuzzySearch from 'fuzzy-search'
 import _ from 'lodash'
+
+import AlertForm from '../components/emergency-alert/AlertForm'
+import AlertListHeader from '../components/emergency-alert/AlertListHeader'
+import AlertList from '../components/emergency-alert/AlertList'
+import { getEmergencyAlerts } from '../actions/emergency-alert/getEmergencyAlerts.action'
 
 const EmergencyAlerts = () => {
   const dispatch = useDispatch()
@@ -16,13 +16,18 @@ const EmergencyAlerts = () => {
   const [selectedAlert, setSelectedAlert] = useState(null)
   const [filter, setFilter] = useState('all')
   const [searchedAlerts, setSearchedAlerts] = useState([])
+  const [fetching, setFetchingStatus] = useState(true)
   const { alerts } = useSelector(({ admin }) => admin)
 
   useEffect(() => {
-    dispatch(getEmergencyAlerts())
+    async function fetchData() {
+      await dispatch(getEmergencyAlerts())
+      setFetchingStatus(false)
+    }
+
+    fetchData()
   }, [])
 
-  // initialize searchAlerts
   useEffect(() => {
     setSearchedAlerts([])
   }, [filter])
@@ -59,21 +64,22 @@ const EmergencyAlerts = () => {
           setDrawerVisibility(false)
         }}
         visible={drawerVisibility}>
-        <EmergencyAlertForm
+        <AlertForm
           selectedAlert={selectedAlert}
           setDrawerVisibility={setDrawerVisibility}
         />
       </Drawer>
 
-      <EmergencyAlertListHeader
+      <AlertListHeader
         filter={filter}
         setFilter={setFilter}
         searchAlerts={searchAlerts}
         setDrawerVisibility={setDrawerVisibility}
       />
 
-      <EmergencyAlertList
+      <AlertList
         alerts={!_.isEmpty(searchedAlerts) ? searchedAlerts : filteredAlerts}
+        fetching={fetching}
         setSelectedAlert={setSelectedAlert}
         setDrawerVisibility={setDrawerVisibility}
       />
