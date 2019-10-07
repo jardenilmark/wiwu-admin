@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Layout, Menu, Icon, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
@@ -37,6 +37,22 @@ const Sidebar = ({ history, match, activeKey }) => {
   const menuItems = role === roles.ADMIN ? adminMenuItems : responderMenuItems
   const [collapsed, toggleCollapse] = useState(false)
   const [selectedKeys, setSelectedKeys] = useState(activeKey)
+
+  useEffect(() => {
+    if (window.screen.width <= 1150) {
+      toggleCollapse(true)
+    } else {
+      toggleCollapse(false)
+    }
+  }, [])
+
+  window.addEventListener('resize', () => {
+    if (window.screen.width <= 1150) {
+      toggleCollapse(true)
+    } else {
+      toggleCollapse(false)
+    }
+  })
 
   return (
     <Layout.Sider
