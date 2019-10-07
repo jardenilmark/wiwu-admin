@@ -1,56 +1,44 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setAuthDetails } from './actions/user/setAuthDetails.action'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Switch, Route, Redirect } from 'react-router'
+
+import { setCurrentUser } from './actions/admin/setCurrentUser.action'
+
 import { auth } from './firebase'
-import 'antd/dist/antd.css'
+
+import PrivateRoute from './routes/PrivateRoute'
+import AuthRoute from './routes/AuthRoute'
+import AuthPage from './pages/AuthPage'
+import AdminPage from './pages/AdminPage'
+import NoMatch from './screens/NoMatch'
+import Spinner from './components/Spinner'
+
+import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
-import AuthRoute from './components/routes/AuthRoute'
-import PrivateRoute from './components/routes/PrivateRoute'
-import Dashboard from './components/Dashboard'
-
-const App = props => {
+const App = () => {
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.user.loading)
-  const authenticated = useSelector(state => state.user.authenticated)
+  const [loading, setLoadingStatus] = useState(true)
 
   useEffect(() => {
-    const observer = auth.onAuthStateChanged(user => {
-      /* 
-        setAuthDetails(user, loading, authenticated)
-      */
-      if (user) {
-        dispatch(setAuthDetails(user, false, true))
-      } else {
-        dispatch(setAuthDetails(user, false, false))
-      }
+    auth.onAuthStateChanged(async user => {
+      await dispatch(setCurrentUser(user))
+      setLoadingStatus(false)
     })
+  }, [dispatch])
 
-    return () => {
-      /* 
-        clean up subscriptions when component unmounts
-      */
-      observer()
-    }
-  })
-
-  /* 
-    TODO: Temporary 'Loading...' is displayed while waiting for the
-          data from firebase and update the state
-  */
   if (loading) {
-    return <div>Loading...</div>
+    return <Spinner tip='Please wait for a while...' height={900} />
   }
 
   return (
     <div className='App'>
-      <PrivateRoute
-        exact
-        path='/'
-        component={Dashboard}
-        authenticated={authenticated}
-      />
-      <AuthRoute path='/auth' authenticated={authenticated} />
+      <Switch>
+        <Redirect exact from='/' to='/admin-page' />
+        <PrivateRoute path='/admin-page' component={AdminPage} />
+        <AuthRoute path='/auth-page' component={AuthPage} />
+        <Route component={NoMatch} />
+      </Switch>
     </div>
   )
 }

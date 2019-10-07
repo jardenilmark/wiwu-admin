@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/emergency-alert/EmergencyAlertForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/emergency-alert/EmergencyAlertList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/emergency-alert/EmergencyAlertListHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/emergency-alert/EmergencyAlertListItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/admin/editAdmin.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/admin/editAdmin.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/admin/signUp.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/admin/signUp.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/deleteEmergencyAlert.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/deleteEmergencyAlert.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/emergency-request/getEmergencies.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-request/getEmergencies.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/responder/createResponder.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/responder/createResponder.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/responder/editResponder.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/responder/editResponder.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-contact/ContactList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-contact/ContactList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-contact/ContactListHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-contact/ContactListHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-contact/ContactListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-contact/ContactListItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-contact/EditContact.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-contact/EditContact.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-request/EmergencyColumn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-responder/EditResponder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-responder/EditResponder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-responder/ResponderList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-responder/ResponderList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-responder/ResponderListHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-responder/ResponderListHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-responder/ResponderListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-responder/ResponderListItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/UserList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/UserListHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/UserListHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/UserListItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/UserListItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/common/getAddress.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/common/getTagColor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/common/getTagColor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/responder/getResponderListItemActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/secret-key/generateKey.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/secret-key/generateKey.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/user/getUserListItemActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/AdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyAlerts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequestsV2.js" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1QmzTvtgAKGRxJIwA9AIzG6QCFs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.last.introduce.type" value="CONST" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="" />
+      <created>1568390571221</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1568390571221</updated>
+      <workItem from="1568390575733" duration="137000" />
+      <workItem from="1568823288188" duration="975000" />
+      <workItem from="1568824281373" duration="8439000" />
+      <workItem from="1569851473676" duration="32296000" />
+      <workItem from="1569995587850" duration="13835000" />
+      <workItem from="1570022797079" duration="2263000" />
+      <workItem from="1570029611943" duration="517000" />
+      <workItem from="1570081101310" duration="525000" />
+      <workItem from="1570084043081" duration="4261000" />
+      <workItem from="1570101673791" duration="2330000" />
+      <workItem from="1570117194734" duration="2490000" />
+      <workItem from="1570354455775" duration="121000" />
+      <workItem from="1570354594820" duration="4874000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

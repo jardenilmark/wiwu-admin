@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Logo = ({ height }) => (
   <img
@@ -7,5 +8,9 @@ const Logo = ({ height }) => (
     src={require('../assets/images/wiwu-logo.png')}
   />
 )
+
+Logo.propTypes = {
+  height: PropTypes.number.isRequired
+}
 
 export default Logo
