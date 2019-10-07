@@ -43,6 +43,7 @@ const VideoModal = ({
           <Button
             key='confirm'
             type='primary'
+            icon='check-circle'
             onClick={async e => {
               await leaveRoom()
               await dispatch(verifyUser(record.id))
@@ -52,19 +53,14 @@ const VideoModal = ({
           </Button>,
           <Button
             key='block'
+            type='danger'
+            icon='close-circle'
             onClick={async e => {
               leaveRoom()
               await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
             }}
             disabled={record.joinedVideo}>
             Block User
-          </Button>,
-          <Button
-            key='back'
-            onClick={e => {
-              leaveRoom()
-            }}>
-            Cancel
           </Button>
         ]}>
         <div style={{ display: 'flex' }}>
