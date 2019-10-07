@@ -9,8 +9,8 @@ import ContactListItem from './ContactListItem'
 
 const ContactsList = () => {
   const dispatch = useDispatch()
-  const contacts = useSelector(state => state.admin.contacts)
-  const filteredContacts = useSelector(state => state.admin.filteredContacts)
+  const contacts = useSelector(({ admin }) => admin.contacts)
+  const filteredContacts = useSelector(({ admin }) => admin.filteredContacts)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const ContactsList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   if (fetching) {
     return <Spinner tip='Fetching Contacts...' height={700} />

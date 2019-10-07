@@ -8,8 +8,8 @@ import Spinner from '../Spinner'
 
 const UserList = () => {
   const dispatch = useDispatch()
-  const users = useSelector(state => state.admin.users)
-  const filteredUsers = useSelector(state => state.admin.filteredUsers)
+  const users = useSelector(({ admin }) => admin.users)
+  const filteredUsers = useSelector(({ admin }) => admin.filteredUsers)
   const [fetching, setFetchingStatus] = useState(true)
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const UserList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   if (fetching) {
     return <Spinner tip='Fetching Users...' height={700} />

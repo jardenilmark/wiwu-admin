@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Table, Button, Divider, Tag, Input } from 'antd'
 import { getToken } from '../actions/twilio/getToken.action'
@@ -33,14 +33,14 @@ const UserVerification = () => {
   })
 
   if (fetching) {
-    return <Spinner tip='Fetching pending users...' height={700} />
+    return <Spinner tip='Fetching pending users...' height='100%' />
   }
 
   const renderActions = (text, record) => (
     <span>
       <Button
         icon='video-camera'
-        size='small'
+        type='dashed'
         onClick={() => {
           setRecord(record)
           dispatch(getToken(identity, record.id))
@@ -50,8 +50,8 @@ const UserVerification = () => {
       </Button>
       <Divider type='vertical' />
       <Button
-        size='small'
-        icon='video-camera'
+        type='dashed'
+        icon='idcard'
         onClick={() => {
           setRecord(record)
           toggleIdModal(true)
@@ -98,14 +98,14 @@ const UserVerification = () => {
   ]
 
   return (
-    <div>
+    <Fragment>
       <Helmet>
         <title>User Verification - wiwu admin</title>
       </Helmet>
 
-      <div style={{ width: '90%', margin: '0 auto' }}>
+      <div style={{ width: '70%', margin: '0 auto', height: '100%' }}>
         <Row>
-          <div style={{ float: 'left', marginLeft: '16px', marginTop: '16px' }}>
+          <div style={{ float: 'left', margin: '25px 0px 20px' }}>
             <Search
               placeholder='Search users...'
               onSearch={value => dispatch(searchUsers(pendingUsers, value))}
@@ -113,10 +113,15 @@ const UserVerification = () => {
             />
           </div>
         </Row>
-        <Row style={{ margin: '8px' }}>
+        <Row>
           <Col span={24}>
             <Table
               dataSource={filteredUsers || pendingUsers}
+              pagination={{
+                pageSize: 15,
+                hideOnSinglePage: true,
+                size: 'small'
+              }}
               columns={columns}
               rowKey='id'
             />
@@ -129,7 +134,7 @@ const UserVerification = () => {
         isIdModalVisible={isIdModalVisible}
         toggleIdModal={toggleIdModal}
       />
-    </div>
+    </Fragment>
   )
 }
 

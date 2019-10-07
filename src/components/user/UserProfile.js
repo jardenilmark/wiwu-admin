@@ -54,6 +54,7 @@ const EmergencyRequestDetails = ({
       {emergency.media ? (
         <img
           src={emergency.media}
+          alt='attached-media'
           width='100%'
           height='250px'
           style={{ marginTop: 10 }}
@@ -108,7 +109,7 @@ const UserProfile = ({ user, drawerVisibility, setDrawerVisibility }) => {
       <br />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         {user.emergencies.length > 0 ? (
-          <List style={{ width: '100%', overflowY: 'auto' }}>
+          <List style={{ width: '100%', overflowY: 'auto', height: '220px' }}>
             {user.emergencies.map(emergency => {
               return (
                 <Fragment>

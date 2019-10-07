@@ -1,5 +1,6 @@
 import { message } from 'antd'
 import { createAction } from 'redux-actions'
+import _ from 'lodash'
 
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP } from './admin.constants'
@@ -10,6 +11,8 @@ export const signUp = ({
   emailAddress: email,
   password,
   adminKey,
+  firstName,
+  lastName,
   ...rest
 }) => {
   return async dispatch => {
@@ -34,6 +37,8 @@ export const signUp = ({
 
       const firestorePayload = {
         ...rest,
+        firstName: _.capitalize(firstName),
+        lastName: _.capitalize(lastName),
         role: roles.ADMIN,
         status: statuses.ACTIVE,
         emergencies: [],

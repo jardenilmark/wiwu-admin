@@ -11,9 +11,9 @@ import { getResponders } from '../../actions/responder/getResponders.action'
 const ResponderList = () => {
   const dispatch = useDispatch()
   const [fetching, setFetchingStatus] = useState(true)
-  const responders = useSelector(state => state.admin.responders)
+  const responders = useSelector(({ admin }) => admin.responders)
   const filteredResponders = useSelector(
-    state => state.admin.filteredResponders
+    ({ admin }) => admin.filteredResponders
   )
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const ResponderList = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dispatch])
 
   if (fetching) {
     return <Spinner tip='Fetching Responders...' height={700} />

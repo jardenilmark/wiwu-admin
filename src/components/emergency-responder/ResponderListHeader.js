@@ -9,7 +9,7 @@ const { Search } = Input
 
 const ResponderListHeader = ({ setDrawerVisibility }) => {
   const dispatch = useDispatch()
-  const responders = useSelector(state => state.admin.responders)
+  const responders = useSelector(({ admin }) => admin.responders)
   const [radioValue, setRadioValue] = useState('all')
 
   return (

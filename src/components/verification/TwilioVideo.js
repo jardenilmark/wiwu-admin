@@ -28,36 +28,35 @@ const TwilioVideo = props => {
       joinRoom()
       setHasJoinedRoom(true)
     }
-  })
+  }, [hasLeftRoom, token, hasJoinedRoom, dispatch])
 
   const roomJoined = room => {
     try {
       setActiveRoom(room)
       setLocalMediaAvailable(true)
       setHasJoinedRoom(true)
+      message.info('Connected to video chat room.', 5)
       if (localMedia) {
         attachParticipantTracks(room.localParticipant, localMedia.current)
       }
       room.participants.forEach(participant => {
-        // todo: replace this
-        console.log(`Already in room ${participant.identity}`)
+        message.info(`Already in room ${participant.identity}.`, 5)
         if (remoteMedia) {
           setRemoteMediaAvailable(true)
           participantConnected(participant, remoteMedia.current)
         }
       })
       room.on('participantConnected', participant => {
-        // todo: replace this
-        console.log(`Joining ${participant.identity}`)
+        message.info(`Joining ${participant.identity}.`, 5)
         setRemoteMediaAvailable(true)
         participantConnected(participant, remoteMedia.current)
       })
       room.on('participantDisconnected', participant => {
-        // todo: replace this
-        console.log(`Participant ${participant.identity} left the room`)
+        message.info(`Participant ${participant.identity} left the room.`, 5)
         detachParticipantTracks(participant)
       })
       room.on('disconnected', () => {
+        message.info('Disconnected.', 5)
         detachParticipantTracks(room.localParticipant)
         room.participants.forEach(detachParticipantTracks)
         setActiveRoom(null)

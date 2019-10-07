@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router'
 
 import { setCurrentUser } from './actions/admin/setCurrentUser.action'
@@ -25,10 +25,10 @@ const App = () => {
       await dispatch(setCurrentUser(user))
       setLoadingStatus(false)
     })
-  }, [])
+  }, [dispatch])
 
   if (loading) {
-    return <Spinner tip='Please wait for a while...' height={800} />
+    return <Spinner tip='Please wait for a while...' height={900} />
   }
 
   return (

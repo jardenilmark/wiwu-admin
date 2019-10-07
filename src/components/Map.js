@@ -20,6 +20,9 @@ const Map = ({ location, label, style }) => {
         mapTypeId='hybrid'
         labels={true}
         zoom={18}
+        options={{
+          scrollwheel: false
+        }}
         mapContainerStyle={style || { height: '500px', width: '600px' }}>
         <Marker position={position} title={label} />
       </GoogleMap>
@@ -33,7 +36,7 @@ const Map = ({ location, label, style }) => {
   return isLoaded ? (
     renderMap()
   ) : (
-    <Spinner tip='Loading Map...' height={style.height || 500} />
+    <Spinner tip='Loading Map...' height={(style && style.height) || 500} />
   )
 }
 

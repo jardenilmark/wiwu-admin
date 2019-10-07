@@ -16,6 +16,7 @@ export const createAlert = values => {
         createAction(CREATE_ALERT)({
           ...payload,
           date: firebase.firestore.Timestamp.fromDate(currentDate),
+          status: 'active',
           id: res.id
         })
       )
