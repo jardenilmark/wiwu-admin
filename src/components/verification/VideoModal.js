@@ -41,7 +41,7 @@ const VideoModal = ({
         }}
         footer={[
           <Button
-            key='submit'
+            key='confirm'
             type='primary'
             onClick={async e => {
               await leaveRoom()
@@ -51,7 +51,7 @@ const VideoModal = ({
             Confirm Verification
           </Button>,
           <Button
-            key='submit'
+            key='block'
             onClick={async e => {
               leaveRoom()
               await dispatch(changeUserStatus(record.id, statuses.BLOCKED))

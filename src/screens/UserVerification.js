@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Table, Button, Divider, Tag, Input } from 'antd'
+import { Row, Col, Table, Button, Input } from 'antd'
 import { getToken } from '../actions/twilio/getToken.action'
 import { getUsers } from '../actions/user/getUsers.action'
 import { searchUsers } from '../actions/user/searchUsers.action'
@@ -40,36 +40,26 @@ const UserVerification = () => {
     <span>
       <Button
         icon='video-camera'
-        type='dashed'
+        type={record.joinedRoom ? 'primary' : 'dashed'}
         onClick={() => {
           setRecord(record)
           dispatch(getToken(identity, record.id))
         }}
-        disabled={!record.joinedRoom}>
+        disabled={!record.joinedRoom}
+        style={{ margin: '8px' }}>
         Join Room
       </Button>
-      <Divider type='vertical' />
       <Button
-        type='dashed'
         icon='idcard'
+        type={record.idImage ? 'primary' : 'dashed'}
         onClick={() => {
           setRecord(record)
           toggleIdModal(true)
         }}
-        disabled={!record.idImage}>
+        disabled={!record.idImage}
+        style={{ margin: '8px' }}>
         View ID
       </Button>
-    </span>
-  )
-
-  const renderTags = (text, record) => (
-    <span>
-      <Tag color={record.joinedRoom ? 'green' : 'red'} key={record.joinedRoom}>
-        {record.joinedRoom ? 'Available Video' : 'Unavailable Video'}
-      </Tag>
-      <Tag color={record.idImage ? 'green' : 'red'} key={record.idImage}>
-        {record.idImage ? 'Available ID' : 'Unavailable ID'}
-      </Tag>
     </span>
   )
 
@@ -77,12 +67,27 @@ const UserVerification = () => {
     {
       title: 'First Name',
       dataIndex: 'firstName',
-      key: 'firstName'
+      key: 'firstName',
+      sorter: (a, b) =>
+        a.firstName.toUpperCase() < b.firstName.toUpperCase()
+          ? -1
+          : a.firstName.toUpperCase() > b.firstName.toUpperCase()
+          ? 1
+          : 0,
+      defaultSortOrder: 'ascend',
+      sortDirections: ['descend', 'ascend']
     },
     {
       title: 'Last Name',
       dataIndex: 'lastName',
-      key: 'lastName'
+      key: 'lastName',
+      sorter: (a, b) =>
+        a.lastName.toUpperCase() < b.lastName.toUpperCase()
+          ? -1
+          : a.lastName.toUpperCase() > b.lastName.toUpperCase()
+          ? 1
+          : 0,
+      sortDirections: ['descend', 'ascend']
     },
     {
       title: 'Phone Number',
@@ -90,10 +95,29 @@ const UserVerification = () => {
       key: 'phoneNumber'
     },
     {
-      render: (text, record) => renderTags(text, record)
-    },
-    {
-      render: (text, record) => renderActions(text, record)
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => renderActions(text, record),
+      filters: [
+        {
+          text: 'Video',
+          value: 'video'
+        },
+        {
+          text: 'ID',
+          value: 'id'
+        }
+      ],
+      filterMultiple: true,
+      onFilter: (value, record) => {
+        if (value === 'video' && record.joinedRoom) {
+          return true
+        } else if (value === 'id' && record.idImage) {
+          return true
+        } else {
+          return false
+        }
+      }
     }
   ]
 
