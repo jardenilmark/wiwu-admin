@@ -26,7 +26,7 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
         }}
         footer={[
           <Button
-            key='submit'
+            key='confirm'
             type='primary'
             icon='check-circle'
             onClick={async e => {
@@ -38,7 +38,7 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             Verify User
           </Button>,
           <Button
-            key='submit'
+            key='block'
             type='danger'
             icon='close-circle'
             onClick={async e => {
