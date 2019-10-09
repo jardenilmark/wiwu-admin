@@ -26,8 +26,8 @@ const adminMenuItems = [
 ]
 
 const responderMenuItems = [
-  { key: 'emergency-contacts', icon: 'phone', title: 'Emergency Contacts' },
   { key: 'emergency-requests', icon: 'alert', title: 'Emergency Requests' },
+  { key: 'emergency-contacts', icon: 'phone', title: 'Emergency Contacts' },
   { key: 'settings', icon: 'user', title: 'Settings' }
 ]
 
