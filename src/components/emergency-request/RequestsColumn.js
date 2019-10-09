@@ -10,9 +10,9 @@ import {
   Popconfirm,
   Spin,
   Tag,
-  Tooltip
+  Tooltip,
+  Modal
 } from 'antd'
-import { updateRequest } from '../../actions/emergency-request/updateEmergency.action'
 import { firestore } from '../../firebase'
 import { useDispatch } from 'react-redux'
 import ProgressiveImage from 'react-progressive-image'
@@ -20,7 +20,12 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import _ from 'lodash'
+
+import { updateRequest } from '../../actions/emergency-request/updateEmergency.action'
+
 import { sendNotification } from '../../helpers/emergency-request/sendNotification'
+
+import Map from '../Map'
 
 const StyledImage = styled.img`
   &:hover {
@@ -228,7 +233,20 @@ const RequestsColumn = props => {
 
                 // SHOW EMERGENCY LOCATION
                 <Tooltip key={'show-location'} title='Show in map'>
-                  <Button size={'small'} type={'link'}>
+                  <Button
+                    size={'small'}
+                    type={'link'}
+                    onClick={() => {
+                      Modal.info({
+                        width: 660,
+                        icon: null,
+                        keyboard: false,
+                        maskClosable: false,
+                        okText: 'Close',
+                        okType: 'danger',
+                        content: <Map location={request.location} />
+                      })
+                    }}>
                     <Icon type='environment' />
                   </Button>
                 </Tooltip>,

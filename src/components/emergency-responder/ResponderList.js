@@ -27,7 +27,7 @@ const ResponderList = () => {
   }, [dispatch])
 
   if (fetching) {
-    return <Spinner tip='Fetching Responders...' height={700} />
+    return <Spinner tip='Fetching Emergency Responders...' height={700} />
   }
 
   return (
