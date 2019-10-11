@@ -39,7 +39,7 @@ const Sidebar = ({ history, match, activeKey }) => {
   const [selectedKeys, setSelectedKeys] = useState(activeKey)
 
   useEffect(() => {
-    if (window.screen.width <= 1150) {
+    if (window.innerWidth <= 1150) {
       toggleCollapse(true)
     } else {
       toggleCollapse(false)
@@ -47,7 +47,7 @@ const Sidebar = ({ history, match, activeKey }) => {
   }, [])
 
   window.addEventListener('resize', () => {
-    if (window.screen.width <= 1150) {
+    if (window.innerWidth <= 1150) {
       toggleCollapse(true)
     } else {
       toggleCollapse(false)

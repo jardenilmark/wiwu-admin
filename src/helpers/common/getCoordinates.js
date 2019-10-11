@@ -4,7 +4,7 @@ export const getCoordinates = async address => {
   let location
 
   try {
-    Geocode.setApiKey('AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM')
+    Geocode.setApiKey('AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog')
     const response = await Geocode.fromAddress(address)
     location = response.results[0].geometry.location
   } catch (error) {

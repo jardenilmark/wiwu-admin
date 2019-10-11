@@ -29,7 +29,7 @@ const AddressSearchInput = ({
   })
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM',
+    googleMapsApiKey: 'AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog',
     libraries
   })
 

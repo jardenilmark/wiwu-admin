@@ -24,7 +24,7 @@ const ContactsList = () => {
   }, [dispatch])
 
   if (fetching) {
-    return <Spinner tip='Fetching Contacts...' height={700} />
+    return <Spinner tip='Fetching Emergency Contacts...' height={700} />
   }
 
   return (

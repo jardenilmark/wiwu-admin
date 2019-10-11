@@ -5,14 +5,15 @@ import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
-var firebaseConfig = {
-  apiKey: 'AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM',
-  authDomain: 'weewoo-b9408.firebaseapp.com',
-  databaseURL: 'https://weewoo-b9408.firebaseio.com',
-  projectId: 'weewoo-b9408',
-  storageBucket: '',
-  messagingSenderId: '363729210043',
-  appId: '1:363729210043:web:47b0c446dc062344'
+const firebaseConfig = {
+  apiKey: 'AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog',
+  authDomain: 'wiwu-48f9e.firebaseapp.com',
+  databaseURL: 'https://wiwu-48f9e.firebaseio.com',
+  projectId: 'wiwu-48f9e',
+  storageBucket: 'wiwu-48f9e.appspot.com',
+  messagingSenderId: '900668914554',
+  appId: '1:900668914554:web:90b417061296d685e674c3',
+  measurementId: 'G-55KP1BV024'
 }
 const main = firebase.initializeApp(firebaseConfig, 'main')
 const secondary = firebase.initializeApp(firebaseConfig, 'secondary')
