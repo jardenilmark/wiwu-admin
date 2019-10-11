@@ -98,8 +98,8 @@ const ResponderListItem = ({ responder }) => {
         }
         title={
           <b>
-            {_.startCase(responder.firstName)} {responder.lastName} |{' '}
-            <Tag color={color}>{responder.status.toUpperCase()}</Tag>
+            {_.startCase(responder.firstName)} {_.startCase(responder.lastName)}{' '}
+            | <Tag color={color}>{responder.status.toUpperCase()}</Tag>
           </b>
         }
         description={
