@@ -2,13 +2,12 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { List, Avatar, Tag, Popconfirm, Tooltip, Icon } from 'antd'
-
 import { getTagColor } from '../../helpers/common/getTagColor'
-
 import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
 import { setSelectedResponder } from '../../actions/responder/setSelectedResponder.action'
 import { changeResponderStatus } from '../../actions/responder/changeResponderStatus.action'
 import { statuses } from '../../constants/User'
+import _ from 'lodash'
 
 const ResponderListItem = ({ responder }) => {
   const dispatch = useDispatch()
@@ -19,7 +18,10 @@ const ResponderListItem = ({ responder }) => {
       actions={
         status === statuses.ACTIVE
           ? [
-              <Tooltip placement='left' title='Edit Responder'>
+              <Tooltip
+                key={'edit-responder'}
+                placement='left'
+                title='Edit Responder'>
                 <Icon
                   type='edit'
                   style={{ fontSize: 18, color: 'green' }}
@@ -29,7 +31,10 @@ const ResponderListItem = ({ responder }) => {
                   }}
                 />
               </Tooltip>,
-              <Tooltip placement='left' title='Archive Responder'>
+              <Tooltip
+                key={'archive-responder'}
+                placement='left'
+                title='Archive Responder'>
                 <Popconfirm
                   placement='top'
                   title='Are you sure you want to archive this responder?'
@@ -46,7 +51,10 @@ const ResponderListItem = ({ responder }) => {
                   />
                 </Popconfirm>
               </Tooltip>,
-              <Tooltip placement='left' title='Block Responder'>
+              <Tooltip
+                key={'block-responder'}
+                placement='left'
+                title='Block Responder'>
                 <Popconfirm
                   placement='top'
                   title='Are you sure you want to block this responder?'
@@ -62,7 +70,10 @@ const ResponderListItem = ({ responder }) => {
               </Tooltip>
             ]
           : [
-              <Tooltip placement='left' title='Activate Responder'>
+              <Tooltip
+                key={'activate-responder'}
+                placement='left'
+                title='Activate Responder'>
                 <Popconfirm
                   placement='top'
                   title='Are you sure you want to activate this responder?'
@@ -87,7 +98,7 @@ const ResponderListItem = ({ responder }) => {
         }
         title={
           <b>
-            {responder.firstName} {responder.lastName} |{' '}
+            {_.startCase(responder.firstName)} {responder.lastName} |{' '}
             <Tag color={color}>{responder.status.toUpperCase()}</Tag>
           </b>
         }
