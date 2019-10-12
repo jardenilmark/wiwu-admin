@@ -21,7 +21,6 @@ export const isBeingVerified = (id, isBeingVerified) => {
       editedUsers[index].isBeingVerified = isBeingVerified
       dispatch(createAction(IS_BEING_VERIFIED)(editedUsers))
     } catch (error) {
-      console.log('hello')
       message.error(error.message, 5)
     }
   }
