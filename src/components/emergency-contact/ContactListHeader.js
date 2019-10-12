@@ -21,7 +21,7 @@ const ContactListHeader = ({ setDrawerVisibility }) => {
           setRadioValue('all')
           dispatch(searchContacts(contacts, value))
         }}
-        style={{ width: 200 }}
+        style={{ width: 230 }}
       />
       <Radio.Group
         value={radioValue}
@@ -43,12 +43,8 @@ const ContactListHeader = ({ setDrawerVisibility }) => {
           <strong>Fire</strong>
         </Radio.Button>
       </Radio.Group>
-      <Button
-        icon='plus'
-        type='dashed'
-        onClick={() => setDrawerVisibility(true)}
-        style={{ float: 'right', width: 180 }}>
-        Add Contact
+      <Button icon='plus' onClick={() => setDrawerVisibility(true)}>
+        Add Emergency Contact
       </Button>
     </div>
   )

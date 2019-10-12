@@ -17,7 +17,7 @@ const ResponderListHeader = ({ setDrawerVisibility }) => {
       <Search
         placeholder='Search responder admins...'
         onSearch={value => dispatch(searchResponders(responders, value))}
-        style={{ width: 200 }}
+        style={{ width: 230 }}
       />
       <Radio.Group
         value={radioValue}
@@ -40,11 +40,8 @@ const ResponderListHeader = ({ setDrawerVisibility }) => {
           <strong>Archived</strong>
         </Radio.Button>
       </Radio.Group>
-      <Button
-        icon='user-add'
-        type='dashed'
-        onClick={() => setDrawerVisibility(true)}>
-        Add Responder
+      <Button icon='plus' onClick={() => setDrawerVisibility(true)}>
+        Add Emergency Responder
       </Button>
     </div>
   )
