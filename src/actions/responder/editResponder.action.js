@@ -7,8 +7,8 @@ import { EDIT_RESPONDER } from './responder.constants'
 
 export const editResponder = ({ firstName, lastName, ...rest }, id) => {
   const values = {
-    firstName: _.capitalize(firstName),
-    lastName: _.capitalize(lastName),
+    firstName: _.startCase(firstName),
+    lastName: _.startCase(lastName),
     ...rest
   }
 
