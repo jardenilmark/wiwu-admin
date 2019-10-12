@@ -5,6 +5,7 @@ import Video from 'twilio-video'
 import PropTypes from 'prop-types'
 import VideoModal from './VideoModal'
 import { resetToken } from '../../actions/twilio/resetToken.action'
+import { isBeingVerified } from '../../actions/user/isBeingVerified.action'
 
 const TwilioVideo = props => {
   const roomName = props.record.id
@@ -111,6 +112,7 @@ const TwilioVideo = props => {
     if (activeRoom) {
       activeRoom.disconnect()
     }
+    dispatch(isBeingVerified(props.record.id, false))
   }
 
   const getTracks = participant => {

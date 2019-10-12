@@ -10,19 +10,24 @@ import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
 import { statuses } from '../../constants/User'
 
 import Spinner from '../Spinner'
+import { isBeingVerified } from '../../actions/user/isBeingVerified.action'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const dispatch = useDispatch()
+  const close = () => {
+    toggleIdModal(false)
+    dispatch(isBeingVerified(record.id, false))
+  }
   return (
     <span>
       <Modal
         visible={isIdModalVisible}
         onOk={e => {
-          toggleIdModal(false)
+          close()
         }}
         onCancel={e => {
-          toggleIdModal(false)
+          close()
         }}
         footer={[
           <Button
@@ -32,7 +37,7 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             onClick={async e => {
               setIsSubmitting(true)
               await dispatch(verifyUser(record.id))
-              toggleIdModal(false)
+              close()
             }}
             disabled={!record.idImage || isSubmitting}>
             Verify User
@@ -44,7 +49,7 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             onClick={async e => {
               setIsSubmitting(true)
               await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
-              toggleIdModal(false)
+              close()
             }}
             disabled={isSubmitting}>
             Block User

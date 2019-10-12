@@ -8,6 +8,7 @@ import TwilioVideo from '../components/verification/TwilioVideo'
 import IdModal from '../components/verification/IdModal'
 import Spinner from '../components/Spinner'
 import { Helmet } from 'react-helmet'
+import { isBeingVerified } from '../actions/user/isBeingVerified.action'
 
 const { Search } = Input
 
@@ -18,7 +19,10 @@ const UserVerification = () => {
   const [isIdModalVisible, toggleIdModal] = useState(false)
   const pendingUsers = useSelector(state =>
     state.admin.users.filter(
-      user => user.isUserVerified === false && user.status === 'active'
+      user =>
+        !user.isUserVerified &&
+        user.status === 'active' &&
+        !user.isBeingVerified
     )
   )
   const filteredUsers = useSelector(state => state.admin.filteredUsers)
@@ -43,6 +47,7 @@ const UserVerification = () => {
         type={record.joinedRoom ? 'primary' : 'dashed'}
         onClick={() => {
           setRecord(record)
+          dispatch(isBeingVerified(record.id, true))
           dispatch(getToken(identity, record.id))
         }}
         disabled={!record.joinedRoom}
@@ -54,6 +59,7 @@ const UserVerification = () => {
         type={record.idImage ? 'primary' : 'dashed'}
         onClick={() => {
           setRecord(record)
+          dispatch(isBeingVerified(record.id, true))
           toggleIdModal(true)
         }}
         disabled={!record.idImage}
