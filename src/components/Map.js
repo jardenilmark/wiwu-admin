@@ -10,7 +10,7 @@ const Map = ({ location, label, style }) => {
     lng: location.longitude
   }
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog'
+    googleMapsApiKey: process.env.REACT_APP_API_KEY
   })
 
   const renderMap = () => {

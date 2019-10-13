@@ -7,7 +7,6 @@ import { toggleEditModal } from '../../actions/responder/toggleEditModal.action'
 import { setSelectedResponder } from '../../actions/responder/setSelectedResponder.action'
 import { changeResponderStatus } from '../../actions/responder/changeResponderStatus.action'
 import { statuses } from '../../constants/User'
-import _ from 'lodash'
 
 const ResponderListItem = ({ responder }) => {
   const dispatch = useDispatch()
@@ -98,8 +97,8 @@ const ResponderListItem = ({ responder }) => {
         }
         title={
           <b>
-            {_.startCase(responder.firstName)} {_.startCase(responder.lastName)}{' '}
-            | <Tag color={color}>{responder.status.toUpperCase()}</Tag>
+            {responder.firstName} {responder.lastName} |{' '}
+            <Tag color={color}>{responder.status.toUpperCase()}</Tag>
           </b>
         }
         description={
