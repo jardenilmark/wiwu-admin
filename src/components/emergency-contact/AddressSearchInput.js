@@ -29,7 +29,7 @@ const AddressSearchInput = ({
   })
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog',
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
     libraries
   })
 
