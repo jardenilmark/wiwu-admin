@@ -2,7 +2,6 @@ import { sendNotification } from '../emergency-request/sendNotification'
 
 import { message } from 'antd'
 
-console.log(process.env)
 export const broadcastNotification = (notificationMessage, filters) => {
   const data = {
     app_id: process.env.REACT_APP_ONE_SIGNAL_API_KEY,
