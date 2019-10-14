@@ -6,7 +6,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog',
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: 'wiwu-48f9e.firebaseapp.com',
   databaseURL: 'https://wiwu-48f9e.firebaseio.com',
   projectId: 'wiwu-48f9e',

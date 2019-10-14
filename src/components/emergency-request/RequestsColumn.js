@@ -6,7 +6,6 @@ import {
   Col,
   Icon,
   Input,
-  message,
   Popconfirm,
   Spin,
   Tag,
@@ -23,9 +22,9 @@ import _ from 'lodash'
 
 import { updateRequest } from '../../actions/emergency-request/updateEmergency.action'
 
-import { sendNotification } from '../../helpers/emergency-request/sendNotification'
-
 import Map from '../Map'
+
+import { broadcastNotification } from '../../helpers/common/broadcastNotification'
 
 const StyledImage = styled.img`
   &:hover {
@@ -203,25 +202,16 @@ const RequestsColumn = props => {
                     title={'Are you sure to broadcast this emergency?'}
                     okText={'Yes'}
                     cancelText='No'
-                    onConfirm={() => {
-                      sendNotification({
-                        app_id: '99a5a234-ed7d-48a6-9738-4cf5a7a4fbec',
-                        contents: {
-                          en: 'An emergency is near your area!'
-                        },
-                        android_group: ['All'],
-                        filters: [
-                          {
-                            field: 'location',
-                            radius: '1000', // within 1000 meters
-                            lat: request.location.latitude,
-                            long: request.location.longitude
-                          }
-                        ]
-                      })
-
-                      message.success('Emergency was broadcast!', 2)
-                    }}>
+                    onConfirm={() =>
+                      broadcastNotification('An emergency is near your area!', [
+                        {
+                          field: 'location',
+                          radius: '1000', // within 1000 meters
+                          lat: request.location.latitude,
+                          long: request.location.longitude
+                        }
+                      ])
+                    }>
                     <Button
                       size={'small'}
                       type={'link'}
