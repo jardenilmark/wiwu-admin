@@ -81,8 +81,9 @@ const TwilioVideo = props => {
       const room = await Video.connect(token, connectOptions)
       roomJoined(room)
     } catch (error) {
-      if (error.message.toUpperCase() === 'USER DEVICE COULD NOT FOUND') {
-        message.error('Webcam and microphone not found.', 10)
+      const errorString = error.messge.toUpperCase()
+      if (errorString.includes('DEVICE NOT FOUND')) {
+        message.error('Webcam or microphone not found.', 10)
       } else {
         message.error(error.message, 10)
       }
