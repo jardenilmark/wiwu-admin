@@ -32,12 +32,25 @@ const StyledImage = styled.img`
   }
 `
 
+const StyledVideo = styled.video`
+  &:hover {
+    cursor: pointer;
+  }
+`
+
 const RequestsColumn = props => {
   const dispatch = useDispatch()
-  const { title, requests, user, setMediaModalOpen, setMediaUrl } = props
+  const {
+    title,
+    requests,
+    user,
+    setMediaModalOpen,
+    setMedia,
+    isSpamRequestsVisible
+  } = props
 
   return (
-    <Col span={8} style={{ height: '75vh' }}>
+    <Col span={isSpamRequestsVisible ? 8 : 12} style={{ height: '75vh' }}>
       <b>{title}</b>
       <Spacer height={16} />
       <div style={{ height: '100%', overflow: 'auto' }}>
@@ -117,8 +130,9 @@ const RequestsColumn = props => {
                 </div>
               }
               cover={
-                request.media && (
-                  <ProgressiveImage src={request.media} placeholder='media'>
+                request.media &&
+                (request.media.ext === 'jpg' ? (
+                  <ProgressiveImage src={request.media.url} placeholder='media'>
                     {(src, loading) =>
                       loading ? (
                         <Spin style={{ marginTop: 24 }} spinning={true} />
@@ -127,9 +141,9 @@ const RequestsColumn = props => {
                           <StyledImage
                             onClick={() => {
                               setMediaModalOpen(true)
-                              setMediaUrl(src)
+                              setMedia(request.media)
                             }}
-                            height={100}
+                            height={isSpamRequestsVisible ? 100 : 200}
                             src={src}
                             alt={'media'}
                             style={{ objectFit: 'cover' }}
@@ -138,7 +152,17 @@ const RequestsColumn = props => {
                       )
                     }
                   </ProgressiveImage>
-                )
+                ) : (
+                  <StyledVideo
+                    onClick={() => {
+                      setMediaModalOpen(true)
+                      setMedia(request.media)
+                    }}
+                    height={isSpamRequestsVisible ? 100 : 200}
+                    src={request.media.url}
+                    style={{ objectFit: 'cover' }}
+                  />
+                ))
               }
               extra={
                 _.upperCase(title) === 'PENDING' && (

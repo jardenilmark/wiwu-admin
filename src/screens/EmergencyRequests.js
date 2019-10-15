@@ -6,8 +6,8 @@ import RequestsColumn from '../components/emergency-request/RequestsColumn'
 
 const EmergencyRequests = () => {
   const [isMediaModalOpen, setMediaModalOpen] = useState(false)
-  const [mediaUrl, setMediaUrl] = useState(null)
-  const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(false)
+  const [media, setMedia] = useState(null)
+  const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(true)
   const { emergency, admin } = useSelector(state => state)
   const { list: requests } = emergency
   const { current: user } = admin
@@ -42,28 +42,31 @@ const EmergencyRequests = () => {
       {/* list of alerts */}
       <div style={styles.listWrapper}>
         <div style={styles.list}>
-          <Row gutter={16} justify='center' type='flex'>
+          <Row gutter={16} type='flex' justify='center'>
             <RequestsColumn
               title={'Pending'}
               requests={pendings}
               user={user}
+              isSpamRequestsVisible={isSpamRequestsVisible}
               setMediaModalOpen={setMediaModalOpen}
-              setMediaUrl={setMediaUrl}
+              setMedia={setMedia}
             />
             <RequestsColumn
               title={'Completed'}
               requests={completeds}
               user={user}
+              isSpamRequestsVisible={isSpamRequestsVisible}
               setMediaModalOpen={setMediaModalOpen}
-              setMediaUrl={setMediaUrl}
+              setMedia={setMedia}
             />
             {isSpamRequestsVisible && (
               <RequestsColumn
                 title={'Spam'}
                 requests={spams}
                 user={user}
+                isSpamRequestsVisible={isSpamRequestsVisible}
                 setMediaModalOpen={setMediaModalOpen}
-                setMediaUrl={setMediaUrl}
+                setMedia={setMedia}
               />
             )}
           </Row>
@@ -71,20 +74,37 @@ const EmergencyRequests = () => {
       </div>
 
       {/* modal for enlarged image */}
-      <Modal
-        title={'Enlarged Media'}
-        width={640}
-        visible={isMediaModalOpen}
-        onOk={() => {
-          setMediaModalOpen(false)
-          setMediaUrl(null)
-        }}
-        onCancel={() => {
-          setMediaModalOpen(false)
-          setMediaUrl(null)
-        }}>
-        <img width={'100%'} src={mediaUrl} alt={'media-url'} />
-      </Modal>
+      {media && (
+        <Modal
+          title={'Enlarged Media'}
+          width={640}
+          visible={isMediaModalOpen}
+          onOk={() => {
+            setMediaModalOpen(false)
+            setMedia(null)
+          }}
+          onCancel={() => {
+            setMediaModalOpen(false)
+            setMedia(null)
+          }}>
+          {media.ext === 'jpg' ? (
+            <img
+              width={'100%'}
+              height={350}
+              src={media.url}
+              alt={'media-url'}
+            />
+          ) : (
+            <video
+              width={'100%'}
+              height={350}
+              src={media.url}
+              controls
+              autoplay
+            />
+          )}
+        </Modal>
+      )}
     </Layout.Content>
   )
 }
