@@ -3,6 +3,7 @@ import { createAction } from 'redux-actions'
 import { CREATE_ALERT } from './alert.constants'
 import { firestore as db } from '../../firebase'
 import * as firebase from 'firebase/app'
+import { broadcastNotification } from '../../helpers/common/broadcastNotification'
 
 export const createAlert = values => {
   return async dispatch => {
@@ -11,6 +12,7 @@ export const createAlert = values => {
       const payload = { ...values, date: currentDate, status: 'active' }
       const res = await db.collection('emergency-alerts').add(payload)
 
+      broadcastNotification(`Emergency broadcast: ${values.message}`)
       message.success('Alert created successfully!', 5)
       dispatch(
         createAction(CREATE_ALERT)({

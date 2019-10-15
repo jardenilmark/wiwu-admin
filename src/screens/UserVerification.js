@@ -37,7 +37,7 @@ const UserVerification = () => {
   })
 
   if (fetching) {
-    return <Spinner tip='Fetching pending users...' height='100%' />
+    return <Spinner tip='Fetching pending users...' height={700} />
   }
 
   const renderActions = (text, record) => (

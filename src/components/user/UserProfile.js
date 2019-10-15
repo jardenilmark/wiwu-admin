@@ -77,6 +77,7 @@ const EmergencyRequestDetails = ({
 const UserProfile = ({ user, drawerVisibility, setDrawerVisibility }) => {
   const [secondDrawerVisibility, setSecondDrawerVisibility] = useState(false)
   const [selectedEmergency, setSelectedEmergency] = useState()
+
   return (
     <Drawer
       title={<b>User Profile</b>}
