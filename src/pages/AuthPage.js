@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Card, Row, Col, Tabs } from 'antd'
 
@@ -11,7 +11,11 @@ import { getActiveKey } from '../helpers/common/getActiveKey'
 const { TabPane } = Tabs
 
 const AuthScreen = ({ history, location, match }) => {
-  const [activeKey, setActiveKey] = useState(getActiveKey(location))
+  const [activeKey, setActiveKey] = useState()
+
+  useEffect(() => {
+    setActiveKey(getActiveKey(location))
+  }, [location])
 
   return (
     <Row style={styles.row} type='flex' justify='center' align='middle'>

@@ -290,15 +290,21 @@ const RequestsColumn = props => {
               <table>
                 <tbody>
                   <tr>
-                    <td style={{ paddingRight: 8 }}>Requester</td>
+                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
+                      Requester:
+                    </td>
                     <td>{request.name}</td>
                   </tr>
                   <tr>
-                    <td style={{ paddingRight: 8 }}>Phone</td>
+                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
+                      Phone:
+                    </td>
                     <td>{request.phoneNumber}</td>
                   </tr>
                   <tr>
-                    <td style={{ paddingRight: 8 }}>Address</td>
+                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
+                      Address:
+                    </td>
                     <td>
                       {request.address || (
                         <Tooltip
@@ -310,7 +316,9 @@ const RequestsColumn = props => {
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ paddingRight: 8 }}>Responder</td>
+                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
+                      Responder:
+                    </td>
                     <td>
                       {request.responderId
                         ? `${request.responderId.firstName} ${request.responderId.lastName}`

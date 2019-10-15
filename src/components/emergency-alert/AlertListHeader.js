@@ -32,10 +32,7 @@ const AlertListHeader = ({
           <strong>Archived</strong>
         </Radio.Button>
       </Radio.Group>
-      <Button
-        icon='alert'
-        type='dashed'
-        onClick={() => setDrawerVisibility(true)}>
+      <Button icon='alert' onClick={() => setDrawerVisibility(true)}>
         Add Emergency Alert
       </Button>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Layout, Drawer } from 'antd'
+import { Layout, Drawer, Divider } from 'antd'
 
 import ContactList from '../components/emergency-contact/ContactList'
 import ContactForm from '../components/emergency-contact/ContactForm'

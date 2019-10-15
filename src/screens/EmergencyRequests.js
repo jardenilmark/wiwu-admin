@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Input, Row, Modal } from 'antd'
+import { Layout, Input, Row, Modal, Button } from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import RequestsColumn from '../components/emergency-request/RequestsColumn'
@@ -7,6 +7,7 @@ import RequestsColumn from '../components/emergency-request/RequestsColumn'
 const EmergencyRequests = () => {
   const [isMediaModalOpen, setMediaModalOpen] = useState(false)
   const [mediaUrl, setMediaUrl] = useState(null)
+  const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(false)
   const { emergency, admin } = useSelector(state => state)
   const { list: requests } = emergency
   const { current: user } = admin
@@ -31,12 +32,17 @@ const EmergencyRequests = () => {
           placeholder='Search emergency requests...'
           style={{ width: 240 }}
         />
+        <Button
+          type='dashed'
+          onClick={() => setSpamRequestsVisibility(!isSpamRequestsVisible)}>
+          {isSpamRequestsVisible ? 'Hide Spam Requests' : 'Show Spam Requests'}
+        </Button>
       </div>
 
       {/* list of alerts */}
       <div style={styles.listWrapper}>
         <div style={styles.list}>
-          <Row gutter={16}>
+          <Row gutter={16} justify='center' type='flex'>
             <RequestsColumn
               title={'Pending'}
               requests={pendings}
@@ -51,13 +57,15 @@ const EmergencyRequests = () => {
               setMediaModalOpen={setMediaModalOpen}
               setMediaUrl={setMediaUrl}
             />
-            <RequestsColumn
-              title={'Spam'}
-              requests={spams}
-              user={user}
-              setMediaModalOpen={setMediaModalOpen}
-              setMediaUrl={setMediaUrl}
-            />
+            {isSpamRequestsVisible && (
+              <RequestsColumn
+                title={'Spam'}
+                requests={spams}
+                user={user}
+                setMediaModalOpen={setMediaModalOpen}
+                setMediaUrl={setMediaUrl}
+              />
+            )}
           </Row>
         </div>
       </div>
