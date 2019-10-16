@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Layout, Input, Row, Modal, Button } from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
+import { CSVLink } from 'react-csv'
+import moment from 'moment'
+
 import RequestsColumn from '../components/emergency-request/RequestsColumn'
+
+import { getCsvData } from '../helpers/common/getCsvData'
 
 const EmergencyRequests = () => {
   const [isMediaModalOpen, setMediaModalOpen] = useState(false)
   const [media, setMedia] = useState(null)
+  const [csvData, setCsvData] = useState([])
   const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(true)
   const { emergency, admin } = useSelector(state => state)
   const { list: requests } = emergency
@@ -20,6 +26,22 @@ const EmergencyRequests = () => {
   )
   const spams = requests.filter(({ isMarkedSpam }) => isMarkedSpam)
 
+  useEffect(() => {
+    if (requests.length <= 0) {
+      return
+    }
+
+    setCsvData(
+      getCsvData(
+        requests,
+        user.department,
+        spams.length,
+        pendings.length,
+        completeds.length
+      )
+    )
+  }, [requests])
+
   return (
     <Layout.Content style={styles.content}>
       <Helmet>
@@ -32,6 +54,16 @@ const EmergencyRequests = () => {
           placeholder='Search emergency requests...'
           style={{ width: 240 }}
         />
+        <Button type='dashed'>
+          <CSVLink
+            data={csvData}
+            filename={`${user.department}-${moment()
+              .toDate()
+              .toLocaleDateString()}-Report`}
+            onClick={() => !(csvData.length <= 0)}>
+            Download Report
+          </CSVLink>
+        </Button>
         <Button
           type='dashed'
           onClick={() => setSpamRequestsVisibility(!isSpamRequestsVisible)}>
