@@ -42,30 +42,33 @@ const UserVerification = () => {
 
   const renderActions = (text, record) => (
     <span>
-      <Button
-        icon='video-camera'
-        type={record.joinedRoom ? 'primary' : 'dashed'}
-        onClick={() => {
-          setRecord(record)
-          dispatch(isBeingVerified(record.id, true))
-          dispatch(getToken(identity, record.id))
-        }}
-        disabled={!record.joinedRoom}
-        style={{ margin: '8px' }}>
-        Join Room
-      </Button>
-      <Button
-        icon='idcard'
-        type={record.idImage ? 'primary' : 'dashed'}
-        onClick={() => {
-          setRecord(record)
-          dispatch(isBeingVerified(record.id, true))
-          toggleIdModal(true)
-        }}
-        disabled={!record.idImage}
-        style={{ margin: '8px' }}>
-        View ID
-      </Button>
+      {record.hasValidId ? (
+        <Button
+          icon='video-camera'
+          type={record.joinedRoom ? 'primary' : 'dashed'}
+          onClick={() => {
+            setRecord(record)
+            dispatch(isBeingVerified(record.id, true))
+            dispatch(getToken(identity, record.id))
+          }}
+          disabled={!record.joinedRoom}
+          style={{ margin: '8px' }}>
+          Join Room
+        </Button>
+      ) : (
+        <Button
+          icon='idcard'
+          type={record.idImage ? 'primary' : 'dashed'}
+          onClick={() => {
+            setRecord(record)
+            dispatch(isBeingVerified(record.id, true))
+            toggleIdModal(true)
+          }}
+          disabled={!record.idImage}
+          style={{ margin: '8px' }}>
+          View ID
+        </Button>
+      )}
     </span>
   )
 
@@ -118,7 +121,7 @@ const UserVerification = () => {
       onFilter: (value, record) => {
         if (value === 'video' && record.joinedRoom) {
           return true
-        } else if (value === 'id' && record.idImage) {
+        } else if (value === 'id' && record.idImage && !record.hasValidId) {
           return true
         } else {
           return false

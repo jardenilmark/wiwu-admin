@@ -11,7 +11,8 @@ import {
   SEARCH_USERS,
   FILTER_USERS,
   CHANGE_USER_STATUS,
-  VERIFY_USER
+  VERIFY_USER,
+  VERIFY_USER_ID
 } from '../actions/user/user.constants'
 import {
   GET_RESPONDERS,
@@ -134,6 +135,11 @@ export default function reducer(state = initialState, action) {
         users: action.payload
       }
     case VERIFY_USER:
+      return {
+        ...state,
+        users: action.payload
+      }
+    case VERIFY_USER_ID:
       return {
         ...state,
         users: action.payload

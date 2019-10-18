@@ -4,13 +4,13 @@ import { Button, Modal, Descriptions, Empty, Divider } from 'antd'
 import * as PropTypes from 'prop-types'
 import ProgressiveImage from 'react-progressive-image'
 
-import { verifyUser } from '../../actions/user/verifyUser.action'
 import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
 
 import { statuses } from '../../constants/User'
 
 import Spinner from '../Spinner'
 import { isBeingVerified } from '../../actions/user/isBeingVerified.action'
+import { verifyUserId } from '../../actions/user/verifyUserId.action'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -36,11 +36,11 @@ const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
             icon='check-circle'
             onClick={async e => {
               setIsSubmitting(true)
-              await dispatch(verifyUser(record.id))
+              await dispatch(verifyUserId(record.id))
               close()
             }}
             disabled={!record.idImage || isSubmitting}>
-            Verify User
+            Verify ID
           </Button>,
           <Button
             key='block'
