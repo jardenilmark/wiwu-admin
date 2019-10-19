@@ -1,4 +1,4 @@
-import { sendNotification } from '../emergency-request/sendNotification'
+import { sendNotificationHelper } from '../emergency-request/sendNotification.helper'
 
 import { message } from 'antd'
 
@@ -17,7 +17,7 @@ export const broadcastNotification = (notificationMessage, filters) => {
     data.included_segments = ['All']
   }
   console.log(data)
-  sendNotification(data)
+  sendNotificationHelper(data)
 
   message.success('Emergency was broadcast!', 2)
 }

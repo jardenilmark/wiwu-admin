@@ -1,4 +1,4 @@
-export const sendNotification = data => {
+export const sendNotificationHelper = data => {
   // TODO: hide api keys
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',

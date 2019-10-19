@@ -1,6 +1,6 @@
 import Geocode from 'react-geocode'
 
-export const getCoordinates = async address => {
+export const getCoordinatesHelper = async address => {
   let location
 
   try {
