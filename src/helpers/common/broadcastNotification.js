@@ -16,7 +16,7 @@ export const broadcastNotification = (notificationMessage, filters) => {
   } else {
     data.included_segments = ['All']
   }
-  console.log(data)
+
   sendNotification(data)
 
   message.success('Emergency was broadcast!', 2)
