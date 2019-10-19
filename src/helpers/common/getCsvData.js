@@ -1,89 +1,65 @@
 import moment from 'moment'
 
 export const getCsvData = (requests, department, spam, pending, completed) => {
-  let lapazCount = 0
-  let moloCount = 0
-  let jaroCount = 0
-  let paviaCount = 0
-  let otonCount = 0
-  let sanMiguelCount = 0
-  let santaBarbaraCount = 0
-  let leganesCount = 0
-  let zarragaCount = 0
+  const municipalities = {
+    lapaz: 0,
+    molo: 0,
+    jaro: 0,
+    pavia: 0,
+    oton: 0,
+    sanMiguel: 0,
+    santaBarbara: 0,
+    leganes: 0,
+    zarraga: 0
+  }
 
-  let dayAccidentCount = 0
-  let weekAccidentCount = 0
-  let monthAccidentCount = 0
-  let yearAccidentCount = 0
+  const accidentDate = {
+    day: 0,
+    week: 0,
+    month: 0,
+    year: 0
+  }
 
   requests.forEach(e => {
     const requestDate = e.date.toDate()
-    const startOfDay = moment()
-      .startOf('day')
-      .toDate()
-    const endOfDay = moment()
-      .endOf('day')
-      .toDate()
-    const startOfWeek = moment()
-      .startOf('week')
-      .toDate()
-    const endOfWeek = moment()
-      .endOf('week')
-      .toDate()
-    const startOfMonth = moment()
-      .startOf('month')
-      .toDate()
-    const endOfMonth = moment()
-      .endOf('month')
-      .toDate()
-    const startOfYear = moment()
-      .startOf('year')
-      .toDate()
-    const endOfYear = moment()
-      .endOf('year')
-      .toDate()
 
-    const isWithinDay = moment().isBetween(startOfDay, endOfDay, requestDate)
-    const isWithinWeek = moment().isBetween(startOfWeek, endOfWeek, requestDate)
-    const isWithinMonth = moment().isBetween(
-      startOfMonth,
-      endOfMonth,
-      requestDate
-    )
-    const isWithinYear = moment().isBetween(startOfYear, endOfYear, requestDate)
+    const isWithinPeriod = period =>
+      moment(requestDate).isBetween(
+        moment()
+          .startOf(period)
+          .toDate(),
+        moment()
+          .endOf(period)
+          .toDate(),
+        requestDate
+      )
 
-    if (isWithinDay) dayAccidentCount++
-    if (isWithinWeek) weekAccidentCount++
-    if (isWithinMonth) monthAccidentCount++
-    if (isWithinYear) yearAccidentCount++
+    for (const date in accidentDate) {
+      if (isWithinPeriod(date)) accidentDate[date]++
+    }
 
     const address = e.address.toLowerCase()
     const hasAddress = name => address.includes(name)
 
-    if (hasAddress('jaro')) jaroCount++
-    else if (hasAddress('la paz')) lapazCount++
-    else if (hasAddress('molo')) moloCount++
-    else if (hasAddress('pavia')) paviaCount++
-    else if (hasAddress('oton')) otonCount++
-    else if (hasAddress('san miguel')) sanMiguelCount++
-    else if (hasAddress('santa barbara')) santaBarbaraCount++
-    else if (hasAddress('leganes')) leganesCount++
-    else if (hasAddress('zarraga')) zarragaCount++
+    for (const municipality in municipalities) {
+      if (hasAddress(municipality)) return municipalities[municipality]++
+    }
   })
+
+  const municipalityData = Object.keys(municipalities).map(municipality => [
+    `${municipality}_incidents`,
+    municipalities[municipality]
+  ])
+
+  const accidentDateData = Object.keys(accidentDate).map(date => [
+    date,
+    accidentDate[date]
+  ])
 
   return [
     ['DEPARTMENT', department],
     [],
-    ['AREA', 'ACCIDENT_COUNT'],
-    ['lapaz_incidents', lapazCount],
-    ['molo_incidents', moloCount],
-    ['jaro_incidents', jaroCount],
-    ['pavia_incidents', paviaCount],
-    ['oton_incidents', otonCount],
-    ['san_miguel_incidents', sanMiguelCount],
-    ['santa_barbara_incidents', santaBarbaraCount],
-    ['leganes_incidents', leganesCount],
-    ['lapaz_incidents', zarragaCount],
+    ...municipalityData,
     [],
     ['STATUS', 'REQUEST_COUNT'],
     ['spam', spam],
@@ -91,9 +67,6 @@ export const getCsvData = (requests, department, spam, pending, completed) => {
     ['completed', completed],
     [],
     ['TIME_PERIOD', 'TIME_PERIOD_COUNT'],
-    ['day', dayAccidentCount],
-    ['week', weekAccidentCount],
-    ['month', monthAccidentCount],
-    ['year', yearAccidentCount]
+    ...accidentDateData
   ]
 }

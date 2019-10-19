@@ -42,6 +42,7 @@ const EmergencyRequests = () => {
     )
   }, [requests])
 
+  console.log(csvData)
   return (
     <Layout.Content style={styles.content}>
       <Helmet>
