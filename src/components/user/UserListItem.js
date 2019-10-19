@@ -7,7 +7,7 @@ import ProgressiveImage from 'react-progressive-image'
 import UserProfile from './UserProfile'
 import Spinner from '../Spinner'
 
-import { getTagColor } from '../../helpers/common/getTagColor'
+import { getTagColor } from '../../helpers/common/getTagColor.helper'
 import avatarPlaceholder from '../../assets/images/user-avatar.png'
 
 import { changeUserStatus } from '../../actions/user/changeUserStatus.action'

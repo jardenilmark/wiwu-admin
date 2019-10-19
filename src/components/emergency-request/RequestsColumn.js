@@ -1,30 +1,17 @@
 import React from 'react'
 import Spacer from '../Spacer'
-import {
-  Button,
-  Card,
-  Col,
-  Icon,
-  Input,
-  Popconfirm,
-  Spin,
-  Tag,
-  Tooltip,
-  Modal
-} from 'antd'
-import { firestore } from '../../firebase'
-import { useDispatch } from 'react-redux'
+import { Card, Col, Input, Spin, Tag, Tooltip } from 'antd'
 import ProgressiveImage from 'react-progressive-image'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import _ from 'lodash'
 
-import { updateRequest } from '../../actions/emergency-request/updateEmergency.action'
-
-import Map from '../Map'
-
-import { broadcastNotification } from '../../helpers/common/broadcastNotification'
+import MarkCompletedButton from './MarkCompletedButton'
+import AssignToMeButton from './AssignToMeButton'
+import BroadcastButton from './BroadcastButton'
+import ShowInMapButton from './ShowInMapButton'
+import MarkAsSpamButton from './MarkAsSpamButton'
 
 const StyledImage = styled.img`
   &:hover {
@@ -39,7 +26,6 @@ const StyledVideo = styled.video`
 `
 
 const RequestsColumn = props => {
-  const dispatch = useDispatch()
   const {
     title,
     requests,
@@ -63,60 +49,6 @@ const RequestsColumn = props => {
           } else {
             tagColor = 'blue'
           }
-
-          /**
-           * MARK COMPLETED
-           * conditions
-           * - cannot move card to completed if no assigned responder
-           * - cannot move card to completed if card is not assigned to you
-           * - can only move card if card is assigned and if card is assigned to u
-           */
-          const isMarkCompletedDisabled =
-            !request.responderId ||
-            (request.responderId && request.responderId.id !== user.uid)
-          const getMarkCompletedDisabledTooltip = () => {
-            if (request.responderId && request.responderId.id !== user.uid) {
-              return 'Unable to move. This card is not assigned to you!'
-            } else if (!request.responderId) {
-              return 'Unable to move unassigned cards'
-            } else {
-              return 'Move card to completed'
-            }
-          }
-
-          /**
-           * ASSIGN TO ME
-           * conditions:
-           * - cannot assign to me if card is already assigned
-           * - cannot assign to me if card is marked as spam
-           */
-          const isAssignToMeDisabled =
-            request.responderId || request.isMarkedSpam
-          const getAssignToMeDisabledTooltip = () => {
-            if (request.responderId) {
-              return 'Request already assigned'
-            } else if (request.isMarkedSpam) {
-              return 'Cannot assign, already marked as spam!'
-            } else {
-              return 'Assign to me'
-            }
-          }
-
-          /**
-           * BROADCAST EMERGENCY
-           * conditions:
-           * - cannot broadcast emergency if completed
-           * - cannot broadcast emergency if marked as spam
-           */
-          const isBroadcastEmergencyDisabled =
-            request.status === 'COMPLETED' || request.isMarkedSpam
-
-          /**
-           * MARK AS SPAM
-           * - cannot mark as spam if card is completed
-           */
-          const isMarkAsSpamDisabled =
-            _.upperCase(title) === 'COMPLETED' && request.status === 'COMPLETED'
 
           return (
             <Card
@@ -167,139 +99,29 @@ const RequestsColumn = props => {
               extra={
                 _.upperCase(title) === 'PENDING' && (
                   // MARK COMPLETED
-                  <Popconfirm
-                    disabled={isMarkCompletedDisabled}
-                    title='Are you sure to mark this completed?'
-                    okText='Yes'
-                    cancelText='No'
-                    onConfirm={() =>
-                      dispatch(
-                        updateRequest(request.id, {
-                          status: 'COMPLETED'
-                        })
-                      )
-                    }>
-                    <Tooltip
-                      key={'move-to-completed'}
-                      title={getMarkCompletedDisabledTooltip}>
-                      <Button
-                        icon={'arrow-right'}
-                        disabled={isMarkCompletedDisabled}
-                      />
-                    </Tooltip>
-                  </Popconfirm>
+                  <MarkCompletedButton request={request} user={user} />
                 )
               }
               actions={[
                 // ASSIGN TO ME
-                <Tooltip
+                <AssignToMeButton
                   key={'assign-to-me'}
-                  title={getAssignToMeDisabledTooltip}>
-                  <Popconfirm
-                    disabled={isAssignToMeDisabled}
-                    title='Assign this request to yourself?'
-                    okText='Yes'
-                    cancelText='No'
-                    onConfirm={() =>
-                      dispatch(
-                        updateRequest(request.id, {
-                          responderId: firestore.doc(`users/${user.uid}`)
-                        })
-                      )
-                    }>
-                    <Button
-                      disabled={isAssignToMeDisabled}
-                      size={'small'}
-                      type={'link'}
-                      style={{
-                        color: isAssignToMeDisabled ? 'grey' : 'green'
-                      }}>
-                      <Icon type='user-add' />
-                    </Button>
-                  </Popconfirm>
-                </Tooltip>,
+                  request={request}
+                  user={user}
+                />,
 
                 // BROADCAST EMERGENCY
-                <Tooltip key={'broadcast'} title='Broadcast emergency'>
-                  <Popconfirm
-                    disabled={isBroadcastEmergencyDisabled}
-                    title={'Are you sure to broadcast this emergency?'}
-                    okText={'Yes'}
-                    cancelText='No'
-                    onConfirm={() =>
-                      broadcastNotification('An emergency is near your area!', [
-                        {
-                          field: 'location',
-                          radius: '1000', // within 1000 meters
-                          lat: request.location.latitude,
-                          long: request.location.longitude
-                        }
-                      ])
-                    }>
-                    <Button
-                      size={'small'}
-                      type={'link'}
-                      disabled={isBroadcastEmergencyDisabled}>
-                      <Icon type='global' />
-                    </Button>
-                  </Popconfirm>
-                </Tooltip>,
+                <BroadcastButton key={'broadcast'} request={request} />,
 
                 // SHOW EMERGENCY LOCATION
-                <Tooltip key={'show-location'} title='Show in map'>
-                  <Button
-                    size={'small'}
-                    type={'link'}
-                    onClick={() => {
-                      Modal.info({
-                        width: 660,
-                        icon: null,
-                        keyboard: false,
-                        maskClosable: false,
-                        okText: 'Close',
-                        okType: 'danger',
-                        content: <Map location={request.location} />
-                      })
-                    }}>
-                    <Icon type='environment' />
-                  </Button>
-                </Tooltip>,
+                <ShowInMapButton key={'show-location'} request={request} />,
 
                 // MARK AS SPAM
-                <Tooltip
+                <MarkAsSpamButton
                   key={'mark-spam'}
-                  title={
-                    request.isMarkedSpam ? 'Remove from spam' : 'Mark as spam'
-                  }>
-                  <Popconfirm
-                    disabled={isMarkAsSpamDisabled}
-                    title={`Are you sure to ${
-                      request.isMarkedSpam
-                        ? 'remove this from spam'
-                        : 'mark this as spam'
-                    }?`}
-                    okText={'Yes'}
-                    cancelText='No'
-                    onConfirm={() =>
-                      dispatch(
-                        updateRequest(request.id, {
-                          isMarkedSpam: !request.isMarkedSpam
-                        })
-                      )
-                    }>
-                    <Button
-                      size={'small'}
-                      type={'link'}
-                      disabled={isMarkAsSpamDisabled}
-                      style={{
-                        color: isMarkAsSpamDisabled ? 'grey' : 'red'
-                      }}>
-                      <Icon
-                        type={request.isMarkedSpam ? 'minus-circle' : 'warning'}
-                      />
-                    </Button>
-                  </Popconfirm>
-                </Tooltip>
+                  groupTitle={title}
+                  request={request}
+                />
               ]}>
               {/* role */}
               <b>{request.role}</b>
