@@ -3,12 +3,12 @@ import { message } from 'antd'
 import { createAction } from 'redux-actions'
 
 import { firestore as db } from '../../firebase'
-import { getCoordinates } from '../../helpers/common/getCoordinates'
+import { getCoordinatesHelper } from '../../helpers/common/getCoordinates.helper'
 import { EDIT_CONTACT } from './contact.constants'
 
 export const editContact = ({ address, ...rest }, id) => {
   return async (dispatch, getState) => {
-    const location = await getCoordinates(address)
+    const location = await getCoordinatesHelper(address)
     const values = { ...rest, location, address }
 
     try {

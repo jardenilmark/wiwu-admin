@@ -19,7 +19,7 @@ import NoMatch from '../screens/NoMatch'
 import { GET_EMERGENCIES } from '../actions/emergency-request/emergency.constants'
 import soundfile from '../assets/sounds/alert.mp3'
 import { roles, departments } from '../constants/User'
-import { getActiveKey } from '../helpers/common/getActiveKey'
+import { getActiveKeyHelper } from '../helpers/common/getActiveKey.helper'
 import EmergencyAlerts from '../screens/EmergencyAlerts'
 import EmergencyRequests from '../screens/EmergencyRequests'
 
@@ -47,7 +47,7 @@ const AdminPage = props => {
   const dispatch = useDispatch()
   const { match } = props
   const { role, department } = useSelector(({ admin }) => admin.current)
-  const activeKey = getActiveKey(props.location)
+  const activeKey = getActiveKeyHelper(props.location)
   const routes = role === roles.ADMIN ? adminRoutes : responderRoutes
 
   toast.configure()

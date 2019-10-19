@@ -199,7 +199,7 @@ RequestsColumn.propTypes = {
   requests: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   setMediaModalOpen: PropTypes.func.isRequired,
-  setMediaUrl: PropTypes.func.isRequired
+  setMedia: PropTypes.func.isRequired
 }
 
 export default RequestsColumn

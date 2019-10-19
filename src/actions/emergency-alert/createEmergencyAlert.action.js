@@ -3,7 +3,7 @@ import { createAction } from 'redux-actions'
 import { CREATE_ALERT } from './alert.constants'
 import { firestore as db } from '../../firebase'
 import * as firebase from 'firebase/app'
-import { broadcastNotification } from '../../helpers/common/broadcastNotification'
+import { broadcastNotification } from '../../helpers/common/broadcastNotification.helper'
 
 export const createAlert = values => {
   return async dispatch => {

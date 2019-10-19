@@ -6,7 +6,7 @@ import SignInTab from '../components/authentication/SignInTab'
 import SignUpTab from '../components/authentication/SignUpTab'
 import Logo from '../components/Logo'
 
-import { getActiveKey } from '../helpers/common/getActiveKey'
+import { getActiveKeyHelper } from '../helpers/common/getActiveKey.helper'
 
 const { TabPane } = Tabs
 
@@ -14,7 +14,7 @@ const AuthScreen = ({ history, location, match }) => {
   const [activeKey, setActiveKey] = useState()
 
   useEffect(() => {
-    setActiveKey(getActiveKey(location))
+    setActiveKey(getActiveKeyHelper(location))
   }, [location])
 
   return (

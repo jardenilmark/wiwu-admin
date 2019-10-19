@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { signOut } from '../actions/admin/signOut.action'
 import { Helmet } from 'react-helmet'
 
-import { sendEmailVerification } from '../helpers/common/sendEmailVerification'
+import { sendEmailVerification } from '../helpers/common/sendEmailVerification.helper'
 
 const { Meta } = Card
 

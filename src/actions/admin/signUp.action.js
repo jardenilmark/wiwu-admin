@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP } from './admin.constants'
 import { statuses, roles } from '../../constants/User'
-import { sendEmailVerification } from '../../helpers/common/sendEmailVerification'
+import { sendEmailVerification } from '../../helpers/common/sendEmailVerification.helper'
 
 export const signUp = ({
   emailAddress: email,

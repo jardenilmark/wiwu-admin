@@ -1,19 +1,41 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Input, Row, Modal, Button } from 'antd'
+import {
+  Layout,
+  Input,
+  Row,
+  Modal,
+  Button,
+  Tooltip,
+  Tabs,
+  List,
+  Tag,
+  Avatar,
+  Icon
+} from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { CSVLink } from 'react-csv'
 import moment from 'moment'
-
+import _ from 'lodash'
+import { getCsvData } from '../helpers/common/getCsvData.helper'
 import RequestsColumn from '../components/emergency-request/RequestsColumn'
+import AssignToMeButton from '../components/emergency-request/AssignToMeButton'
+import BroadcastButton from '../components/emergency-request/BroadcastButton'
+import ShowInMapButton from '../components/emergency-request/ShowInMapButton'
+import MarkAsSpamButton from '../components/emergency-request/MarkAsSpamButton'
+import MarkCompletedButton from '../components/emergency-request/MarkCompletedButton'
+import logo from '../assets/images/wiwu-logo.png'
+import RequestsTab from '../components/emergency-request/RequestsTab'
 
-import { getCsvData } from '../helpers/common/getCsvData'
+const desc =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 
 const EmergencyRequests = () => {
   const [isMediaModalOpen, setMediaModalOpen] = useState(false)
   const [media, setMedia] = useState(null)
   const [csvData, setCsvData] = useState([])
   const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(true)
+  const [viewType, setViewType] = useState('list')
   const { emergency, admin } = useSelector(state => state)
   const { list: requests } = emergency
   const { current: user } = admin
@@ -50,10 +72,27 @@ const EmergencyRequests = () => {
 
       {/* header */}
       <div style={styles.headerWrapper}>
-        <Input.Search
-          placeholder='Search emergency requests...'
-          style={{ width: 240 }}
-        />
+        <div>
+          <Input.Search
+            placeholder='Search emergency requests...'
+            style={{ width: 240 }}
+          />
+          <Tooltip title='Compact List View'>
+            <Button
+              onClick={() => setViewType('list')}
+              style={{ marginLeft: 12, marginRight: 6 }}
+              type={viewType === 'list' ? 'primary' : 'ghost'}
+              icon='unordered-list'
+            />
+          </Tooltip>
+          <Tooltip title='Trello View'>
+            <Button
+              onClick={() => setViewType('trello')}
+              type={viewType === 'trello' ? 'primary' : 'ghost'}
+              icon='appstore'
+            />
+          </Tooltip>
+        </div>
         <Button type='dashed'>
           <CSVLink
             data={csvData}
@@ -74,34 +113,66 @@ const EmergencyRequests = () => {
       {/* list of alerts */}
       <div style={styles.listWrapper}>
         <div style={styles.list}>
-          <Row gutter={16} type='flex' justify='center'>
-            <RequestsColumn
-              title={'Pending'}
-              requests={pendings}
-              user={user}
-              isSpamRequestsVisible={isSpamRequestsVisible}
-              setMediaModalOpen={setMediaModalOpen}
-              setMedia={setMedia}
-            />
-            <RequestsColumn
-              title={'Completed'}
-              requests={completeds}
-              user={user}
-              isSpamRequestsVisible={isSpamRequestsVisible}
-              setMediaModalOpen={setMediaModalOpen}
-              setMedia={setMedia}
-            />
-            {isSpamRequestsVisible && (
+          {viewType === 'trello' ? (
+            <Row gutter={16} type='flex' justify='center'>
               <RequestsColumn
-                title={'Spam'}
-                requests={spams}
+                title={'Pending'}
+                requests={pendings}
                 user={user}
                 isSpamRequestsVisible={isSpamRequestsVisible}
                 setMediaModalOpen={setMediaModalOpen}
                 setMedia={setMedia}
               />
-            )}
-          </Row>
+              <RequestsColumn
+                title={'Completed'}
+                requests={completeds}
+                user={user}
+                isSpamRequestsVisible={isSpamRequestsVisible}
+                setMediaModalOpen={setMediaModalOpen}
+                setMedia={setMedia}
+              />
+              {isSpamRequestsVisible && (
+                <RequestsColumn
+                  title={'Spam'}
+                  requests={spams}
+                  user={user}
+                  isSpamRequestsVisible={isSpamRequestsVisible}
+                  setMediaModalOpen={setMediaModalOpen}
+                  setMedia={setMedia}
+                />
+              )}
+            </Row>
+          ) : (
+            <Tabs defaultActiveKey='pending'>
+              <Tabs.TabPane tab='Pending' key='pending'>
+                <RequestsTab
+                  title={'pending'}
+                  requests={pendings}
+                  user={user}
+                  setMediaModalOpen={setMediaModalOpen}
+                  setMedia={setMedia}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab='Completed' key='completed'>
+                <RequestsTab
+                  title={'completed'}
+                  requests={completeds}
+                  user={user}
+                  setMediaModalOpen={setMediaModalOpen}
+                  setMedia={setMedia}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab='Spam' key='spam'>
+                <RequestsTab
+                  title={'spam'}
+                  requests={spams}
+                  user={user}
+                  setMediaModalOpen={setMediaModalOpen}
+                  setMedia={setMedia}
+                />
+              </Tabs.TabPane>
+            </Tabs>
+          )}
         </div>
       </div>
 
@@ -132,7 +203,7 @@ const EmergencyRequests = () => {
               height={350}
               src={media.url}
               controls
-              autoplay
+              autoPlay
             />
           )}
         </Modal>
