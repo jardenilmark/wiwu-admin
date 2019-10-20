@@ -14,7 +14,7 @@ import RequestMedia from '../components/emergency-request/RequestMedia'
 import Spacer from '../components/Spacer'
 import styled from 'styled-components'
 
-const StyledRequestModal = styled(Modal)`
+const StyledNoPaddingModal = styled(Modal)`
   .ant-modal-body {
     padding: 0px;
   }
@@ -88,21 +88,25 @@ const EmergencyRequests = () => {
             />
           </Tooltip>
         </div>
-        <Button type='dashed'>
-          <CSVLink
-            data={csvData}
-            filename={`${user.department}-${moment()
-              .toDate()
-              .toLocaleDateString()}-Report`}
-            onClick={() => !(csvData.length <= 0)}>
-            Download Report
-          </CSVLink>
-        </Button>
-        <Button
-          type='dashed'
-          onClick={() => setSpamRequestsVisibility(!isSpamRequestsVisible)}>
-          {isSpamRequestsVisible ? 'Hide Spam Requests' : 'Show Spam Requests'}
-        </Button>
+        <div>
+          <Button type='dashed' style={{ marginRight: 6 }}>
+            <CSVLink
+              data={csvData}
+              filename={`${user.department}-${moment()
+                .toDate()
+                .toLocaleDateString()}-Report`}
+              onClick={() => !(csvData.length <= 0)}>
+              Download Report
+            </CSVLink>
+          </Button>
+          <Button
+            type='dashed'
+            onClick={() => setSpamRequestsVisibility(!isSpamRequestsVisible)}>
+            {isSpamRequestsVisible
+              ? 'Hide Spam Requests'
+              : 'Show Spam Requests'}
+          </Button>
+        </div>
       </div>
 
       {/* list of alerts */}
@@ -179,9 +183,9 @@ const EmergencyRequests = () => {
 
       {/* modal for enlarged image */}
       {media && (
-        <Modal
+        <StyledNoPaddingModal
           title={'Enlarged Media'}
-          width={640}
+          width={720}
           visible={isMediaModalOpen}
           onOk={() => {
             setMediaModalOpen(false)
@@ -194,25 +198,26 @@ const EmergencyRequests = () => {
           {media.ext === 'jpg' ? (
             <img
               width={'100%'}
-              height={350}
+              height={500}
+              style={{ objectFit: 'contain' }}
               src={media.url}
               alt={'media-url'}
             />
           ) : (
             <video
               width={'100%'}
-              height={350}
+              height={500}
               src={media.url}
               controls
               autoPlay
             />
           )}
-        </Modal>
+        </StyledNoPaddingModal>
       )}
 
       {/* modal for expanded request */}
       {request && (
-        <StyledRequestModal
+        <StyledNoPaddingModal
           title={
             <div>
               <Tag color={getDepartmentTagColor(request.department)}>
@@ -247,7 +252,7 @@ const EmergencyRequests = () => {
           <div style={{ padding: '16px' }}>
             <RequestBody request={request} />
           </div>
-        </StyledRequestModal>
+        </StyledNoPaddingModal>
       )}
     </Layout.Content>
   )
