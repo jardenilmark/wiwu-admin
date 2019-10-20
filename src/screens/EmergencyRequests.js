@@ -13,6 +13,7 @@ import RequestBody from '../components/emergency-request/RequestBody'
 import RequestMedia from '../components/emergency-request/RequestMedia'
 import Spacer from '../components/Spacer'
 import styled from 'styled-components'
+import FuzzySearch from 'fuzzy-search'
 
 const StyledNoPaddingModal = styled(Modal)`
   .ant-modal-body {
@@ -31,6 +32,10 @@ const EmergencyRequests = () => {
   const [csvData, setCsvData] = useState([])
   const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(true)
   const [viewType, setViewType] = useState('list')
+  const [currentTab, setCurrentTab] = useState('pending')
+  const [filteredPendings, setFilteredPendings] = useState([])
+  const [filteredCompleteds, setFilteredCompleteds] = useState([])
+  const [filteredSpams, setFilteredSpams] = useState([])
   const { emergency, admin } = useSelector(state => state)
   const { list: requests } = emergency
   const { current: user } = admin
@@ -59,6 +64,31 @@ const EmergencyRequests = () => {
     )
   }, [requests])
 
+  const searchRequests = (group, input) => {
+    let arrayToSearch
+    let setFiltered
+    if (_.lowerCase(group) === 'pending') {
+      arrayToSearch = pendings
+      setFiltered = setFilteredPendings
+    } else if (_.lowerCase(group) === 'completed') {
+      arrayToSearch = completeds
+      setFiltered = setFilteredCompleteds
+    } else {
+      arrayToSearch = spams
+      setFiltered = setFilteredSpams
+    }
+
+    const searcher = new FuzzySearch(
+      arrayToSearch,
+      ['name', 'address', 'role'],
+      {
+        sort: true
+      }
+    )
+
+    setFiltered(searcher.search(input))
+  }
+
   return (
     <Layout.Content style={styles.content}>
       <Helmet>
@@ -71,6 +101,7 @@ const EmergencyRequests = () => {
           <Input.Search
             placeholder='Search emergency requests...'
             style={{ width: 240 }}
+            onSearch={value => searchRequests(currentTab, value)}
           />
           <Tooltip title='Compact List View'>
             <Button
@@ -142,11 +173,15 @@ const EmergencyRequests = () => {
               )}
             </Row>
           ) : (
-            <Tabs defaultActiveKey='pending'>
+            <Tabs
+              defaultActiveKey='pending'
+              onChange={tab => setCurrentTab(tab)}>
               <Tabs.TabPane tab='Pending' key='pending'>
                 <RequestsTab
                   title={'pending'}
-                  requests={pendings}
+                  requests={
+                    !_.isEmpty(filteredPendings) ? filteredPendings : pendings
+                  }
                   user={user}
                   setMediaModalOpen={setMediaModalOpen}
                   setMedia={setMedia}
@@ -157,7 +192,11 @@ const EmergencyRequests = () => {
               <Tabs.TabPane tab='Completed' key='completed'>
                 <RequestsTab
                   title={'completed'}
-                  requests={completeds}
+                  requests={
+                    !_.isEmpty(filteredCompleteds)
+                      ? filteredCompleteds
+                      : completeds
+                  }
                   user={user}
                   setMediaModalOpen={setMediaModalOpen}
                   setMedia={setMedia}
@@ -168,7 +207,7 @@ const EmergencyRequests = () => {
               <Tabs.TabPane tab='Spam' key='spam'>
                 <RequestsTab
                   title={'spam'}
-                  requests={spams}
+                  requests={!_.isEmpty(filteredSpams) ? filteredSpams : spams}
                   user={user}
                   setMediaModalOpen={setMediaModalOpen}
                   setMedia={setMedia}
