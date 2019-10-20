@@ -1,10 +1,10 @@
 import Geocode from 'react-geocode'
 
-export const getCoordinatesHelper = async address => {
+export const getCoordinates = async address => {
   let location
 
   try {
-    Geocode.setApiKey('AIzaSyBvUkXmNQ5VDKN46EYEPy8QuHluzzpxvog')
+    Geocode.setApiKey(process.env.REACT_APP_API_KEY)
     const response = await Geocode.fromAddress(address)
     location = response.results[0].geometry.location
   } catch (error) {

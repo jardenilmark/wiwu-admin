@@ -3,12 +3,12 @@ import { createAction } from 'redux-actions'
 
 import { CREATE_CONTACT } from './contact.constants'
 import { firestore as db } from '../../firebase'
-import { getCoordinatesHelper } from '../../helpers/common/getCoordinates.helper'
+import { getCoordinates } from '../../helpers/common/getCoordinates.helper'
 
 export const createContact = ({ address, ...rest }) => {
   return async dispatch => {
     try {
-      const location = await getCoordinatesHelper(address)
+      const location = await getCoordinates(address)
 
       await db.collection('contacts').add({
         ...rest,

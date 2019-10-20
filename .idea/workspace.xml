@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
+    <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="merge conflicts with mark/dev">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/contact/createContact.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/contact/createContact.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/contact/editContact.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/contact/editContact.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/common/broadcastNotification.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/common/broadcastNotification.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/common/getCoordinates.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/common/getCoordinates.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/common/getCsvData.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/common/getCsvData.helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/emergency-request/sendNotification.helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/emergency-request/sendNotification.helper.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,5 +96,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="merge conflicts with mark/dev" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge conflicts with mark/dev" />
   </component>
 </project>
