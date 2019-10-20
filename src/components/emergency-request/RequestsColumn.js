@@ -1,10 +1,7 @@
 import React from 'react'
-import Spacer from '../Spacer'
-import { Card, Col, Input, Spin, Tag, Tooltip } from 'antd'
-import ProgressiveImage from 'react-progressive-image'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import { Card, Col, Tag } from 'antd'
+import Spacer from '../Spacer'
 import _ from 'lodash'
 
 import MarkCompletedButton from './MarkCompletedButton'
@@ -12,18 +9,9 @@ import AssignToMeButton from './AssignToMeButton'
 import BroadcastButton from './BroadcastButton'
 import ShowInMapButton from './ShowInMapButton'
 import MarkAsSpamButton from './MarkAsSpamButton'
-
-const StyledImage = styled.img`
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const StyledVideo = styled.video`
-  &:hover {
-    cursor: pointer;
-  }
-`
+import { getDepartmentTagColor } from '../../helpers/common/getDepartmentTagColor.helper'
+import RequestBody from './RequestBody'
+import RequestMedia from './RequestMedia'
 
 const RequestsColumn = props => {
   const {
@@ -41,14 +29,7 @@ const RequestsColumn = props => {
       <Spacer height={16} />
       <div style={{ height: '100%', overflow: 'auto' }}>
         {requests.map(request => {
-          let tagColor = ''
-          if (request.department === 'police') {
-            tagColor = 'red'
-          } else if (request.department === 'fire') {
-            tagColor = 'orange'
-          } else {
-            tagColor = 'blue'
-          }
+          const tagColor = getDepartmentTagColor(request.department)
 
           return (
             <Card
@@ -62,39 +43,14 @@ const RequestsColumn = props => {
                 </div>
               }
               cover={
-                request.media &&
-                (request.media.ext === 'jpg' ? (
-                  <ProgressiveImage src={request.media.url} placeholder='media'>
-                    {(src, loading) =>
-                      loading ? (
-                        <Spin style={{ marginTop: 24 }} spinning={true} />
-                      ) : (
-                        <Tooltip title={'Enlarge media'}>
-                          <StyledImage
-                            onClick={() => {
-                              setMediaModalOpen(true)
-                              setMedia(request.media)
-                            }}
-                            height={isSpamRequestsVisible ? 100 : 200}
-                            src={src}
-                            alt={'media'}
-                            style={{ objectFit: 'cover' }}
-                          />
-                        </Tooltip>
-                      )
-                    }
-                  </ProgressiveImage>
-                ) : (
-                  <StyledVideo
-                    onClick={() => {
-                      setMediaModalOpen(true)
-                      setMedia(request.media)
-                    }}
-                    height={isSpamRequestsVisible ? 100 : 200}
-                    src={request.media.url}
-                    style={{ objectFit: 'cover' }}
+                request.media && (
+                  <RequestMedia
+                    media={request.media}
+                    setMediaModalOpen={setMediaModalOpen}
+                    setMedia={setMedia}
+                    isSpamRequestsVisible={isSpamRequestsVisible}
                   />
-                ))
+                )
               }
               extra={
                 _.upperCase(title) === 'PENDING' && (
@@ -123,69 +79,7 @@ const RequestsColumn = props => {
                   request={request}
                 />
               ]}>
-              {/* role */}
-              <b>{request.role}</b>
-
-              {/* date of request */}
-              <div style={{ color: 'grey' }}>
-                {moment(request.date.toDate()).format('MMM DD, YYYY - hh:mmA')}
-              </div>
-              <Spacer height={8} />
-
-              {/* more info */}
-              <table>
-                <tbody>
-                  <tr>
-                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
-                      Requester:
-                    </td>
-                    <td>{request.name}</td>
-                  </tr>
-                  <tr>
-                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
-                      Phone:
-                    </td>
-                    <td>{request.phoneNumber}</td>
-                  </tr>
-                  <tr>
-                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
-                      Address:
-                    </td>
-                    <td>
-                      {request.address || (
-                        <Tooltip
-                          placement='right'
-                          title='You may need to confirm request address by calling back the requester'>
-                          N / A
-                        </Tooltip>
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ paddingRight: 8, fontWeight: 'bold' }}>
-                      Responder:
-                    </td>
-                    <td>
-                      {request.responderId
-                        ? `${request.responderId.firstName} ${request.responderId.lastName}`
-                        : 'Unassigned'}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              {/* conditional description */}
-              {request.description && (
-                <>
-                  <Spacer height={8} />
-                  <Input.TextArea
-                    style={{ color: '#606060' }}
-                    value={request.description}
-                    autosize={true}
-                    disabled={true}
-                  />
-                </>
-              )}
+              <RequestBody request={request} />
             </Card>
           )
         })}
@@ -199,7 +93,8 @@ RequestsColumn.propTypes = {
   requests: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   setMediaModalOpen: PropTypes.func.isRequired,
-  setMedia: PropTypes.func.isRequired
+  setMedia: PropTypes.func.isRequired,
+  isSpamRequestsVisible: PropTypes.bool.isRequired
 }
 
 export default RequestsColumn

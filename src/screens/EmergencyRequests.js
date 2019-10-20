@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Layout,
-  Input,
-  Row,
-  Modal,
-  Button,
-  Tooltip,
-  Tabs,
-  List,
-  Tag,
-  Avatar,
-  Icon
-} from 'antd'
+import { Layout, Input, Row, Modal, Button, Tooltip, Tabs, Tag } from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { CSVLink } from 'react-csv'
 import moment from 'moment'
-import _ from 'lodash'
 import { getCsvData } from '../helpers/common/getCsvData.helper'
 import RequestsColumn from '../components/emergency-request/RequestsColumn'
-import AssignToMeButton from '../components/emergency-request/AssignToMeButton'
-import BroadcastButton from '../components/emergency-request/BroadcastButton'
-import ShowInMapButton from '../components/emergency-request/ShowInMapButton'
-import MarkAsSpamButton from '../components/emergency-request/MarkAsSpamButton'
-import MarkCompletedButton from '../components/emergency-request/MarkCompletedButton'
-import logo from '../assets/images/wiwu-logo.png'
 import RequestsTab from '../components/emergency-request/RequestsTab'
+import _ from 'lodash'
+import { getDepartmentTagColor } from '../helpers/common/getDepartmentTagColor.helper'
+import RequestBody from '../components/emergency-request/RequestBody'
+import RequestMedia from '../components/emergency-request/RequestMedia'
+import Spacer from '../components/Spacer'
+import styled from 'styled-components'
+
+const StyledRequestModal = styled(Modal)`
+  .ant-modal-body {
+    padding: 0px;
+  }
+`
 
 const desc =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 
 const EmergencyRequests = () => {
   const [isMediaModalOpen, setMediaModalOpen] = useState(false)
+  const [isRequestModalOpen, setRequestModalOpen] = useState(false)
   const [media, setMedia] = useState(null)
+  const [request, setRequest] = useState(null)
   const [csvData, setCsvData] = useState([])
   const [isSpamRequestsVisible, setSpamRequestsVisibility] = useState(true)
   const [viewType, setViewType] = useState('list')
@@ -151,6 +146,8 @@ const EmergencyRequests = () => {
                   user={user}
                   setMediaModalOpen={setMediaModalOpen}
                   setMedia={setMedia}
+                  setRequestModalOpen={setRequestModalOpen}
+                  setRequest={setRequest}
                 />
               </Tabs.TabPane>
               <Tabs.TabPane tab='Completed' key='completed'>
@@ -160,6 +157,8 @@ const EmergencyRequests = () => {
                   user={user}
                   setMediaModalOpen={setMediaModalOpen}
                   setMedia={setMedia}
+                  setRequestModalOpen={setRequestModalOpen}
+                  setRequest={setRequest}
                 />
               </Tabs.TabPane>
               <Tabs.TabPane tab='Spam' key='spam'>
@@ -169,6 +168,8 @@ const EmergencyRequests = () => {
                   user={user}
                   setMediaModalOpen={setMediaModalOpen}
                   setMedia={setMedia}
+                  setRequestModalOpen={setRequestModalOpen}
+                  setRequest={setRequest}
                 />
               </Tabs.TabPane>
             </Tabs>
@@ -207,6 +208,46 @@ const EmergencyRequests = () => {
             />
           )}
         </Modal>
+      )}
+
+      {/* modal for expanded request */}
+      {request && (
+        <StyledRequestModal
+          title={
+            <div>
+              <Tag color={getDepartmentTagColor(request.department)}>
+                {_.upperCase(request.department)}
+              </Tag>
+              {request.responderId && <Tag color={'orange'}>ASSIGNED</Tag>}
+            </div>
+          }
+          width={640}
+          visible={isRequestModalOpen}
+          onOk={() => {
+            setRequestModalOpen(false)
+            setRequest(null)
+          }}
+          onCancel={() => {
+            setRequestModalOpen(false)
+            setRequest(null)
+          }}>
+          <div>
+            {request.media && (
+              <>
+                <RequestMedia
+                  media={request.media}
+                  setMediaModalOpen={setMediaModalOpen}
+                  setMedia={setMedia}
+                  isSpamRequestsVisible={false}
+                />
+                <Spacer height={16} />
+              </>
+            )}
+          </div>
+          <div style={{ padding: '16px' }}>
+            <RequestBody request={request} />
+          </div>
+        </StyledRequestModal>
       )}
     </Layout.Content>
   )

@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37acd802-dd95-488d-a829-bd1845bbdf9d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/emergency-request/RequestsTab.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/emergency-request/RequestBody.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/emergency-request/RequestMedia.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/common/getDepartmentTagColor.helper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/admin/signUp.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/admin/signUp.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/contact/createContact.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/contact/createContact.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/contact/editContact.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/contact/editContact.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/emergency-alert/createEmergencyAlert.action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-request/AssignToMeButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-request/AssignToMeButton.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/emergency-request/RequestsColumn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-request/RequestsColumn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AdminPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AdminPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AuthPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AuthPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/emergency-request/RequestsTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/emergency-request/RequestsTab.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EmergencyRequests.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/UnverifiedScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UnverifiedScreen.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

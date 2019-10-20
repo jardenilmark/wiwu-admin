@@ -27,7 +27,7 @@ const AssignToMeButton = props => {
     } else if (request.isMarkedSpam) {
       return 'Cannot assign, already marked as spam!'
     } else {
-      return 'Assign to me'
+      return 'Assign to this station'
     }
   }
 
@@ -35,7 +35,7 @@ const AssignToMeButton = props => {
     <Tooltip title={getAssignToMeDisabledTooltip}>
       <Popconfirm
         disabled={isAssignToMeDisabled}
-        title='Assign this request to yourself?'
+        title='Assign this request to this station?'
         okText='Yes'
         cancelText='No'
         onConfirm={() =>

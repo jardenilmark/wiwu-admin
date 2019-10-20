@@ -10,23 +10,32 @@ import _ from 'lodash'
 import moment from 'moment'
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { getDepartmentTagColor } from '../../helpers/common/getDepartmentTagColor.helper'
+
+const StyledMeta = styled(List.Item.Meta)`
+  &:hover {
+    cursor: pointer;
+  }
+`
 
 const RequestsTab = props => {
-  const { requests, user, title, setMediaModalOpen, setMedia } = props
+  const {
+    requests,
+    user,
+    title,
+    setMediaModalOpen,
+    setMedia,
+    setRequestModalOpen,
+    setRequest
+  } = props
 
   return (
     <List
       itemLayout='horizontal'
       dataSource={requests}
       renderItem={request => {
-        let tagColor = ''
-        if (request.department === 'police') {
-          tagColor = 'red'
-        } else if (request.department === 'fire') {
-          tagColor = 'orange'
-        } else {
-          tagColor = 'blue'
-        }
+        const tagColor = getDepartmentTagColor(request.department)
 
         return (
           <List.Item
@@ -74,32 +83,42 @@ const RequestsTab = props => {
                 />
               )
             ]}>
-            <List.Item.Meta
-              avatar={<Avatar src={logo} />}
-              title={
-                <div style={{ display: 'flex' }}>
-                  <Tag color={tagColor}>{_.upperCase(request.department)}</Tag>
-                  {request.responderId && <Tag color={'orange'}>ASSIGNED</Tag>}
-                  <div>
-                    <span style={{ fontWeight: 'bold' }}>{request.name}</span> |{' '}
-                    {request.phoneNumber}
+            <Tooltip title={'Click to expand request'} placement={'left'}>
+              <StyledMeta
+                onClick={() => {
+                  setRequestModalOpen(true)
+                  setRequest(request)
+                }}
+                avatar={<Avatar src={logo} />}
+                title={
+                  <div style={{ display: 'flex' }}>
+                    <Tag color={tagColor}>
+                      {_.upperCase(request.department)}
+                    </Tag>
+                    {request.responderId && (
+                      <Tag color={'orange'}>ASSIGNED</Tag>
+                    )}
+                    <div>
+                      <span style={{ fontWeight: 'bold' }}>{request.name}</span>{' '}
+                      | {request.phoneNumber}
+                    </div>
                   </div>
-                </div>
-              }
-              description={
-                <div>
-                  <span style={{ fontWeight: 'bold' }}>{request.role}</span>
-                  <span>
-                    {' '}
-                    -{' '}
-                    {_.truncate(request.description, {
-                      length: 56,
-                      separator: ' '
-                    }) || 'No additional description'}
-                  </span>
-                </div>
-              }
-            />
+                }
+                description={
+                  <div>
+                    <span style={{ fontWeight: 'bold' }}>{request.role}</span>
+                    <span>
+                      {' '}
+                      -{' '}
+                      {_.truncate(request.description, {
+                        length: 56,
+                        separator: ' '
+                      }) || 'No additional description'}
+                    </span>
+                  </div>
+                }
+              />
+            </Tooltip>
             <div>
               <span style={{ color: 'grey' }}>
                 {moment(request.date.toDate()).format('MMM DD, YYYY - hh:mmA')}
@@ -117,7 +136,9 @@ RequestsTab.propTypes = {
   requests: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   setMediaModalOpen: PropTypes.func.isRequired,
-  setMedia: PropTypes.func.isRequired
+  setMedia: PropTypes.func.isRequired,
+  setRequestModalOpen: PropTypes.func.isRequired,
+  setRequest: PropTypes.func.isRequired
 }
 
 export default RequestsTab
