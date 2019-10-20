@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Input, Row, Modal, Button, Tooltip, Tabs, Tag } from 'antd'
+import {
+  Layout,
+  Input,
+  Row,
+  Modal,
+  Button,
+  Tooltip,
+  Tabs,
+  Tag,
+  Select
+} from 'antd'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { CSVLink } from 'react-csv'
@@ -99,8 +109,19 @@ const EmergencyRequests = () => {
       <div style={styles.headerWrapper}>
         <div>
           <Input.Search
+            addonBefore={
+              viewType === 'trello' && (
+                <Select
+                  defaultValue='pending'
+                  onChange={tab => setCurrentTab(tab)}>
+                  <Select.Option value='pending'>Pending</Select.Option>
+                  <Select.Option value='completed'>Completed</Select.Option>
+                  <Select.Option value='spam'>Spam</Select.Option>
+                </Select>
+              )
+            }
             placeholder='Search emergency requests...'
-            style={{ width: 240 }}
+            style={{ width: 332 }}
             onSearch={value => searchRequests(currentTab, value)}
           />
           <Tooltip title='Compact List View'>
@@ -147,7 +168,9 @@ const EmergencyRequests = () => {
             <Row gutter={16} type='flex' justify='center'>
               <RequestsColumn
                 title={'Pending'}
-                requests={pendings}
+                requests={
+                  !_.isEmpty(filteredPendings) ? filteredPendings : pendings
+                }
                 user={user}
                 isSpamRequestsVisible={isSpamRequestsVisible}
                 setMediaModalOpen={setMediaModalOpen}
@@ -155,7 +178,11 @@ const EmergencyRequests = () => {
               />
               <RequestsColumn
                 title={'Completed'}
-                requests={completeds}
+                requests={
+                  !_.isEmpty(filteredCompleteds)
+                    ? filteredCompleteds
+                    : completeds
+                }
                 user={user}
                 isSpamRequestsVisible={isSpamRequestsVisible}
                 setMediaModalOpen={setMediaModalOpen}
@@ -164,7 +191,7 @@ const EmergencyRequests = () => {
               {isSpamRequestsVisible && (
                 <RequestsColumn
                   title={'Spam'}
-                  requests={spams}
+                  requests={!_.isEmpty(filteredSpams) ? filteredSpams : spams}
                   user={user}
                   isSpamRequestsVisible={isSpamRequestsVisible}
                   setMediaModalOpen={setMediaModalOpen}
