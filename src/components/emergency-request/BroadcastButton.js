@@ -30,7 +30,7 @@ const BroadcastButton = props => {
           broadcastNotification('An emergency is near your area!', [
             {
               field: 'location',
-              radius: '1000', // within 1000 meters
+              radius: '3000', // within 3000 meters
               lat: request.location.latitude,
               long: request.location.longitude
             }
