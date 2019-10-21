@@ -15,16 +15,10 @@ export const sendNotification = data => {
 
   const https = require('https')
   const req = https.request(options, res => {
-    res.on('data', function(data) {
-      console.log('Response:')
-      console.log(JSON.parse(data))
-    })
+    res.on('data', function(data) {})
   })
 
-  req.on('error', error => {
-    console.log('ERROR:')
-    console.log(error.message)
-  })
+  req.on('error', () => {})
 
   req.write(JSON.stringify(data))
   req.end()

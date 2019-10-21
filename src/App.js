@@ -16,6 +16,8 @@ import Spinner from './components/Spinner'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
+require('dotenv').config()
+
 const App = () => {
   const dispatch = useDispatch()
   const [loading, setLoadingStatus] = useState(true)

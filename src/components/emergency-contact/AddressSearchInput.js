@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Form, Input } from 'antd'
 import {
   GoogleMap,
-  StandaloneSearchBox,
+  Autocomplete,
   Marker,
   useLoadScript
 } from '@react-google-maps/api'
@@ -29,7 +29,7 @@ const AddressSearchInput = ({
   })
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBwvfQvIxe14wJMbOvSoAGLeaG3t5KSsfM',
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
     libraries
   })
 
@@ -74,12 +74,13 @@ const AddressSearchInput = ({
         }}
         center={center}>
         <Marker position={position} />
-        <StandaloneSearchBox
+        <Autocomplete
+          restrictions={{ country: 'ph' }}
           onLoad={ref => (searchBox.current = ref)}
-          onPlacesChanged={() => {
-            const places = searchBox.current.getPlaces()
-            const location = places[0].geometry.location
-            setFieldValue('address', places[0].formatted_address)
+          onPlaceChanged={() => {
+            const place = searchBox.current.getPlace()
+            const location = place.geometry.location
+            setFieldValue('address', place.formatted_address)
             setPosition({
               lat: location.lat(),
               lng: location.lng()
@@ -106,7 +107,7 @@ const AddressSearchInput = ({
               textOverflow: 'ellipsis'
             }}
           />
-        </StandaloneSearchBox>
+        </Autocomplete>
       </GoogleMap>
     </Item>
   )

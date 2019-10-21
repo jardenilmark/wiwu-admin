@@ -52,13 +52,24 @@ const EmergencyRequestDetails = ({
       <Text strong>Attached Media:</Text>
       <br />
       {emergency.media ? (
-        <img
-          src={emergency.media}
-          alt='attached-media'
-          width='100%'
-          height='250px'
-          style={{ marginTop: 10 }}
-        />
+        emergency.media.ext === 'jpg' ? (
+          <img
+            src={emergency.media}
+            alt='attached-media'
+            width='100%'
+            height='250px'
+            style={{ marginTop: 10 }}
+          />
+        ) : (
+          <video
+            src={emergency.media}
+            height='250px'
+            width='100%'
+            controls
+            autoplay>
+            Your browser does not support playing videos.
+          </video>
+        )
       ) : (
         <Empty description='There is no media attached to this request.' />
       )}
@@ -77,6 +88,7 @@ const EmergencyRequestDetails = ({
 const UserProfile = ({ user, drawerVisibility, setDrawerVisibility }) => {
   const [secondDrawerVisibility, setSecondDrawerVisibility] = useState(false)
   const [selectedEmergency, setSelectedEmergency] = useState()
+
   return (
     <Drawer
       title={<b>User Profile</b>}

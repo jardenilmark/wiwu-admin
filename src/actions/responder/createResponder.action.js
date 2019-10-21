@@ -20,8 +20,8 @@ export const createResponder = ({
 
       const payload = {
         ...rest,
-        firstName: _.capitalize(firstName),
-        lastName: _.capitalize(lastName),
+        firstName: _.startCase(firstName),
+        lastName: _.startCase(lastName),
         role: roles.RESPONDER,
         status: statuses.ACTIVE,
         emergencies: [],

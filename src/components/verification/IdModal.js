@@ -4,47 +4,52 @@ import { Button, Modal, Descriptions, Empty, Divider } from 'antd'
 import * as PropTypes from 'prop-types'
 import ProgressiveImage from 'react-progressive-image'
 
-import { verifyUser } from '../../actions/user/verifyUser.action'
 import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
 
 import { statuses } from '../../constants/User'
 
 import Spinner from '../Spinner'
+import { isBeingVerified } from '../../actions/user/isBeingVerified.action'
+import { verifyUserId } from '../../actions/user/verifyUserId.action'
 
 const IdModal = ({ record, isIdModalVisible, toggleIdModal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const dispatch = useDispatch()
+  const close = () => {
+    toggleIdModal(false)
+    dispatch(isBeingVerified(record.id, false))
+  }
   return (
     <span>
       <Modal
         visible={isIdModalVisible}
         onOk={e => {
-          toggleIdModal(false)
+          close()
         }}
         onCancel={e => {
-          toggleIdModal(false)
+          close()
         }}
         footer={[
           <Button
-            key='submit'
+            key='confirm'
             type='primary'
             icon='check-circle'
             onClick={async e => {
               setIsSubmitting(true)
-              await dispatch(verifyUser(record.id))
-              toggleIdModal(false)
+              await dispatch(verifyUserId(record.id))
+              close()
             }}
             disabled={!record.idImage || isSubmitting}>
-            Verify User
+            Verify ID
           </Button>,
           <Button
-            key='submit'
+            key='block'
             type='danger'
             icon='close-circle'
             onClick={async e => {
               setIsSubmitting(true)
               await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
-              toggleIdModal(false)
+              close()
             }}
             disabled={isSubmitting}>
             Block User

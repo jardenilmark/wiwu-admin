@@ -5,6 +5,7 @@ import Video from 'twilio-video'
 import PropTypes from 'prop-types'
 import VideoModal from './VideoModal'
 import { resetToken } from '../../actions/twilio/resetToken.action'
+import { isBeingVerified } from '../../actions/user/isBeingVerified.action'
 
 const TwilioVideo = props => {
   const roomName = props.record.id
@@ -80,7 +81,12 @@ const TwilioVideo = props => {
       const room = await Video.connect(token, connectOptions)
       roomJoined(room)
     } catch (error) {
-      message.error(error.message, 10)
+      const errorString = error.messge.toUpperCase()
+      if (errorString.includes('DEVICE NOT FOUND')) {
+        message.error('Webcam or microphone not found.', 10)
+      } else {
+        message.error(error.message, 10)
+      }
     }
   }
 
@@ -107,6 +113,7 @@ const TwilioVideo = props => {
     if (activeRoom) {
       activeRoom.disconnect()
     }
+    dispatch(isBeingVerified(props.record.id, false))
   }
 
   const getTracks = participant => {

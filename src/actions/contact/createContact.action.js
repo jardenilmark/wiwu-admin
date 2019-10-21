@@ -3,7 +3,7 @@ import { createAction } from 'redux-actions'
 
 import { CREATE_CONTACT } from './contact.constants'
 import { firestore as db } from '../../firebase'
-import { getCoordinates } from '../../helpers/common/getCoordinates'
+import { getCoordinates } from '../../helpers/common/getCoordinates.helper'
 
 export const createContact = ({ address, ...rest }) => {
   return async dispatch => {

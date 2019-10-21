@@ -5,6 +5,7 @@ import * as PropTypes from 'prop-types'
 import { verifyUser } from '../../actions/user/verifyUser.action'
 import { changeUserStatus } from '../../actions/user/changeUserStatus.action'
 import { statuses } from '../../constants/User'
+import './video.css'
 
 const VideoModal = ({
   record,
@@ -16,18 +17,6 @@ const VideoModal = ({
   remoteMediaAvailable
 }) => {
   const dispatch = useDispatch()
-
-  const showLocalTrack = localMediaAvailable ? (
-    <div ref={localMedia} />
-  ) : (
-    <Spin size='large' tip='...Connecting Local Video...' />
-  )
-
-  const showRemoteTrack = remoteMediaAvailable ? (
-    <div ref={remoteMedia} />
-  ) : (
-    <Spin size='large' tip='...Connecting Remote Video...' />
-  )
 
   return (
     <span>
@@ -41,8 +30,9 @@ const VideoModal = ({
         }}
         footer={[
           <Button
-            key='submit'
+            key='confirm'
             type='primary'
+            icon='check-circle'
             onClick={async e => {
               await leaveRoom()
               await dispatch(verifyUser(record.id))
@@ -51,28 +41,42 @@ const VideoModal = ({
             Confirm Verification
           </Button>,
           <Button
-            key='submit'
+            key='block'
+            type='danger'
+            icon='close-circle'
             onClick={async e => {
               leaveRoom()
               await dispatch(changeUserStatus(record.id, statuses.BLOCKED))
             }}
             disabled={record.joinedVideo}>
             Block User
-          </Button>,
-          <Button
-            key='back'
-            onClick={e => {
-              leaveRoom()
-            }}>
-            Cancel
           </Button>
         ]}>
         <div style={{ display: 'flex' }}>
-          <div style={{ flex: 1, margin: '8px', height: '300px' }}>
-            <div>{showLocalTrack}</div>
-          </div>
-          <div style={{ flex: 1, margin: '8px', height: '300px' }}>
-            <div>{showRemoteTrack}</div>
+          <div
+            style={{
+              flex: 1,
+              padding: 0,
+              margin: 8,
+              textAlign: 'center'
+            }}>
+            {remoteMediaAvailable || localMediaAvailable ? (
+              <div />
+            ) : (
+              <div style={{ display: 'inline-block', margin: 50 }}>
+                <Spin size='large' tip='...Connecting Video Streams...' />
+              </div>
+            )}
+            <div
+              style={{
+                width: '100%',
+                display: 'inline-block'
+              }}>
+              <div id='remote-media' ref={remoteMedia} />
+            </div>
+            <div style={{ float: 'right', marginLeft: -200 }}>
+              <div ref={localMedia} />
+            </div>
           </div>
         </div>
         <Descriptions title='User Info' bordered size='small' layout='vertical'>

@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { auth, firestore as db } from '../../firebase'
 import { SIGNUP } from './admin.constants'
 import { statuses, roles } from '../../constants/User'
-import { sendEmailVerification } from '../../helpers/common/sendEmailVerification'
+import { sendEmailVerification } from '../../helpers/common/sendEmailVerification.helper'
 
 export const signUp = ({
   emailAddress: email,
@@ -23,12 +23,12 @@ export const signUp = ({
         .get()
 
       if (!key.exists) {
-        throw new Error('Admin key does not exist!')
+        throw new Error('Admin key does not exist')
       } else {
         const { user } = key.data()
 
         if (user) {
-          throw new Error('Admin key already used')
+          throw new Error('Admin key is already used')
         }
       }
 

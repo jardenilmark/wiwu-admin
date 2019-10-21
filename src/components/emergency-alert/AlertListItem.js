@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { Tooltip, List, Icon, Popconfirm, Tag, Avatar } from 'antd'
 
-import { getTagColor } from '../../helpers/common/getTagColor'
+import { getTagColor } from '../../helpers/common/getTagColor.helper'
 
 import { updateEmergencyAlert } from '../../actions/emergency-alert/updateEmergencyAlert.action'
 import { deleteEmergencyAlert } from '../../actions/emergency-alert/deleteEmergencyAlert.action'

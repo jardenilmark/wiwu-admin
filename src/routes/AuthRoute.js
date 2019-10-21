@@ -10,7 +10,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
   const path =
     user && user.role === 'admin'
       ? 'emergency-responders'
-      : 'emergency-contacts'
+      : 'emergency-requests'
   return (
     <Route
       {...rest}
